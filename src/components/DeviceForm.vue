@@ -1,13 +1,17 @@
 <template>
   <v-container>
-    <v-select :options="['foo', 'bar']" />
+    <search-select :options="['foo', 'bar']" />
   </v-container>
 </template>
 
 <script>
-export default {
-  name: "DeviceForm",
+import vSelect from 'vue-select';
 
-  data: () => ({})
+export default {
+  name: 'DeviceForm',
+
+  data: () => ({}),
 };
 </script>
+
+<style></style>
