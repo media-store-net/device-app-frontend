@@ -1,23 +1,26 @@
+<!-- @format -->
+
 <template>
   <v-app>
     <v-main>
-      <DeviceForm />
+      <DeviceList />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import DeviceForm from "./components/DeviceForm";
+  // import DeviceForm from "./components/DeviceForm";
+  import DeviceList from "./components/DeviceList"
 
-export default {
-  name: "App",
+  export default {
+    name: "App",
 
-  components: {
-    DeviceForm
-  },
+    components: {
+      DeviceList
+    },
 
-  data: () => ({
-    //
-  })
-};
+    data: () => ({
+      //
+    })
+  }
 </script>
