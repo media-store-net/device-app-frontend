@@ -1,23 +1,25 @@
 <template>
-  <v-app>
-    <v-main>
-      <DeviceForm />
-    </v-main>
-  </v-app>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <DeviceForm />
+      </v-main>
+    </v-app>
+  </div>
 </template>
 
 <script>
-import DeviceForm from "./components/DeviceForm";
+import DeviceForm from './components/DeviceForm';
 
 export default {
-  name: "App",
+  name: 'App',
 
   components: {
-    DeviceForm
+    DeviceForm,
   },
 
   data: () => ({
     //
-  })
+  }),
 };
 </script>
