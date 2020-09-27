@@ -7,8 +7,10 @@
     <div class="addNew">
       <search-select
         class="select"
-        :options="devices.map((device) => device.sn)"
-        @search="onDeviceSearch"
+        :options="[
+          ...devices.map((device) => device.sn),
+          ...companies.map((c) => c.name),
+        ]"
         v-model="selectedDevice"
       >
         <template v-slot:no-options="{ search, searching }">
@@ -129,10 +131,15 @@ export default {
     selectedDevice: '',
   }),
   computed: {
-    ...mapGetters(['devices', 'currentDevice', 'doctypes']),
+    ...mapGetters(['companies', 'devices', 'currentDevice', 'doctypes']),
   },
   methods: {
-    ...mapActions(['setDevices', 'setCurrentDevice', 'setDoctypes']),
+    ...mapActions([
+      'setCompanies',
+      'setDevices',
+      'setCurrentDevice',
+      'setDoctypes',
+    ]),
     genQr() {
       alert(1);
     },
@@ -142,29 +149,31 @@ export default {
     deletDevice() {
       alert(1);
     },
+    async getCompanies() {
+      const res = await api.getCompanies();
+      this.setCompanies(res.data);
+    },
     async getDiveces() {
-      const self = this;
       const res = await api.getDiveces();
       this.setDevices(res.data);
     },
     async getDoctypes() {
-      const self = this;
       const res = await api.getDoctypes();
       this.setDoctypes(res.data);
-    },
-    onDeviceSearch(event) {
-      console.log(event);
     },
   },
   watch: {
     selectedDevice(val) {
-      console.log('selectedDevice on Watch');
+      console.log('selectedDevice on Watch ' + val);
       this.setCurrentDevice(
-        this.devices.filter((device) => device.sn === val)[0],
+        this.devices.filter(
+          (device) => device.sn === val || device.companie.name.includes(val),
+        )[0],
       );
     },
   },
   mounted() {
+    this.getCompanies();
     this.getDiveces();
     this.getDoctypes();
   },
