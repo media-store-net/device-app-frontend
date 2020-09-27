@@ -5,7 +5,12 @@
     <h1>Device List</h1>
     <p>Search Device or Customer...</p>
     <div class="addNew">
-      <search-select class="select">
+      <search-select
+        class="select"
+        :options="devices.map((device) => device.sn)"
+        @search="onDeviceSearch"
+        v-model="selectedDevice"
+      >
         <template v-slot:no-options="{ search, searching }">
           <template v-if="searching">
             No results found for <em>{{ search }}</em
@@ -19,44 +24,89 @@
       </v-btn>
     </div>
 
-    <v-card class="mx-auto" v-for="device in devices" :key="device.id">
-      <v-list-item three-line class="list">
-        <v-list-item-content>
-          <v-list-item-title class="headline mb-1">
-            Firma: {{ device.companie.name }}
-          </v-list-item-title>
-          <v-list-item-title class="headline mb-1">
-            SN: {{ device.sn }}
-          </v-list-item-title>
-          <v-list-item-title class="headline mb-1">
-            Art.Nr: {{ device.part.title }}
-          </v-list-item-title>
-        </v-list-item-content>
+    <v-col class="pa-0" v-if="selectedDevice">
+      <v-card class="mx-auto">
+        <v-list-item three-line class="list">
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">
+              Firma: {{ currentDevice.companie.name }}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              SN: {{ currentDevice.sn }}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Art.Nr: {{ currentDevice.part.title }}
+            </v-list-item-title>
+          </v-list-item-content>
 
-        <v-btn text color="primary" @click="genQr">
-          <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
-        </v-btn>
+          <v-btn text color="primary" @click="genQr">
+            <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
+          </v-btn>
 
-        <v-btn text color="success" @click="editDevice">
-          <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
-        </v-btn>
+          <v-btn text color="success" @click="editDevice">
+            <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
+          </v-btn>
 
-        <v-btn text color="red" @click="deletDevice">
-          <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
-        </v-btn>
-      </v-list-item>
+          <v-btn text color="red" @click="deletDevice">
+            <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
+          </v-btn>
+        </v-list-item>
 
-      <v-card-actions v-for="doc in doctypes" :key="doc.id">
-        <v-list-item-content class="item">
-          <v-list-item-title class="headline mb-1">
-            {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
-          </v-list-item-title>
-        </v-list-item-content>
-        <v-btn color="primary">
-          Download
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+        <v-card-actions v-for="doc in doctypes" :key="doc.id">
+          <v-list-item-content class="item">
+            <v-list-item-title class="headline mb-1">
+              {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-btn color="primary">
+            Download
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+
+    <v-col class="pa-0" v-if="!selectedDevice">
+      <!-- TODO This one as a own component -->
+      <v-card class="mx-auto" v-for="device in devices" :key="device.id">
+        <v-list-item three-line class="list">
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">
+              Firma: {{ device.companie.name }}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              SN: {{ device.sn }}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Art.Nr: {{ device.part.title }}
+            </v-list-item-title>
+          </v-list-item-content>
+
+          <v-btn text color="primary" @click="genQr">
+            <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
+          </v-btn>
+
+          <v-btn text color="success" @click="editDevice">
+            <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
+          </v-btn>
+
+          <v-btn text color="red" @click="deletDevice">
+            <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
+          </v-btn>
+        </v-list-item>
+
+        <v-card-actions v-for="doc in doctypes" :key="doc.id">
+          <v-list-item-content class="item">
+            <v-list-item-title class="headline mb-1">
+              {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-btn color="primary">
+            Download
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      <!-- This one as a own component -->
+    </v-col>
   </v-container>
 </template>
 
@@ -76,12 +126,13 @@ export default {
       mdiPencil,
       mdiDelete,
     },
+    selectedDevice: '',
   }),
   computed: {
-    ...mapGetters(['devices', 'doctypes']),
+    ...mapGetters(['devices', 'currentDevice', 'doctypes']),
   },
   methods: {
-    ...mapActions(['setDevices', 'setDoctypes']),
+    ...mapActions(['setDevices', 'setCurrentDevice', 'setDoctypes']),
     genQr() {
       alert(1);
     },
@@ -100,6 +151,17 @@ export default {
       const self = this;
       const res = await api.getDoctypes();
       this.setDoctypes(res.data);
+    },
+    onDeviceSearch(event) {
+      console.log(event);
+    },
+  },
+  watch: {
+    selectedDevice(val) {
+      console.log('selectedDevice on Watch');
+      this.setCurrentDevice(
+        this.devices.filter((device) => device.sn === val)[0],
+      );
     },
   },
   mounted() {
