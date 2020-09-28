@@ -9,7 +9,7 @@
         class="select"
         :options="[
           ...devices.map((device) => device.sn),
-          ...companies.map((c) => c.name)
+          ...companies.map((c) => c.name),
         ]"
         v-model="selectedDevice"
       >
@@ -161,100 +161,100 @@
 </template>
 
 <script>
-  //import vSelect from "vue-select"
-  import api from "@/api/api"
+//import vSelect from "vue-select"
+import api from '@/api/api';
 
-  import { mdiQrcode, mdiPencil, mdiDelete } from "@mdi/js"
-  import { mapGetters, mapActions } from "vuex"
+import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
+import { mapGetters, mapActions } from 'vuex';
 
-  export default {
-    name: "DeviceList",
+export default {
+  name: 'DeviceList',
 
-    data: () => ({
-      icons: {
-        mdiQrcode,
-        mdiPencil,
-        mdiDelete
-      },
-      selectedDevice: ""
-    }),
-    computed: {
-      ...mapGetters(["companies", "devices", "currentDevice", "doctypes"])
+  data: () => ({
+    icons: {
+      mdiQrcode,
+      mdiPencil,
+      mdiDelete,
     },
-    methods: {
-      ...mapActions([
-        "setCompanies",
-        "setDevices",
-        "setCurrentDevice",
-        "setDoctypes"
-      ]),
-      genQr() {
-        alert(1)
-      },
-      editDevice() {
-        alert(1)
-      },
-      deletDevice() {
-        alert(1)
-      },
-      async getCompanies() {
-        const res = await api.getCompanies()
-        this.setCompanies(res.data)
-      },
-      async getDiveces() {
-        const res = await api.getDiveces()
-        this.setDevices(res.data)
-      },
-      async getDoctypes() {
-        const res = await api.getDoctypes()
-        this.setDoctypes(res.data)
-      }
+    selectedDevice: '',
+  }),
+  computed: {
+    ...mapGetters(['companies', 'devices', 'currentDevice', 'doctypes']),
+  },
+  methods: {
+    ...mapActions([
+      'setCompanies',
+      'setDevices',
+      'setCurrentDevice',
+      'setDoctypes',
+    ]),
+    genQr() {
+      alert(1);
     },
-    watch: {
-      selectedDevice(val) {
-        console.log("selectedDevice on Watch " + val)
-        this.setCurrentDevice(
-          this.devices.filter(
-            (device) => device.sn === val || device.companie.name.includes(val)
-          )[0]
-        )
-      }
+    editDevice() {
+      alert(1);
     },
-    mounted() {
-      this.getCompanies()
-      this.getDiveces()
-      this.getDoctypes()
-    }
-  }
+    deletDevice() {
+      alert(1);
+    },
+    // MOVED TO STORE
+    // async getCompanies() {
+    //   const res = await api.getCompanies()
+    //   this.setCompanies(res.data)
+    // },
+    // async getDiveces() {
+    //   const res = await api.getDiveces();
+    //   this.setDevices(res.data);
+    // },
+    // async getDoctypes() {
+    //   const res = await api.getDoctypes();
+    //   this.setDoctypes(res.data);
+    // },
+  },
+  watch: {
+    selectedDevice(val) {
+      this.setCurrentDevice(
+        this.devices.filter(
+          (device) => device.sn === val || device.companie.name.includes(val),
+        )[0],
+      );
+    },
+  },
+  mounted() {
+    this.setCompanies();
+    this.setDevices();
+    this.setDoctypes();
+  },
+};
 </script>
 
 <style scoped>
-  h1 {
-    display: flex;
-    justify-content: center;
-    margin: 40px;
-  }
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
 
-  .v-application p {
-    margin-bottom: 0;
-  }
-  .addNew {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-  .select {
-    width: 100%;
-    margin-right: 20px;
-  }
-  .mx-auto {
-    margin-top: 40px;
-  }
-  .list {
-    align-items: end;
-    padding: 20px;
-  }
-  .item {
-    padding: 0;
-  }
+.v-application p {
+  margin-bottom: 0;
+}
+.addNew {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.select {
+  width: 100%;
+  margin-right: 20px;
+}
+.mx-auto {
+  margin-top: 40px;
+}
+.list {
+  align-items: end;
+  padding: 20px;
+}
+.item {
+  padding: 0;
+}
 </style>

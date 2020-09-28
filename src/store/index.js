@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import api from '../api/api'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -30,9 +32,32 @@ export default new Vuex.Store({
   },
   actions: {
     setAuthKey: ({ commit }, payload) => commit('setAuthKey', payload),
-    setCompanies: ({ commit }, payload) => commit('setCompanies', payload),
-    setDevices: ({ commit }, payload) => commit('setDevices', payload),
-    setDoctypes: ({ commit }, payload) => commit('setDoctypes', payload),
+    setCompanies: async ({ commit }) => {
+      try {
+        const res = await api.getCompanies();
+        commit('setCompanies', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    setDevices: async ({ commit }) => {
+      try {
+        const res = await api.getDiveces()
+        commit('setDevices', res.data)
+      }
+      catch (error) {
+        console.error(error)
+      }
+    },
+    setDoctypes: async ({ commit }) => {
+      try {
+        const res = await api.getDoctypes();
+        commit('setDoctypes', res.data)
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
     setParts: ({ commit }, payload) => commit('setParts', payload),
     setCurrentDevice: ({ commit }, payload) => commit('setCurrentDevice', payload),
   },
