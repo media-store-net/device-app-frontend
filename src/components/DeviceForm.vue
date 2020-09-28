@@ -21,8 +21,14 @@
 
     <div>
       <div class="addedSnPass">
-        <v-text-field class="input" label="SN:"></v-text-field>
-        <v-text-field class="input" label="Pass:"></v-text-field>
+        <v-text-field
+          class="input"
+          label="SN:"
+        />
+        <v-text-field
+          class="input"
+          label="Pass:"
+        />
         <v-btn text>
           <v-icon>{{ icons.mdiContentCopy }}</v-icon>
         </v-btn>
@@ -42,27 +48,46 @@
       <span>
         <v-icon x-large>{{ icons.mdiFilePdf }}</v-icon>
       </span>
+
       <v-overflow-btn
         class="my-2"
         label="Dropdown DocType"
         editable
-        item-value="text"
-      ></v-overflow-btn>
-      <v-btn color="primary">
+        :items="items"
+      />
+
+      <v-btn
+        color="primary"
+        @click="$refs.inputUpload.click()"
+      >
         Select File
       </v-btn>
+      <input
+        v-show="false"
+        ref="inputUpload"
+        type="file"
+        @change="uploadFile"
+      >
     </div>
 
-    <v-card-actions v-for="doc in doctypes" :key="doc.id">
+    <v-card-actions
+      v-for="doc in doctypes"
+      :key="doc.id"
+    >
       <v-list-item-content class="item">
         <v-list-item-title class="headline mb-1">
-          <v-icon x-large>{{ icons.mdiFilePdf }}</v-icon>
+          <v-icon x-large>
+            {{ icons.mdiFilePdf }}
+          </v-icon>
           {{ doc.title }}: {{ doc.desc }}
         </v-list-item-title>
       </v-list-item-content>
     </v-card-actions>
 
-    <v-btn-toggle group class="btnGroup">
+    <v-btn-toggle
+      group
+      class="btnGroup"
+    >
       <v-btn class="btn">
         <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
       </v-btn>
@@ -98,6 +123,13 @@
         mdiQrcode,
         mdiContentSave
       },
+      items: [
+        "User - Manual",
+        "Data - Sheet",
+        "CE - Konfirmität",
+        "Video",
+        "Sonstiges"
+      ],
       doctypes: ""
     }),
     methods: {
@@ -115,12 +147,19 @@
       }, 350),
       getDoctypes() {
         const self = this
-        api.getDoctypes().then((res) => {
-          self.doctypes = res.data
-          console.log(res.data)
-        })
+        api
+          .getDoctypes()
+          .then((res) => {
+            self.doctypes = res.data
+            const document = res.data
+          })
+          .catch((error) => console.log(error))
+      },
+      uploadFile($event) {
+        console.log($event.target.files)
       }
     },
+
     mounted() {
       this.getDoctypes()
     }

@@ -118,7 +118,6 @@
           .getDiveces()
           .then((res) => {
             self.devices = res.data
-            console.log(self.devices[0])
           })
           .catch((error) => console.log(error))
       },
@@ -126,7 +125,6 @@
         const self = this
         api.getDoctypes().then((res) => {
           self.doctypes = res.data
-          console.log(res.data)
         })
       }
     },
