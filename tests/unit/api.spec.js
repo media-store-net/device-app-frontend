@@ -26,3 +26,24 @@ it('Should fetch Doctypes from API', () => {
 
     return api.getCompanies().then(res => expect(res.data).toEqual(doctypes));
 })
+
+it('Should fail fetching Companies', () => {
+    const response = Promise.reject(new Error('failed'));
+    API.get.mockResolvedValue(response);
+
+    return api.getCompanies().then().catch(err => expect(err).toBeInstanceOf(Error));
+})
+
+it('Should fail fetching Devices', () => {
+    const response = Promise.reject(new Error('failed'));
+    API.get.mockResolvedValue(response);
+
+    return api.getDiveces().then().catch(err => expect(err).toBeInstanceOf(Error));
+})
+
+it('Should fail fetching Doctypes', () => {
+    const response = Promise.reject(new Error('failed'));
+    API.get.mockResolvedValue(response);
+
+    return api.getDoctypes().then().catch(err => expect(err).toBeInstanceOf(Error));
+})
