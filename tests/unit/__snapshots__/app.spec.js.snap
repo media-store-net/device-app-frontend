@@ -4,10 +4,10 @@ exports[`App.test.js has the expected html structure 1`] = `
 <div
   id="app"
 >
-  <v-app>
-    <v-main>
+  <v-app-stub>
+    <v-main-stub>
       <devicelist-stub />
-    </v-main>
-  </v-app>
+    </v-main-stub>
+  </v-app-stub>
 </div>
 `;
