@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <v-container>
     <h1>Device List</h1>
