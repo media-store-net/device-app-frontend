@@ -8,9 +8,11 @@ describe("App.test.js", () => {
     cmp = shallowMount(App, {
       // Create a shallow instance of the component
       data() {
-        return {
-          messages: ["Cat"]
-        }
+        return {}
+      },
+      components: {
+        'v-app': {},
+        'v-main': {}
       }
     });
   });

@@ -1,7 +1,6 @@
-/** @format */
-
 import axios from "axios"
 
+// set baseUrl from .env file and export axios instance
 export default axios.create({
-  baseURL: "http://localhost:1337"
+  baseURL: process.env.VUE_APP_API_URL
 })
