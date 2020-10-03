@@ -3,7 +3,11 @@
 <template>
   <div>
     <v-row justify="center">
-      <modal name="dialog" width="700px" height="99%">
+      <modal
+        name="dialog"
+        width="700px"
+        height="99%"
+      >
         <DeviceForm />
       </modal>
     </v-row>
@@ -21,20 +25,31 @@
         >
           <template v-slot:no-options="{ search, searching }">
             <template v-if="searching">
-              No results found for <em>{{ search }}</em
-              >.
+              No results found for <em>{{ search }}</em>.
             </template>
-            <em style="opacity: 0.5;" v-else>Search Device or Customer...</em>
+            <em
+              style="opacity: 0.5;"
+              v-else
+            >Search Device or Customer...</em>
           </template>
         </search-select>
-        <v-btn color="success" @click="addNew">
+        <v-btn
+          color="success"
+          @click="addNew"
+        >
           Add New
         </v-btn>
       </div>
 
-      <v-col class="pa-0" v-if="selectedDevice">
+      <v-col
+        class="pa-0"
+        v-if="selectedDevice"
+      >
         <v-card class="mx-auto">
-          <v-list-item three-line class="list">
+          <v-list-item
+            three-line
+            class="list"
+          >
             <v-list-item-content>
               <v-list-item-title class="headline mb-1">
                 Firma: {{ currentDevice.companie.name }}
@@ -47,20 +62,35 @@
               </v-list-item-title>
             </v-list-item-content>
 
-            <v-btn text color="primary" @click="genQr">
+            <v-btn
+              text
+              color="primary"
+              @click="genQr"
+            >
               <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
             </v-btn>
 
-            <v-btn text color="success" @click="editDevice">
+            <v-btn
+              text
+              color="success"
+              @click="editDevice"
+            >
               <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
             </v-btn>
 
-            <v-btn text color="red" @click="deletDevice">
+            <v-btn
+              text
+              color="red"
+              @click="deletDevice"
+            >
               <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
             </v-btn>
           </v-list-item>
 
-          <v-card-actions v-for="doc in doctypes" :key="doc.id">
+          <v-card-actions
+            v-for="doc in doctypes"
+            :key="doc.id"
+          >
             <v-list-item-content class="item">
               <v-list-item-title class="headline mb-1">
                 {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
@@ -73,10 +103,20 @@
         </v-card>
       </v-col>
 
-      <v-col class="pa-0" v-if="!selectedDevice">
+      <v-col
+        class="pa-0"
+        v-if="!selectedDevice"
+      >
         <!-- TODO This one as a own component -->
-        <v-card class="mx-auto" v-for="device in devices" :key="device.id">
-          <v-list-item three-line class="list">
+        <v-card
+          class="mx-auto"
+          v-for="device in devices"
+          :key="device.id"
+        >
+          <v-list-item
+            three-line
+            class="list"
+          >
             <v-list-item-content>
               <v-list-item-title class="headline mb-1">
                 Firma: {{ device.companie.name }}
@@ -89,20 +129,35 @@
               </v-list-item-title>
             </v-list-item-content>
 
-            <v-btn text color="primary" @click="genQr">
+            <v-btn
+              text
+              color="primary"
+              @click="genQr"
+            >
               <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
             </v-btn>
 
-            <v-btn text color="success" @click="editDevice">
+            <v-btn
+              text
+              color="success"
+              @click="editDevice"
+            >
               <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
             </v-btn>
 
-            <v-btn text color="red" @click="deletDevice">
+            <v-btn
+              text
+              color="red"
+              @click="deletDevice"
+            >
               <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
             </v-btn>
           </v-list-item>
 
-          <v-card-actions v-for="doc in doctypes" :key="doc.id">
+          <v-card-actions
+            v-for="doc in doctypes"
+            :key="doc.id"
+          >
             <v-list-item-content class="item">
               <v-list-item-title class="headline mb-1">
                 {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
