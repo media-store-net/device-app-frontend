@@ -4,7 +4,7 @@
   <div>
     <v-row justify="center">
       <modal
-        name="dialog"
+        name="DeviceForm"
         width="700px"
         height="99%"
       >
@@ -206,7 +206,7 @@
         "setDoctypes",
       ]),
       addNew() {
-        this.$modal.show("dialog")
+        this.$modal.show("DeviceForm")
       },
       genQr() {
         alert(1)

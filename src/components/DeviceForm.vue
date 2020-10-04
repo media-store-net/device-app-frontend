@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <v-container>
     <h1>POWASERT® Device Form</h1>
@@ -8,15 +10,6 @@
       :options="options"
       @search="onSearch"
     />
-    <!-- <template slot="no-options">type to search GitHub repositories..</template>
-      <template slot="option" slot-scope="option">
-        <div class="d-center">
-          <img :src="option.owner.avatar_url" />
-          {{ option.full_name }}
-        </div>
-      </template>
-    </v-select>-->
-
     <div>
       <div class="addedSnPass">
         <v-text-field
@@ -86,13 +79,24 @@
       group
       class="btnGroup"
     >
-      <v-btn class="btn">
+      <v-btn
+        class="btn"
+        @click="GenQrCode"
+      >
         <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
       </v-btn>
       <v-btn class="btn">
         <v-icon>{{ icons.mdiContentSave }} </v-icon> Save
       </v-btn>
     </v-btn-toggle>
+
+    <modal
+      name="QrCode"
+      :width="310"
+      :height="310"
+    >
+      <QrCode />
+    </modal>
   </v-container>
 </template>
 
@@ -108,9 +112,14 @@
   } from "@mdi/js"
 
   import api from "@/api/api"
+  import QrCode from "@/components/QrCode"
 
   export default {
     name: "DeviceForm",
+    components: {
+      QrCode,
+    },
+
     data: () => ({
       options: [],
       icons: {
@@ -154,8 +163,10 @@
       uploadFile($event) {
         console.log($event.target.files)
       },
+      GenQrCode() {
+        this.$modal.show("QrCode")
+      },
     },
-
     mounted() {
       this.getDoctypes()
     },
