@@ -116,8 +116,10 @@
         <!-- This one as a own component -->
       </v-col>
 
-      <modal name="QrCode" :width="310" :height="310">
-        <QrCode />
+      <modal name="QrCode" :width="350" :height="350">
+        <div class="QrCode">
+          <QrCode />
+        </div>
       </modal>
     </v-container>
   </div>
@@ -227,5 +229,11 @@
   }
   .item {
     padding: 0;
+  }
+  .QrCode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 </style>
