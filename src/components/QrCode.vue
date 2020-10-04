@@ -2,7 +2,11 @@
 
 <template>
   <div>
-    <qrcode-vue :value="value" :size="size" level="H" />
+    <qrcode-vue
+      :value="value"
+      :size="size"
+      level="H"
+    />
   </div>
 </template>
 <script>

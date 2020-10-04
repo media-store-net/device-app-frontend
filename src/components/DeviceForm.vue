@@ -12,8 +12,14 @@
     />
     <div>
       <div class="addedSnPass">
-        <v-text-field class="input" label="SN:" />
-        <v-text-field class="input" label="Pass:" />
+        <v-text-field
+          class="input"
+          label="SN:"
+        />
+        <v-text-field
+          class="input"
+          label="Pass:"
+        />
         <v-btn text>
           <v-icon>{{ icons.mdiContentCopy }}</v-icon>
         </v-btn>
@@ -41,7 +47,10 @@
         :items="items"
       />
 
-      <v-btn color="primary" @click="$refs.inputUpload.click()">
+      <v-btn
+        color="primary"
+        @click="$refs.inputUpload.click()"
+      >
         Select File
       </v-btn>
       <input
@@ -49,10 +58,13 @@
         ref="inputUpload"
         type="file"
         @change="uploadFile"
-      />
+      >
     </div>
 
-    <v-card-actions v-for="doc in doctypes" :key="doc.id">
+    <v-card-actions
+      v-for="doc in doctypes"
+      :key="doc.id"
+    >
       <v-list-item-content class="item">
         <v-list-item-title class="headline mb-1">
           <v-icon x-large>
@@ -63,8 +75,14 @@
       </v-list-item-content>
     </v-card-actions>
 
-    <v-btn-toggle group class="btnGroup">
-      <v-btn class="btn" @click="GenQrCode">
+    <v-btn-toggle
+      group
+      class="btnGroup"
+    >
+      <v-btn
+        class="btn"
+        @click="GenQrCode"
+      >
         <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
       </v-btn>
       <v-btn class="btn">
