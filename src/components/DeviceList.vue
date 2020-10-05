@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center">
+    <!-- <v-row justify="center">
       <modal
         name="DeviceForm"
         width="700px"
@@ -8,7 +8,16 @@
       >
         <DeviceForm />
       </modal>
-    </v-row>
+    </v-row> -->
+    <!-- <modal
+      :name="modalName"
+      :width="currentModal.width"
+      :height="currentModal.height"
+    >
+      <div :class="currentModal.class">
+        <component :is="currentModal.component" />
+      </div>
+    </modal> -->
     <v-container>
       <h1>Device List</h1>
       <p>Search Device or Customer...</p>
@@ -52,7 +61,7 @@
           :is-admin="true"
           @gen-qr="genQr"
           @edit-device="editDevice"
-          @delete-device="deletDevice"
+          @delete-device="deleteDevice"
         />
       </v-col>
 
@@ -71,18 +80,9 @@
           :is-admin="true"
           @gen-qr="genQr"
           @edit-device="editDevice"
-          @delete-device="deletDevice"
+          @delete-device="deleteDevice"
         />
       </v-col>
-      <modal
-        name="QrCode"
-        :width="350"
-        :height="350"
-      >
-        <div class="QrCode">
-          <QrCode />
-        </div>
-      </modal>
     </v-container>
   </div>
 </template>
@@ -91,9 +91,8 @@
 //import vSelect from "vue-select"
 import api from '@/api/api';
 import DeviceItem from '@/components/DeviceItem';
-import DeviceForm from "@/components/DeviceForm"
-import QrCode from "@/components/QrCode"
-
+import DeviceForm from '@/components/DeviceForm';
+import QrCode from '@/components/QrCode';
 
 import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
 import { mapGetters, mapActions } from 'vuex';
@@ -102,101 +101,139 @@ export default {
   name: 'DeviceList',
   components: {
     DeviceItem,
+    // eslint-disable-next-line
     DeviceForm,
+    // eslint-disable-next-line
     QrCode,
   },
-    data: () => ({
-      icons: {
-        mdiQrcode,
-        mdiPencil,
-        mdiDelete,
-      },
-      selectedDevice: "",
-    }),
-    computed: {
-      ...mapGetters(["companies", "devices", "currentDevice"]),
+  data: () => ({
+    icons: {
+      mdiQrcode,
+      mdiPencil,
+      mdiDelete,
     },
-    methods: {
-      ...mapActions([
-        "setCompanies",
-        "setDevices",
-        "setCurrentDevice",
-      ]),
-      addNew() {
-        this.$modal.show("DeviceForm")
+    selectedDevice: '',
+    modals: {
+      DeviceForm: {
+        name: 'DeviceForm',
+        class: 'DeviceForm',
+        height: '99%',
+        width: '700px',
+        component: DeviceForm,
       },
-      genQr() {
-        this.$modal.show("QrCode")
-      },
-      editDevice() {
-        alert(1)
-      },
-      deletDevice() {
-        alert(1)
-      },
-      // MOVED TO STORE
-      // async getCompanies() {
-      //   const res = await api.getCompanies()
-      //   this.setCompanies(res.data)
-      // },
-      // async getDiveces() {
-      //   const res = await api.getDiveces();
-      //   this.setDevices(res.data);
-      // },
-      // async getDoctypes() {
-      //   const res = await api.getDoctypes();
-      //   this.setDoctypes(res.data);
-      // },
-    },
-    watch: {
-      selectedDevice(val) {
-        this.setCurrentDevice(
-          this.devices.filter(
-            (device) => device.sn === val || device.companie.name.includes(val)
-          )[0]
-        )
+      QrCode: {
+        name: 'QrCode',
+        class: 'QrCode',
+        height: '99%',
+        width: '700px',
+        component: QrCode,
       },
     },
-    mounted() {
-      this.setCompanies()
-      this.setDevices()
+    modalName: 'DeviceForm',
+  }),
+  computed: {
+    ...mapGetters(['companies', 'devices', 'currentDevice']),
+    currentModal() {
+      return this.modals[this.modalName];
     },
-  }
+  },
+  methods: {
+    ...mapActions([
+      'setCompanies',
+      'setDevices',
+      'setCurrentDevice',
+      'setDoctypes',
+    ]),
+    addNew() {
+      this.modalName = 'DeviceForm';
+      this.showModal();
+    },
+    genQr() {
+      this.modalName = 'QrCode';
+      this.showModal();
+    },
+    editDevice() {
+      alert(1);
+    },
+    deleteDevice() {
+      alert(1);
+    },
+    showModal() {
+      this.$modal.show(
+        this.currentModal.component,
+        {},
+        {
+          height: this.currentModal.height,
+          width: this.currentModal.width,
+          class: this.currentModal.class,
+        },
+      );
+    },
+
+    // MOVED TO STORE
+    // async getCompanies() {
+    //   const res = await api.getCompanies()
+    //   this.setCompanies(res.data)
+    // },
+    // async getDiveces() {
+    //   const res = await api.getDiveces();
+    //   this.setDevices(res.data);
+    // },
+    // async getDoctypes() {
+    //   const res = await api.getDoctypes();
+    //   this.setDoctypes(res.data);
+    // },
+  },
+  watch: {
+    selectedDevice(val) {
+      this.setCurrentDevice(
+        this.devices.filter(
+          (device) => device.sn === val || device.companie.name.includes(val),
+        )[0],
+      );
+    },
+  },
+  mounted() {
+    this.setCompanies();
+    this.setDevices();
+    this.setDoctypes();
+  },
+};
 </script>
 
 <style scoped>
-  h1 {
-    display: flex;
-    justify-content: center;
-    margin: 40px;
-  }
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
 
-  .v-application p {
-    margin-bottom: 0;
-  }
-  .addNew {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-  .select {
-    width: 100%;
-    margin-right: 20px;
-  }
-  .mx-auto {
-    margin-top: 40px;
-  }
-  .list {
-    align-items: end;
-    padding: 20px;
-  }
-  .item {
-    padding: 0;
-  }
-  .QrCode {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
+.v-application p {
+  margin-bottom: 0;
+}
+.addNew {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.select {
+  width: 100%;
+  margin-right: 20px;
+}
+.mx-auto {
+  margin-top: 40px;
+}
+.list {
+  align-items: end;
+  padding: 20px;
+}
+.item {
+  padding: 0;
+}
+.QrCode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 </style>
