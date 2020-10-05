@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div id="app">
     <v-app>
@@ -10,19 +12,19 @@
 </template>
 
 <script>
-// import DeviceForm from './components/DeviceForm';
-import DeviceList from './components/DeviceList';
+  // import DeviceForm from "./components/DeviceForm"
+  import DeviceList from "./components/DeviceList"
 
-export default {
-  name: 'App',
+  export default {
+    name: "App",
 
-  components: {
-    // DeviceForm,
-    DeviceList,
-  },
+    components: {
+      // DeviceForm,
+      DeviceList,
+    },
 
-  data: () => ({
-    //
-  }),
-};
+    data: () => ({
+      //
+    }),
+  }
 </script>

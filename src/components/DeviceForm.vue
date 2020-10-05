@@ -10,15 +10,6 @@
       :options="options"
       @search="onSearch"
     />
-    <!-- <template slot="no-options">type to search GitHub repositories..</template>
-      <template slot="option" slot-scope="option">
-        <div class="d-center">
-          <img :src="option.owner.avatar_url" />
-          {{ option.full_name }}
-        </div>
-      </template>
-    </v-select>-->
-
     <div>
       <div class="addedSnPass">
         <v-text-field
@@ -88,7 +79,10 @@
       group
       class="btnGroup"
     >
-      <v-btn class="btn">
+      <v-btn
+        class="btn"
+        @click="GenQrCode"
+      >
         <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
       </v-btn>
       <v-btn class="btn">
@@ -106,13 +100,15 @@
     mdiOnepassword,
     mdiFilePdf,
     mdiQrcode,
-    mdiContentSave
+    mdiContentSave,
   } from "@mdi/js"
 
   import api from "@/api/api"
 
   export default {
     name: "DeviceForm",
+    components: {},
+
     data: () => ({
       options: [],
       icons: {
@@ -120,16 +116,16 @@
         mdiOnepassword,
         mdiFilePdf,
         mdiQrcode,
-        mdiContentSave
+        mdiContentSave,
       },
       items: [
         "User - Manual",
         "Data - Sheet",
         "CE - Konfirmität",
         "Video",
-        "Sonstiges"
+        "Sonstiges",
       ],
-      doctypes: ""
+      doctypes: "",
     }),
     methods: {
       onSearch(search, loading) {
@@ -150,18 +146,19 @@
           .getDoctypes()
           .then((res) => {
             self.doctypes = res.data
-            const document = res.data
           })
           .catch((error) => console.log(error))
       },
       uploadFile($event) {
         console.log($event.target.files)
-      }
+      },
+      GenQrCode() {
+        this.$modal.show("QrCode")
+      },
     },
-
     mounted() {
       this.getDoctypes()
-    }
+    },
   }
 </script>
 
