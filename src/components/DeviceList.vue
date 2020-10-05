@@ -30,130 +30,36 @@
       class="pa-0"
       v-if="selectedDevice"
     >
-      <v-card class="mx-auto">
-        <v-list-item
-          three-line
-          class="list"
-        >
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">
-              Firma: {{ currentDevice.companie.name }}
-            </v-list-item-title>
-            <v-list-item-title class="headline mb-1">
-              SN: {{ currentDevice.sn }}
-            </v-list-item-title>
-            <v-list-item-title class="headline mb-1">
-              Art.Nr: {{ currentDevice.part.title }}
-            </v-list-item-title>
-          </v-list-item-content>
-
-          <v-btn
-            text
-            color="primary"
-            @click="genQr"
-          >
-            <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
-          </v-btn>
-
-          <v-btn
-            text
-            color="success"
-            @click="editDevice"
-          >
-            <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
-          </v-btn>
-
-          <v-btn
-            text
-            color="red"
-            @click="deletDevice"
-          >
-            <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
-          </v-btn>
-        </v-list-item>
-
-        <v-card-actions
-          v-for="doc in doctypes"
-          :key="doc.id"
-        >
-          <v-list-item-content class="item">
-            <v-list-item-title class="headline mb-1">
-              {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
-            </v-list-item-title>
-          </v-list-item-content>
-          <v-btn color="primary">
-            Download
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <device-item
+        :id="currentDevice.id"
+        :companie="currentDevice.companie"
+        :part="currentDevice.part"
+        :sn="currentDevice.sn"
+        :files="currentDevice.files"
+        :is-admin="true"
+        @gen-qr="genQr"
+        @edit-device="editDevice"
+        @delete-device="deletDevice"
+      />
     </v-col>
 
     <v-col
       class="pa-0"
       v-if="!selectedDevice"
     >
-      <!-- TODO This one as a own component -->
-      <v-card
-        class="mx-auto"
+      <device-item
         v-for="device in devices"
         :key="device.id"
-      >
-        <v-list-item
-          three-line
-          class="list"
-        >
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">
-              Firma: {{ device.companie.name }}
-            </v-list-item-title>
-            <v-list-item-title class="headline mb-1">
-              SN: {{ device.sn }}
-            </v-list-item-title>
-            <v-list-item-title class="headline mb-1">
-              Art.Nr: {{ device.part.title }}
-            </v-list-item-title>
-          </v-list-item-content>
-
-          <v-btn
-            text
-            color="primary"
-            @click="genQr"
-          >
-            <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
-          </v-btn>
-
-          <v-btn
-            text
-            color="success"
-            @click="editDevice"
-          >
-            <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
-          </v-btn>
-
-          <v-btn
-            text
-            color="red"
-            @click="deletDevice"
-          >
-            <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
-          </v-btn>
-        </v-list-item>
-
-        <v-card-actions
-          v-for="doc in doctypes"
-          :key="doc.id"
-        >
-          <v-list-item-content class="item">
-            <v-list-item-title class="headline mb-1">
-              {{ doc.id }}. {{ doc.title }}: {{ doc.desc }}
-            </v-list-item-title>
-          </v-list-item-content>
-          <v-btn color="primary">
-            Download
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-      <!-- This one as a own component -->
+        :id="device.id"
+        :companie="device.companie"
+        :part="device.part"
+        :sn="device.sn"
+        :files="device.files"
+        :is-admin="true"
+        @gen-qr="genQr"
+        @edit-device="editDevice"
+        @delete-device="deletDevice"
+      />
     </v-col>
   </v-container>
 </template>
@@ -161,13 +67,16 @@
 <script>
 //import vSelect from "vue-select"
 import api from '@/api/api';
+import DeviceItem from '@/components/DeviceItem';
 
 import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'DeviceList',
-
+  components: {
+    DeviceItem,
+  },
   data: () => ({
     icons: {
       mdiQrcode,
