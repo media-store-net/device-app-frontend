@@ -14,9 +14,13 @@ export default {
   name: 'QrCode',
   data() {
     return {
-      value: 'https://example.com',
       size: 300,
     };
+  },
+  computed: {
+    value() {
+      return process.env.VUE_APP_QR_LINK;
+    },
   },
   components: {
     QrcodeVue,
