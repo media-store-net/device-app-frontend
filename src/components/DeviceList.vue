@@ -1,23 +1,5 @@
 <template>
   <div>
-    <!-- <v-row justify="center">
-      <modal
-        name="DeviceForm"
-        width="700px"
-        height="99%"
-      >
-        <DeviceForm />
-      </modal>
-    </v-row> -->
-    <!-- <modal
-      :name="modalName"
-      :width="currentModal.width"
-      :height="currentModal.height"
-    >
-      <div :class="currentModal.class">
-        <component :is="currentModal.component" />
-      </div>
-    </modal> -->
     <v-container>
       <h1>Device List</h1>
       <p>Search Device or Customer...</p>

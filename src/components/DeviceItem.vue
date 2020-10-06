@@ -17,46 +17,74 @@
       </v-list-item-content>
 
       <v-card-actions>
-        <v-btn
-          text
-          color="primary"
-          @click="$emit('gen-qr')"
-        >
-          <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
-        </v-btn>
+        <v-row>
+          <v-col cols="12">
+            <v-btn
+              text
+              color="primary"
+              @click="$emit('gen-qr')"
+            >
+              <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
+            </v-btn>
 
-        <v-btn
-          text
-          color="success"
-          @click="$emit('edit-device')"
-        >
-          <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
-        </v-btn>
+            <v-btn
+              text
+              color="success"
+              @click="$emit('edit-device')"
+            >
+              <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
+            </v-btn>
 
-        <v-btn
-          text
-          color="red"
-          @click="$emit('delete-device')"
-        >
-          <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
-        </v-btn>
+            <v-btn
+              text
+              color="red"
+              @click="$emit('delete-device')"
+            >
+              <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
+            </v-btn>
+          </v-col>
+
+          <v-col
+            cols="12"
+            class="badge-container"
+          >
+            <div
+              class="badge"
+              @click="showFiles = !showFiles"
+            >
+              <v-icon
+                color="success"
+                class="mr-3"
+                size="1.5em"
+              >
+                {{ icons.mdiFile }}
+              </v-icon>
+              <span>{{ files.length }}</span>
+            </div>
+          </v-col>
+        </v-row>
       </v-card-actions>
     </v-list-item>
-    <!-- Component -->
-    <v-card-actions
-      v-for="file in files"
-      :key="file.id"
-    >
-      <v-list-item-content class="item">
-        <v-list-item-title class="headline mb-1">
-          {{ file.id }}. {{ fileDoctype(file.doctype) }} | {{ file.url.name }}
-        </v-list-item-title>
-      </v-list-item-content>
-      <v-btn color="primary">
-        Download
-      </v-btn>
-    </v-card-actions>
-    <!-- /Component -->
+    <div v-if="showFiles">
+      <transition-group duration="2000">
+        <!-- Component -->
+        <v-card-actions
+          v-for="file in files"
+          :key="file.id"
+        >
+          <v-list-item-content class="item">
+            <v-list-item-title class="headline mb-1">
+              {{ file.id }}. {{ fileDoctype(file.doctype) }} |
+              {{ file.url.name }}
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-btn color="primary">
+            Download
+          </v-btn>
+        </v-card-actions>
+        <!-- /Component -->
+      </transition-group>
+    </div>
   </v-card>
 </template>
 <script>
@@ -83,6 +111,7 @@ export default {
         mdiDelete,
         mdiFile,
       },
+      showFiles: false,
     };
   },
   computed: {
@@ -108,5 +137,16 @@ export default {
   position: absolute;
   left: 2em;
   margin-left: 4em;
+}
+.badge {
+  width: 35%;
+  text-align: center;
+  padding: 10px 20px;
+  border: 1px solid #4caf50;
+  border-radius: 10px;
+  margin: 0 auto;
+  background: transparent;
+  color: #4caf50;
+  cursor: pointer;
 }
 </style>
