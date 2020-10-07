@@ -99,8 +99,9 @@ export default {
       DeviceForm: {
         name: 'DeviceForm',
         class: 'DeviceForm',
-        height: '99%',
+        height: 'auto',
         width: '700px',
+        scrollable: true,
         component: DeviceForm,
       },
       QrCode: {
@@ -148,6 +149,7 @@ export default {
           height: this.currentModal.height,
           width: this.currentModal.width,
           class: this.currentModal.class,
+          scrollable: this.currentModal.scrollable,
         },
       );
     },
