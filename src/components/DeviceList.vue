@@ -98,18 +98,24 @@ export default {
     modals: {
       DeviceForm: {
         name: 'DeviceForm',
-        class: 'DeviceForm',
-        height: 'auto',
-        width: '700px',
-        scrollable: true,
         component: DeviceForm,
+        attrs: {},
+        props: {
+          class: 'DeviceForm',
+          height: 'auto',
+          width: '700px',
+          scrollable: true,
+        },
       },
       QrCode: {
         name: 'QrCode',
-        class: 'QrCode',
-        height: '99%',
-        width: '700px',
         component: QrCode,
+        attrs: {},
+        props: {
+          class: 'QrCode',
+          height: '99%',
+          width: '700px',
+        },
       },
     },
     modalName: 'DeviceForm',
@@ -144,13 +150,8 @@ export default {
     showModal() {
       this.$modal.show(
         this.currentModal.component,
-        {},
-        {
-          height: this.currentModal.height,
-          width: this.currentModal.width,
-          class: this.currentModal.class,
-          scrollable: this.currentModal.scrollable,
-        },
+        this.currentModal.attrs,
+        this.currentModal.props,
       );
     },
 
