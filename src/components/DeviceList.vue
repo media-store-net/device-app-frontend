@@ -70,14 +70,11 @@
 </template>
 
 <script>
-//import vSelect from "vue-select"
+import { mapGetters, mapActions } from 'vuex';
+import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
+
 import api from '@/api/api';
 import DeviceItem from '@/components/DeviceItem';
-// import DeviceForm from '@/components/DeviceForm';
-// import QrCode from '@/components/QrCode';
-
-import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
-import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'DeviceList',
