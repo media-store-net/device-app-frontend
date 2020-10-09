@@ -3,6 +3,11 @@ import Vuex from 'vuex'
 
 import api from '../api/api'
 
+//TODO make this imports dynamic, when they needed
+import DeviceForm from '@/components/DeviceForm';
+import QrCode from '@/components/QrCode';
+
+
 Vue.use(Vuex)
 
 export const state = {
@@ -11,7 +16,30 @@ export const state = {
   devices: [],
   doctypes: [],
   parts: [],
-  currentDevice: {}
+  currentDevice: {},
+  modals: {
+    DeviceForm: {
+      name: 'DeviceForm',
+      component: DeviceForm,
+      attrs: {},
+      props: {
+        class: 'DeviceForm',
+        height: 'auto',
+        width: '700px',
+        scrollable: true,
+      },
+    },
+    QrCode: {
+      name: 'QrCode',
+      component: QrCode,
+      attrs: {},
+      props: {
+        class: 'QrCode',
+        height: '99%',
+        width: '700px',
+      },
+    },
+  }
 };
 
 export const getters = {
@@ -20,7 +48,8 @@ export const getters = {
   devices: state => state.devices,
   doctypes: state => state.doctypes,
   parts: state => state.parts,
-  currentDevice: state => state.currentDevice
+  currentDevice: state => state.currentDevice,
+  modals: state => state.modals
 };
 
 export const mutations = {
@@ -30,6 +59,7 @@ export const mutations = {
   setDoctypes: (state, payload) => state.doctypes = payload,
   setParts: (state, payload) => state.parts = payload,
   setCurrentDevice: (state, payload) => state.currentDevice = payload,
+  setModals: (state, payload) => state.modals = payload
 }
 
 export const actions = {
@@ -62,6 +92,7 @@ export const actions = {
   },
   setParts: ({ commit }, payload) => commit('setParts', payload),
   setCurrentDevice: ({ commit }, payload) => commit('setCurrentDevice', payload),
+  setModals: ({ commit }, payload) => commit('setModals', payload),
 }
 
 export const modules = {

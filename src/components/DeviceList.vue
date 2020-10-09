@@ -73,8 +73,8 @@
 //import vSelect from "vue-select"
 import api from '@/api/api';
 import DeviceItem from '@/components/DeviceItem';
-import DeviceForm from '@/components/DeviceForm';
-import QrCode from '@/components/QrCode';
+// import DeviceForm from '@/components/DeviceForm';
+// import QrCode from '@/components/QrCode';
 
 import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
 import { mapGetters, mapActions } from 'vuex';
@@ -83,10 +83,6 @@ export default {
   name: 'DeviceList',
   components: {
     DeviceItem,
-    // eslint-disable-next-line
-    DeviceForm,
-    // eslint-disable-next-line
-    QrCode,
   },
   data: () => ({
     icons: {
@@ -95,33 +91,10 @@ export default {
       mdiDelete,
     },
     selectedDevice: '',
-    modals: {
-      DeviceForm: {
-        name: 'DeviceForm',
-        component: DeviceForm,
-        attrs: {},
-        props: {
-          class: 'DeviceForm',
-          height: 'auto',
-          width: '700px',
-          scrollable: true,
-        },
-      },
-      QrCode: {
-        name: 'QrCode',
-        component: QrCode,
-        attrs: {},
-        props: {
-          class: 'QrCode',
-          height: '99%',
-          width: '700px',
-        },
-      },
-    },
     modalName: 'DeviceForm',
   }),
   computed: {
-    ...mapGetters(['companies', 'devices', 'currentDevice']),
+    ...mapGetters(['companies', 'devices', 'currentDevice', 'modals']),
     currentModal() {
       return this.modals[this.modalName];
     },
@@ -154,20 +127,6 @@ export default {
         this.currentModal.props,
       );
     },
-
-    // MOVED TO STORE
-    // async getCompanies() {
-    //   const res = await api.getCompanies()
-    //   this.setCompanies(res.data)
-    // },
-    // async getDiveces() {
-    //   const res = await api.getDiveces();
-    //   this.setDevices(res.data);
-    // },
-    // async getDoctypes() {
-    //   const res = await api.getDoctypes();
-    //   this.setDoctypes(res.data);
-    // },
   },
   watch: {
     selectedDevice(val) {
