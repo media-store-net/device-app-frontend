@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <transition name="device-list">
     <v-container>
       <h1>Device List</h1>
       <p>Search Device or Customer...</p>
@@ -14,19 +14,28 @@
         >
           <template v-slot:no-options="{ search, searching }">
             <template v-if="searching">
-              No results found for <em>{{ search }}</em
-              >.
+              No results found for <em>{{ search }}</em>.
             </template>
-            <em style="opacity: 0.5;" v-else>Search Device or Customer...</em>
+            <em
+              style="opacity: 0.5;"
+              v-else
+            >Search Device or Customer...</em>
           </template>
         </search-select>
-        <v-btn color="success" @click="addNew">
+        <v-btn
+          color="success"
+          @click="addNew"
+        >
           Add New
         </v-btn>
       </div>
 
-      <v-col class="pa-0" v-if="selectedDevice">
+      <v-col
+        class="pa-0"
+        v-if="selectedDevice"
+      >
         <device-item
+          :key="currentDevice.id"
           :id="currentDevice.id"
           :companie="currentDevice.companie"
           :part="currentDevice.part"
@@ -39,7 +48,10 @@
         />
       </v-col>
 
-      <v-col class="pa-0" v-if="!selectedDevice">
+      <v-col
+        class="pa-0"
+        v-if="!selectedDevice"
+      >
         <device-item
           v-for="device in devices"
           :key="device.id"
@@ -55,7 +67,7 @@
         />
       </v-col>
     </v-container>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -204,5 +216,21 @@ h1 {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.device-list-enter-active {
+  animation: dev-list-animation 0.8s ease;
+}
+.device-list-leave-active {
+  animation: dev-list-animation 0.8s ease reverse;
+}
+
+@keyframes dev-list-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

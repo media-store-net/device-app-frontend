@@ -1,65 +1,99 @@
 <template>
-  <v-card class="mx-auto">
-    <v-list-item three-line class="list">
-      <v-list-item-content>
-        <v-list-item-title class="headline mb-4">
-          <strong>SN: </strong><span class="title-span">{{ sn }}</span>
-        </v-list-item-title>
-        <v-list-item-title class="headline mb-1">
-          <strong>Art.Nr: </strong
-          ><span class="title-span">{{ part.title }}</span>
-        </v-list-item-title>
-        <v-list-item-title class="headline mb-1">
-          <strong>Firma: </strong
-          ><span class="title-span">{{ companie.name }}</span>
-        </v-list-item-title>
-      </v-list-item-content>
+  <transition
+    name="device"
+    mode="out-in"
+  >
+    <v-card class="mx-auto">
+      <v-list-item
+        three-line
+        class="list"
+      >
+        <v-list-item-content>
+          <v-list-item-title class="headline mb-4">
+            <strong>SN: </strong><span class="title-span">{{ sn }}</span>
+          </v-list-item-title>
+          <v-list-item-title class="headline mb-1">
+            <strong>Art.Nr: </strong><span class="title-span">{{ part.title }}</span>
+          </v-list-item-title>
+          <v-list-item-title class="headline mb-1">
+            <strong>Firma: </strong><span class="title-span">{{ companie.name }}</span>
+          </v-list-item-title>
+        </v-list-item-content>
 
-      <v-card-actions>
-        <v-row>
-          <v-col cols="12">
-            <v-btn text color="primary" @click="$emit('gen-qr')">
-              <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
-            </v-btn>
+        <v-card-actions>
+          <v-row>
+            <v-col cols="12">
+              <v-btn
+                text
+                color="primary"
+                @click="$emit('gen-qr')"
+              >
+                <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
+              </v-btn>
 
-            <v-btn text color="success" @click="$emit('edit-device')">
-              <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
-            </v-btn>
+              <v-btn
+                text
+                color="success"
+                @click="$emit('edit-device')"
+              >
+                <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
+              </v-btn>
 
-            <v-btn text color="red" @click="$emit('delete-device')">
-              <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
-            </v-btn>
-          </v-col>
+              <v-btn
+                text
+                color="red"
+                @click="$emit('delete-device')"
+              >
+                <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
+              </v-btn>
+            </v-col>
 
-          <v-col cols="12" class="badge-container">
-            <div class="badge" @click="showFiles = !showFiles">
-              <v-icon color="success" class="mr-3" size="1.5em">
-                {{ icons.mdiFile }}
-              </v-icon>
-              <span>{{ files.length }}</span>
-            </div>
-          </v-col>
-        </v-row>
-      </v-card-actions>
-    </v-list-item>
-    <div v-if="showFiles">
-      <transition-group duration="2000">
-        <!-- Component -->
-        <v-card-actions v-for="file in files" :key="file.id">
-          <v-list-item-content class="item">
-            <v-list-item-title class="headline mb-1">
-              {{ file.id }}. {{ fileDoctype(file.doctype) }} |
-              {{ file.url.name }}
-            </v-list-item-title>
-          </v-list-item-content>
-          <v-btn color="primary">
-            Download
-          </v-btn>
+            <v-col
+              cols="12"
+              class="badge-container"
+            >
+              <div
+                class="badge"
+                @click="showFiles = !showFiles"
+              >
+                <v-icon
+                  color="success"
+                  class="mr-3"
+                  size="1.5em"
+                >
+                  {{ icons.mdiFile }}
+                </v-icon>
+                <span>{{ files.length }}</span>
+              </div>
+            </v-col>
+          </v-row>
         </v-card-actions>
-        <!-- /Component -->
-      </transition-group>
-    </div>
-  </v-card>
+      </v-list-item>
+      <div v-if="showFiles">
+        <transition-group
+          name="file-list"
+          tag="div"
+        >
+          <!-- Component -->
+          <v-card-actions
+            v-for="file in files"
+            :key="file.id"
+          >
+            <v-list-item-content class="item">
+              <v-list-item-title class="headline mb-1">
+                {{ file.id }}. {{ fileDoctype(file.doctype) }} |
+                {{ file.url.name }}
+              </v-list-item-title>
+            </v-list-item-content>
+            <v-btn color="primary">
+              Download
+            </v-btn>
+          </v-card-actions>
+          <!-- /Component -->
+        </transition-group>
+      </div>
+    </v-card>
+  </transition>
 </template>
 <script>
 import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
@@ -151,5 +185,43 @@ export default {
   background: transparent;
   color: #4caf50;
   cursor: pointer;
+}
+
+.device-enter-active {
+  animation: device-animation 0.8s ease-out;
+}
+.device-leave-active {
+  animation: device-animation 0.5s ease-in reverse;
+}
+
+.file-list-enter-active {
+  transition: list-animation 2s ease;
+}
+.file-list-leave-active {
+  transition: list-animation 2s ease reverse;
+}
+
+@keyframes device-animation {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes list-animation {
+  from {
+    opacity: 0;
+    transform: translateX(-50);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 </style>
