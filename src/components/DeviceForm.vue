@@ -93,7 +93,7 @@
 </template>
 
 <script>
-  import _ from "lodash"
+  import _ from 'lodash'
 
   import {
     mdiContentCopy,
@@ -101,12 +101,12 @@
     mdiFilePdf,
     mdiQrcode,
     mdiContentSave,
-  } from "@mdi/js"
+  } from '@mdi/js'
 
-  import api from "@/api/api"
+  import api from '@/api/api'
 
   export default {
-    name: "DeviceForm",
+    name: 'DeviceForm',
     components: {},
 
     data: () => ({
@@ -119,13 +119,13 @@
         mdiContentSave,
       },
       items: [
-        "User - Manual",
-        "Data - Sheet",
-        "CE - Konfirmität",
-        "Video",
-        "Sonstiges",
+        'User - Manual',
+        'Data - Sheet',
+        'CE - Konfirmität',
+        'Video',
+        'Sonstiges',
       ],
-      doctypes: "",
+      doctypes: '',
     }),
     methods: {
       onSearch(search, loading) {
@@ -153,7 +153,7 @@
         console.log($event.target.files)
       },
       GenQrCode() {
-        this.$modal.show("QrCode")
+        this.$modal.show('QrCode')
       },
     },
     mounted() {
