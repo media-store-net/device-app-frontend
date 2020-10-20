@@ -149,7 +149,6 @@
           mdiDelete,
           mdiFile,
         },
-        lf: '',
         showFiles: false,
       }
     },
