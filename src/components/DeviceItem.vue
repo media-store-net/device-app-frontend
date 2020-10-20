@@ -72,171 +72,108 @@
         </v-card-actions>
       </v-list-item>
       <div v-if="showFiles">
-        <transition-group
-          name="file-list"
-          tag="div"
-        >
-          <!-- Component -->
-          <v-card-actions
-            v-for="file in files"
-            :key="file.id"
-          >
-            <v-list-item-content class="item">
-              <v-list-item-title class="headline mb-1">
-                {{ file.id }}. {{ fileDoctype(file.doctype) }} |
-                {{ file.url.name }}
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-btn
-              color="primary"
-              @click="Download(file.url)"
-            >
-              Download
-            </v-btn>
-          </v-card-actions>
-          <!-- /Component -->
-        </transition-group>
+        <file-list :items="files" />
       </div>
     </v-card>
   </transition>
 </template>
 <script>
-  import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js'
+import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
 
-  import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
-  import api from '@/api/api'
+import api from '@/api/api';
+import FileList from '@/components/FileList.vue';
 
-  /**
-   * @description DeviceItem is a Component to reflect functionality of one device object
-   *
-   * @vue-prop {number} id - id of the item, this prop is required
-   * @vue-prop {object} companie - represent the companie / customer of the device,
-   * this prop is required
-   * @vue-prop {object} part - represent the doctype of the device,
-   * this prop is required
-   * @vue-prop {string} sn - represent the series number of the device,
-   * this prop is required
-   * @vue-prop {Array} [files=[]] - Files Array include all the Files of one component
-   * @vue-prop {Boolean} [isAdmin=false] - isAdmin prop allows to show or hide admin-specific buttons and actions
-   *
-   * @vue-data {object} [icons={mdiQrcode, mdiPencil, mdiDelete, mdiFile}] - used MDI Icons inside the
-   * component {@link https://materialdesignicons.com}
-   * @vue-data {Boolean} [showFiles=false] - this property allow to show and hide Files-Component
-   *
-   * @vue-computed {Array<object>} doctypes - the doctypes property will be loaded from the VUEX store via mapGetters() function
-   *
-   * @vue-event {string} gen-qr - Emit 'gen-qr' event if the generate qr button clicked
-   * @vue-event {string} edit-device - Emit 'edit-device' event if the edit-button clicked
-   * @vue-event {string} delete-device - Emit 'delete-device' event if the delete-button clicked
-   */
-  export default {
-    name: 'DeviceItem',
-    props: {
-      id: { type: Number, required: true },
-      companie: { type: Object, required: true },
-      part: { type: Object, required: true },
-      sn: { type: String, required: true },
-      files: { type: Array, required: false, default: () => [] },
-      isAdmin: { type: Boolean, default: false },
-    },
-    emits: ['gen-qr', 'edit-device', 'delete-device'],
-    data() {
-      return {
-        icons: {
-          mdiQrcode,
-          mdiPencil,
-          mdiDelete,
-          mdiFile,
-        },
-        lf: '',
-        showFiles: false,
-      }
-    },
-    computed: {
-      ...mapGetters(['doctypes']),
-    },
-    methods: {
-      /**
-       * @vue-method fileDoctype
-       * @description saerch a specific doctype from the doctypes array and return those title
-       * @param {number} id - id from the doctype object
-       * @returns {string}  - returns a title from the doctype
-       */
-      fileDoctype(id) {
-        let doctype = this.doctypes.find((doc) => doc.id === id)
-        return doctype && doctype.title ? doctype.title : ''
+/**
+ * @description DeviceItem is a Component to reflect functionality of one device object
+ *
+ * @vue-prop {number} id - id of the item, this prop is required
+ * @vue-prop {object} companie - represent the companie / customer of the device,
+ * this prop is required
+ * @vue-prop {object} part - represent the doctype of the device,
+ * this prop is required
+ * @vue-prop {string} sn - represent the series number of the device,
+ * this prop is required
+ * @vue-prop {Array} [files=[]] - Files Array include all the Files of one component
+ * @vue-prop {Boolean} [isAdmin=false] - isAdmin prop allows to show or hide admin-specific buttons and actions
+ *
+ * @vue-data {object} [icons={mdiQrcode, mdiPencil, mdiDelete, mdiFile}] - used MDI Icons inside the
+ * component {@link https://materialdesignicons.com}
+ * @vue-data {Boolean} [showFiles=false] - this property allow to show and hide Files-Component
+ *
+ * @vue-computed {Array<object>} doctypes - the doctypes property will be loaded from the VUEX store via mapGetters() function
+ *
+ * @vue-event {string} gen-qr - Emit 'gen-qr' event if the generate qr button clicked
+ * @vue-event {string} edit-device - Emit 'edit-device' event if the edit-button clicked
+ * @vue-event {string} delete-device - Emit 'delete-device' event if the delete-button clicked
+ */
+export default {
+  name: 'DeviceItem',
+  components: {
+    FileList,
+  },
+  props: {
+    id: { type: Number, required: true },
+    companie: { type: Object, required: true },
+    part: { type: Object, required: true },
+    sn: { type: String, required: true },
+    files: { type: Array, required: false, default: () => [] },
+    isAdmin: { type: Boolean, default: false },
+  },
+  emits: ['gen-qr', 'edit-device', 'delete-device'],
+  data() {
+    return {
+      icons: {
+        mdiQrcode,
+        mdiPencil,
+        mdiDelete,
+        mdiFile,
       },
-      Download(file) {
-        const link = document.createElement('a')
-        link.href = process.env.VUE_APP_API_URL + file.url
-        link.target = '_blank'
-        document.body.appendChild(link)
-        link.click()
-      },
-    },
-  }
+      lf: '',
+      showFiles: false,
+    };
+  },
+};
 </script>
 <style scoped>
-  .list {
-    align-items: end;
-    padding: 20px;
-  }
-  .item {
-    padding: 0;
-  }
-  .title-span {
-    position: absolute;
-    left: 2em;
-    margin-left: 4em;
-  }
-  .badge {
-    width: 35%;
-    text-align: center;
-    padding: 10px 20px;
-    border: 1px solid #4caf50;
-    border-radius: 10px;
-    margin: 0 auto;
-    background: transparent;
-    color: #4caf50;
-    cursor: pointer;
+.list {
+  align-items: end;
+  padding: 20px;
+}
+.title-span {
+  position: absolute;
+  left: 2em;
+  margin-left: 4em;
+}
+.badge {
+  width: 35%;
+  text-align: center;
+  padding: 10px 20px;
+  border: 1px solid #4caf50;
+  border-radius: 10px;
+  margin: 0 auto;
+  background: transparent;
+  color: #4caf50;
+  cursor: pointer;
+}
+
+.device-enter-active {
+  animation: device-animation 0.8s ease-out;
+}
+.device-leave-active {
+  animation: device-animation 0.5s ease-in reverse;
+}
+
+@keyframes device-animation {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
   }
 
-  .device-enter-active {
-    animation: device-animation 0.8s ease-out;
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
-  .device-leave-active {
-    animation: device-animation 0.5s ease-in reverse;
-  }
-
-  .file-list-enter-active {
-    transition: list-animation 2s ease;
-  }
-  .file-list-leave-active {
-    transition: list-animation 2s ease reverse;
-  }
-
-  @keyframes device-animation {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes list-animation {
-    from {
-      opacity: 0;
-      transform: translateX(-50);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
+}
 </style>
