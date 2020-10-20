@@ -72,30 +72,7 @@
         </v-card-actions>
       </v-list-item>
       <div v-if="showFiles">
-        <transition-group
-          name="file-list"
-          tag="div"
-        >
-          <!-- Component -->
-          <v-card-actions
-            v-for="file in files"
-            :key="file.id"
-          >
-            <v-list-item-content class="item">
-              <v-list-item-title class="headline mb-1">
-                {{ file.id }}. {{ fileDoctype(file.doctype) }} |
-                {{ file.url.name }}
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-btn
-              color="primary"
-              @click="Download(file.url)"
-            >
-              Download
-            </v-btn>
-          </v-card-actions>
-          <!-- /Component -->
-        </transition-group>
+        <file-list :items="files" />
       </div>
     </v-card>
   </transition>
@@ -103,10 +80,7 @@
 <script>
   import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js'
 
-  import { mapGetters } from 'vuex'
-
-  import api from '@/api/api'
-
+  import FileList from '@/components/FileList.vue'
   /**
    * @description DeviceItem is a Component to reflect functionality of one device object
    *
@@ -132,6 +106,9 @@
    */
   export default {
     name: 'DeviceItem',
+    components: {
+      FileList,
+    },
     props: {
       id: { type: Number, required: true },
       companie: { type: Object, required: true },
@@ -149,30 +126,9 @@
           mdiDelete,
           mdiFile,
         },
+        lf: '',
         showFiles: false,
       }
-    },
-    computed: {
-      ...mapGetters(['doctypes']),
-    },
-    methods: {
-      /**
-       * @vue-method fileDoctype
-       * @description saerch a specific doctype from the doctypes array and return those title
-       * @param {number} id - id from the doctype object
-       * @returns {string}  - returns a title from the doctype
-       */
-      fileDoctype(id) {
-        let doctype = this.doctypes.find((doc) => doc.id === id)
-        return doctype && doctype.title ? doctype.title : ''
-      },
-      Download(file) {
-        const link = document.createElement('a')
-        link.href = process.env.VUE_APP_API_URL + file.url
-        link.target = '_blank'
-        document.body.appendChild(link)
-        link.click()
-      },
     },
   }
 </script>
@@ -180,9 +136,6 @@
   .list {
     align-items: end;
     padding: 20px;
-  }
-  .item {
-    padding: 0;
   }
   .title-span {
     position: absolute;
@@ -200,39 +153,17 @@
     color: #4caf50;
     cursor: pointer;
   }
-
   .device-enter-active {
     animation: device-animation 0.8s ease-out;
   }
   .device-leave-active {
     animation: device-animation 0.5s ease-in reverse;
   }
-
-  .file-list-enter-active {
-    transition: list-animation 2s ease;
-  }
-  .file-list-leave-active {
-    transition: list-animation 2s ease reverse;
-  }
-
   @keyframes device-animation {
     from {
       opacity: 0;
       transform: translateX(-50px);
     }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes list-animation {
-    from {
-      opacity: 0;
-      transform: translateX(-50);
-    }
-
     to {
       opacity: 1;
       transform: translateX(0);

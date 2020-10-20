@@ -44,9 +44,6 @@
     components: {
       QrcodeVue,
     },
-    mounted() {
-      console.log(this.$emit.devi)
-    },
   }
 </script>
 
