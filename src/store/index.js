@@ -39,7 +39,7 @@ export const state = {
       attrs: {},
       props: {
         class: 'QrCode',
-        height: '30%',
+        height: '280px',
         width: '60%',
       },
     },
@@ -102,8 +102,10 @@ export const actions = {
     }
   },
   setParts: ({ commit }, payload) => commit('setParts', payload),
-  setCurrentDevice: ({ commit }, payload) =>
-    commit('setCurrentDevice', payload),
+  setCurrentDevice: (context, payload) => {
+    const device = context.getters.devices.find(dev => dev.id === payload);
+    context.commit('setCurrentDevice', device);
+  },
   setModals: ({ commit }, payload) => commit('setModals', payload),
 }
 
