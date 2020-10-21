@@ -16,6 +16,11 @@
 <script>
 import FileItem from '@/components/FileItem.vue';
 
+/**
+ * @description FileList - represent the Files Array Component in action cards
+ *
+ * @vue-prop {Array<FileItem>} [items=[]] - atterate through an array of FileItem-Objects
+ */
 export default {
   name: 'FileList',
   components: {

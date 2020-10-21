@@ -100,9 +100,9 @@ import FileList from '@/components/FileList.vue';
  *
  * @vue-computed {Array<object>} doctypes - the doctypes property will be loaded from the VUEX store via mapGetters() function
  *
- * @vue-event {string} gen-qr - Emit 'gen-qr' event if the generate qr button clicked
- * @vue-event {string} edit-device - Emit 'edit-device' event if the edit-button clicked
- * @vue-event {string} delete-device - Emit 'delete-device' event if the delete-button clicked
+ * @vue-event {number} gen-qr - Emit 'gen-qr' event with the given id of device if the generate qr button clicked
+ * @vue-event {number} edit-device - Emit 'edit-device' event with the given id of device if the edit-button clicked
+ * @vue-event {number} delete-device - Emit 'delete-device' with the given id of device event if the delete-button clicked
  */
 export default {
   name: 'DeviceItem',

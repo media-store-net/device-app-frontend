@@ -91,10 +91,10 @@ import DeviceItem from '@/components/DeviceItem';
  * @vue-computed {Array<object>} companies - this property will be loaded via mapGetters()-Method
  * from the VUEX state if the component is mounted
  *
- * @vue-computed {Array<object>} devices - this property will be loaded via mapGetters()-Method
+ * @vue-computed {Array<DeviceItem>} devices - this property will be loaded via mapGetters()-Method
  * from the VUEX state if the component is mounted
  *
- * @vue-computed {object} currentDevice - this property will be loaded via mapGetters()-Method
+ * @vue-computed {DeviceItem} currentDevice - this property will be loaded via mapGetters()-Method
  * from the VUEX state if the component is mounted
  *
  * @vue-computed {object} modals - this property will be loaded via mapGetters()-Method
@@ -132,33 +132,49 @@ export default {
     ]),
     /**
      * @vue-method addNew
-     * @description set the modalName to DeviceForm and show Modal Component
+     * @description set the currentDeviceID to null and the modalName to DeviceForm and show Modal Component
      * @returns {void}
      */
     addNew() {
+      this.setCurrentDevice(null);
       this.modalName = 'DeviceForm';
       this.showModal();
     },
     /**
      * @vue-method genQr
      * @description set the modalName to QrCode and show the Modal Component
-     * @returns {void}
+     * @param {Number} id the ID of the selected Device
+     * @returns {ModalComponent}
      */
     genQr(id) {
       this.setCurrentDevice(id);
       this.modalName = 'QrCode';
       this.showModal();
     },
-    editDevice() {
-      alert(1);
+    /**
+     * @vue-method editDevice
+     * @description set the currentDevice to given id, sets modalName to QrCode and show the Modal Component
+     * @param {Number} id the ID of the selected Device
+     * @returns {ModalComponent}
+     */
+    editDevice(id) {
+      this.setCurrentDevice(id);
+      this.modalName = 'DeviceForm';
+      this.showModal();
     },
-    deleteDevice() {
-      alert(1);
+    /**
+     * @vue-method deleteDevice
+     * @description remove device of given id from the devices array in the Store
+     * @param {Number} id the ID of the selected Device
+     * @returns {boolean}
+     */
+    deleteDevice(id) {
+      alert(id);
     },
     /**
      * @vue-method showModal
      * @description a helper function to open a new modal component
-     * @returns {void}
+     * @returns {ModalComponent}
      */
     showModal() {
       this.$modal.show(

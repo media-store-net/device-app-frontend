@@ -26,8 +26,10 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>&lt;template>
-  &lt;div>
+            <pre class="prettyprint source linenums"><code>&lt;!-- @format -->
+
+&lt;template>
+  &lt;transition name="device-list">
     &lt;v-container>
       &lt;h1>Device List&lt;/h1>
       &lt;p>Search Device or Customer...&lt;/p>
@@ -42,19 +44,28 @@
         >
           &lt;template v-slot:no-options="{ search, searching }">
             &lt;template v-if="searching">
-              No results found for &lt;em>{{ search }}&lt;/em
-              >.
+              No results found for &lt;em>{{ search }}&lt;/em>.
             &lt;/template>
-            &lt;em style="opacity: 0.5;" v-else>Search Device or Customer...&lt;/em>
+            &lt;em
+              style="opacity: 0.5;"
+              v-else
+            >Search Device or Customer...&lt;/em>
           &lt;/template>
         &lt;/search-select>
-        &lt;v-btn color="success" @click="addNew">
+        &lt;v-btn
+          color="success"
+          @click="addNew"
+        >
           Add New
         &lt;/v-btn>
       &lt;/div>
 
-      &lt;v-col class="pa-0" v-if="selectedDevice">
+      &lt;v-col
+        class="pa-0"
+        v-if="selectedDevice"
+      >
         &lt;device-item
+          :key="currentDevice.id"
           :id="currentDevice.id"
           :companie="currentDevice.companie"
           :part="currentDevice.part"
@@ -67,7 +78,10 @@
         />
       &lt;/v-col>
 
-      &lt;v-col class="pa-0" v-if="!selectedDevice">
+      &lt;v-col
+        class="pa-0"
+        v-if="!selectedDevice"
+      >
         &lt;device-item
           v-for="device in devices"
           :key="device.id"
@@ -83,7 +97,7 @@
         />
       &lt;/v-col>
     &lt;/v-container>
-  &lt;/div>
+  &lt;/transition>
 &lt;/template>
 
 &lt;script>
@@ -105,10 +119,10 @@ import DeviceItem from '@/components/DeviceItem';
  * @vue-computed {Array&lt;object>} companies - this property will be loaded via mapGetters()-Method
  * from the VUEX state if the component is mounted
  *
- * @vue-computed {Array&lt;object>} devices - this property will be loaded via mapGetters()-Method
+ * @vue-computed {Array&lt;DeviceItem>} devices - this property will be loaded via mapGetters()-Method
  * from the VUEX state if the component is mounted
  *
- * @vue-computed {object} currentDevice - this property will be loaded via mapGetters()-Method
+ * @vue-computed {DeviceItem} currentDevice - this property will be loaded via mapGetters()-Method
  * from the VUEX state if the component is mounted
  *
  * @vue-computed {object} modals - this property will be loaded via mapGetters()-Method
@@ -146,32 +160,49 @@ export default {
     ]),
     /**
      * @vue-method addNew
-     * @description set the modalName to DeviceForm and show Modal Component
+     * @description set the currentDeviceID to null and the modalName to DeviceForm and show Modal Component
      * @returns {void}
      */
     addNew() {
+      this.setCurrentDevice(null);
       this.modalName = 'DeviceForm';
       this.showModal();
     },
     /**
      * @vue-method genQr
      * @description set the modalName to QrCode and show the Modal Component
-     * @returns {void}
+     * @param {Number} id the ID of the selected Device
+     * @returns {ModalComponent}
      */
-    genQr() {
+    genQr(id) {
+      this.setCurrentDevice(id);
       this.modalName = 'QrCode';
       this.showModal();
     },
-    editDevice() {
-      alert(1);
+    /**
+     * @vue-method editDevice
+     * @description set the currentDevice to given id, sets modalName to QrCode and show the Modal Component
+     * @param {Number} id the ID of the selected Device
+     * @returns {ModalComponent}
+     */
+    editDevice(id) {
+      this.setCurrentDevice(id);
+      this.modalName = 'DeviceForm';
+      this.showModal();
     },
-    deleteDevice() {
-      alert(1);
+    /**
+     * @vue-method deleteDevice
+     * @description remove device of given id from the devices array in the Store
+     * @param {Number} id the ID of the selected Device
+     * @returns {boolean}
+     */
+    deleteDevice(id) {
+      alert(id);
     },
     /**
      * @vue-method showModal
      * @description a helper function to open a new modal component
-     * @returns {void}
+     * @returns {ModalComponent}
      */
     showModal() {
       this.$modal.show(
@@ -184,9 +215,9 @@ export default {
   watch: {
     selectedDevice(val) {
       this.setCurrentDevice(
-        this.devices.filter(
+        this.devices.find(
           (device) => device.sn === val || device.companie.name.includes(val),
-        )[0],
+        )['id'],
       );
     },
   },
@@ -233,6 +264,22 @@ h1 {
   align-items: center;
   height: 100%;
 }
+
+.device-list-enter-active {
+  animation: dev-list-animation 0.8s ease;
+}
+.device-list-leave-active {
+  animation: dev-list-animation 0.8s ease reverse;
+}
+
+@keyframes dev-list-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 &lt;/style>
 </code></pre>
         </article>
@@ -244,13 +291,13 @@ h1 {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#getters">getters</a></li><li><a href="global.html#modules">modules</a></li><li><a href="global.html#mutations">mutations</a></li><li><a href="global.html#state">state</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Oct 15 2020 12:00:10 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Oct 21 2020 21:42:11 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>

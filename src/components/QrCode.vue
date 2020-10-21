@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <div class="QrLabel">
     <div class="QrLabelDesc">
@@ -21,7 +19,7 @@
 
       <div>
         <qrcode-vue
-          :value="value"
+          :value="link"
           :size="size"
           level="H"
         />
@@ -34,6 +32,12 @@ import { mapGetters } from 'vuex';
 
 import QrcodeVue from 'qrcode.vue';
 
+/**
+ * @description QrCode - Component with the generated QrCode of one specific device
+ *
+ * @vue-data {Number} size - size in px for the QrCode-Snapshot
+ * @vue-computed {String} link - computed property, return full url with included urlParam 'sn'
+ */
 export default {
   name: 'QrCode',
   data() {
@@ -43,7 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters(['currentDevice']),
-    value() {
+    link() {
       return process.env.VUE_APP_QR_LINK + '?sn=' + this.currentDevice.sn;
     },
   },

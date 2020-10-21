@@ -25,6 +25,16 @@
 <script>
 import { mapGetters } from 'vuex';
 
+/**
+ * @description FileItem - represent one given File Object
+ *
+ * @vue-prop {Number} id - given ID of the current file, prop is required
+ * @vue-prop {Number} doctypeId - given ID of doctype, prop is required
+ * @vue-prop {Object} url - object with detail info of the given file, like mime, public url, name
+ *
+ * @vue-computed {String} filelink - computed property to return the full url of the current file, to make downloads available
+ *
+ */
 export default {
   name: 'FileItem',
   props: {

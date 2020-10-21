@@ -11,9 +11,6 @@ import QrCode from '@/components/QrCode'
 
 Vue.use(Vuex)
 
-/**
- * @description Initial VUEX state object
- */
 export const state = {
   authKey: '',
   companies: [],
@@ -46,9 +43,6 @@ export const state = {
   },
 }
 
-/**
- * @description VUEX Getters to load state parts inside App or Components
- */
 export const getters = {
   authKey: (state) => state.authKey,
   companies: (state) => state.companies,
@@ -59,9 +53,6 @@ export const getters = {
   modals: (state) => state.modals,
 }
 
-/**
- * @description VUEX Mutations to set the state parts
- */
 export const mutations = {
   setAuthKey: (state, payload) => (state.authKey = payload),
   setCompanies: (state, payload) => (state.companies = payload),
@@ -102,16 +93,21 @@ export const actions = {
     }
   },
   setParts: ({ commit }, payload) => commit('setParts', payload),
+  /**
+   * @method setCurrentDevice
+   * @description find the device with the given ID in the devices array and set the state.currentDevice
+   * @param {Number} payload given ID of one device object
+   */
   setCurrentDevice: (context, payload) => {
-    const device = context.getters.devices.find(dev => dev.id === payload);
+    let device = {};
+    if (payload !== null) {
+      device = context.getters.devices.find(dev => dev.id === payload);
+    }
     context.commit('setCurrentDevice', device);
   },
   setModals: ({ commit }, payload) => commit('setModals', payload),
 }
 
-/**
- * @description VUEX Modules
- */
 export const modules = {}
 
 /**

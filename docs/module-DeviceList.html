@@ -91,12 +91,12 @@ awailable modal objects will be found under Global -> state global#state</td>
 from the VUEX state if the component is mounted</td>
     </tr><tr>
         <td><code>devices</code></td>
-        <td>Array.&lt;object></td>
+        <td>Array.&lt;DeviceItem></td>
         <td>this property will be loaded via mapGetters()-Method
 from the VUEX state if the component is mounted</td>
     </tr><tr>
         <td><code>currentDevice</code></td>
-        <td>object</td>
+        <td>DeviceItem</td>
         <td>this property will be loaded via mapGetters()-Method
 from the VUEX state if the component is mounted</td>
     </tr><tr>
@@ -225,7 +225,7 @@ from the VUEX state if the component is mounted</td>
 
 
 <div class="description">
-    set the modalName to DeviceForm and show Modal Component
+    set the currentDeviceID to null and the modalName to DeviceForm and show Modal Component
 </div>
 
 
@@ -269,7 +269,7 @@ from the VUEX state if the component is mounted</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line124">line 124</a>
+        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line138">line 138</a>
     </li></ul></dd>
     
 
@@ -323,7 +323,317 @@ from the VUEX state if the component is mounted</td>
     
 
     
-    <h4 class="name" id="genQr"><span class="type-signature"></span>genQr<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="deleteDevice"><span class="type-signature"></span>deleteDevice<span class="signature">(id)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    remove device of given id from the devices array in the Store
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the ID of the selected Device</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line171">line 171</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="editDevice"><span class="type-signature"></span>editDevice<span class="signature">(id)</span><span class="type-signature"> &rarr; {ModalComponent}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    set the currentDevice to given id, sets modalName to QrCode and show the Modal Component
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the ID of the selected Device</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line160">line 160</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ModalComponent</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="genQr"><span class="type-signature"></span>genQr<span class="signature">(id)</span><span class="type-signature"> &rarr; {ModalComponent}</span></h4>
     
 
     
@@ -342,6 +652,55 @@ from the VUEX state if the component is mounted</td>
 
 
 
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the ID of the selected Device</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
 
 
 
@@ -375,7 +734,7 @@ from the VUEX state if the component is mounted</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line133">line 133</a>
+        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -411,7 +770,7 @@ from the VUEX state if the component is mounted</td>
     </dt>
     <dd>
         
-<span class="param-type">void</span>
+<span class="param-type">ModalComponent</span>
 
 
     </dd>
@@ -429,7 +788,7 @@ from the VUEX state if the component is mounted</td>
     
 
     
-    <h4 class="name" id="showModal"><span class="type-signature"></span>showModal<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="showModal"><span class="type-signature"></span>showModal<span class="signature">()</span><span class="type-signature"> &rarr; {ModalComponent}</span></h4>
     
 
     
@@ -481,7 +840,7 @@ from the VUEX state if the component is mounted</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line148">line 148</a>
+        <a href="components_DeviceList.vue.html">components/DeviceList.vue</a>, <a href="components_DeviceList.vue.html#line179">line 179</a>
     </li></ul></dd>
     
 
@@ -517,7 +876,7 @@ from the VUEX state if the component is mounted</td>
     </dt>
     <dd>
         
-<span class="param-type">void</span>
+<span class="param-type">ModalComponent</span>
 
 
     </dd>
@@ -545,13 +904,13 @@ from the VUEX state if the component is mounted</td>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#getters">getters</a></li><li><a href="global.html#modules">modules</a></li><li><a href="global.html#mutations">mutations</a></li><li><a href="global.html#state">state</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Oct 15 2020 12:00:10 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Oct 21 2020 21:42:11 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>
