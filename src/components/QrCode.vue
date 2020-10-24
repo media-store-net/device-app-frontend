@@ -13,7 +13,7 @@
           <p>SN: {{ currentDevice.sn }}</p>
         </div>
         <div class="item">
-          <p>Link: {{ value }}</p>
+          <p>Link: {{ link }}</p>
         </div>
       </div>
 
