@@ -15,4 +15,8 @@ export default {
     let params = new URLSearchParams()
     return API.get('/doctypes ', params)
   },
+  getParts() {
+    let params = new URLSearchParams()
+    return API.get('/parts', params)
+  }
 }

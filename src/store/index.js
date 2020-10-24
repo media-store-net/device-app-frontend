@@ -92,16 +92,29 @@ export const actions = {
       console.error(error)
     }
   },
-  setParts: ({ commit }, payload) => commit('setParts', payload),
+  setParts: async ({ commit }) => {
+    try {
+      const res = await api.getParts();
+      commit('setParts', res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  pushDevice: (context, payload) => {
+    context.state.devices.push(payload);
+  },
   /**
    * @method setCurrentDevice
    * @description find the device with the given ID in the devices array and set the state.currentDevice
-   * @param {Number} payload given ID of one device object
+   * @param {Object} payload given {deviceId: x} of one device object or completed device-object from devices array
    */
-  setCurrentDevice: (context, payload) => {
+  setCurrentDevice: (context, payload = {}) => {
     let device = {};
-    if (payload !== null) {
-      device = context.getters.devices.find(dev => dev.id === payload);
+    if (payload && payload['deviceId']) {
+      device = context.getters.devices.find(dev => dev.id === payload.deviceId);
+    }
+    else {
+      device = payload
     }
     context.commit('setCurrentDevice', device);
   },

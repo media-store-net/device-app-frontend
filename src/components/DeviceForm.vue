@@ -3,192 +3,259 @@
 <template>
   <v-container>
     <h1>POWASERT® Device Form</h1>
-    <p>Firma</p>
-    <search-select
-      label="name"
-      :filterable="false"
-      :options="options"
-      @search="onSearch"
-    />
-    <div>
-      <div class="addedSnPass">
+    <v-form @submit.prevent="saveData">
+      <v-col cols="12">
+        <p>Firma</p>
+        <search-select
+          label="firma"
+          :options="companieOptions"
+          v-model="formData.companie.name"
+        />
+      </v-col>
+      <v-col
+        cols="12"
+        class="addedSnPass"
+      >
         <v-text-field
           class="input"
           label="SN:"
+          v-model="formData.sn"
         />
         <v-text-field
           class="input"
           label="Pass:"
+          v-model="formData.pass"
         />
-        <v-btn text>
+        <v-btn
+          text
+          title="Passwort generieren"
+          @click="genPass"
+        >
+          <v-icon>{{ icons.mdiLockReset }}</v-icon>
+        </v-btn>
+        <v-btn
+          text
+          title="Kopieren"
+          @click="toClipboard(formData.pass)"
+        >
           <v-icon>{{ icons.mdiContentCopy }}</v-icon>
         </v-btn>
-        <v-btn text>
-          <v-icon>{{ icons.mdiOnepassword }}</v-icon>
+      </v-col>
+      <v-col cols="12">
+        <p>Art. Nr.</p>
+        <search-select
+          label="parts"
+          :options="partsOptions"
+          v-model="formData.part.title"
+        />
+      </v-col>
+      <v-col
+        cols="12"
+        class="downloadFile"
+      >
+        <span class="col-1">
+          <v-icon x-large>{{ icons.mdiFilePdf }}</v-icon>
+        </span>
+        <search-select
+          label="doctypes"
+          :options="doctypeOptions"
+          v-model="doctypeTitle"
+          class="col-8"
+        />
+
+        <v-btn
+          color="blue"
+          class="col-3"
+          @click="$refs.inputUpload.click()"
+        >
+          Select File
         </v-btn>
-      </div>
-      <p>Art. Nr.</p>
-      <search-select
-        label="name"
-        :filterable="false"
-        :options="options"
-        @search="onSearch"
-      />
-    </div>
-    <div class="downloadFile">
-      <span>
-        <v-icon x-large>{{ icons.mdiFilePdf }}</v-icon>
-      </span>
+        <input
+          v-show="false"
+          ref="inputUpload"
+          type="file"
+          @change="uploadFile"
+        >
+      </v-col>
 
-      <v-overflow-btn
-        class="my-2"
-        label="Dropdown DocType"
-        editable
-        :items="items"
-      />
+      <file-list :items="formData.files" />
 
-      <v-btn
-        color="primary"
-        @click="$refs.inputUpload.click()"
+      <v-btn-toggle
+        group
+        class="btnGroup mt-3"
       >
-        Select File
-      </v-btn>
-      <input
-        v-show="false"
-        ref="inputUpload"
-        type="file"
-        @change="uploadFile"
-      >
-    </div>
-
-    <v-card-actions
-      v-for="doc in doctypes"
-      :key="doc.id"
-    >
-      <v-list-item-content class="item">
-        <v-list-item-title class="headline mb-1">
-          <v-icon x-large>
-            {{ icons.mdiFilePdf }}
-          </v-icon>
-          {{ doc.title }}: {{ doc.desc }}
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-card-actions>
-
-    <v-btn-toggle
-      group
-      class="btnGroup"
-    >
-      <v-btn
-        class="btn"
-        @click="GenQrCode"
-      >
-        <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
-      </v-btn>
-      <v-btn class="btn">
-        <v-icon>{{ icons.mdiContentSave }} </v-icon> Save
-      </v-btn>
-    </v-btn-toggle>
+        <v-btn
+          class="btn"
+          @click="GenQrCode"
+          type="button"
+        >
+          <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
+        </v-btn>
+        <v-btn
+          class="btn"
+          type="submit"
+        >
+          <v-icon>{{ icons.mdiContentSave }} </v-icon> Save
+        </v-btn>
+      </v-btn-toggle>
+    </v-form>
   </v-container>
 </template>
 
 <script>
-  import _ from 'lodash'
+import { mapActions, mapGetters } from 'vuex';
+import {
+  mdiContentCopy,
+  mdiLockReset,
+  mdiFilePdf,
+  mdiQrcode,
+  mdiContentSave,
+} from '@mdi/js';
 
-  import {
-    mdiContentCopy,
-    mdiOnepassword,
-    mdiFilePdf,
-    mdiQrcode,
-    mdiContentSave,
-  } from '@mdi/js'
+import FileList from '@/components/FileList';
 
-  import api from '@/api/api'
-
-  export default {
-    name: 'DeviceForm',
-    components: {},
-
-    data: () => ({
-      options: [],
-      icons: {
-        mdiContentCopy,
-        mdiOnepassword,
-        mdiFilePdf,
-        mdiQrcode,
-        mdiContentSave,
-      },
-      items: [
-        'User - Manual',
-        'Data - Sheet',
-        'CE - Konfirmität',
-        'Video',
-        'Sonstiges',
-      ],
-      doctypes: '',
-    }),
-    methods: {
-      onSearch(search, loading) {
-        loading(true)
-        this.search(loading, search, this)
-      },
-      search: _.debounce((loading, search, vm) => {
-        fetch(`https://localhost:1337/companies${escape(search)}`).then(
-          (res) => {
-            res.json().then((json) => (vm.options = json.items))
-            loading(false)
-          }
-        )
-      }, 350),
-      getDoctypes() {
-        const self = this
-        api
-          .getDoctypes()
-          .then((res) => {
-            self.doctypes = res.data
-          })
-          .catch((error) => console.log(error))
-      },
-      uploadFile($event) {
-        console.log($event.target.files)
-      },
-      GenQrCode() {
-        this.$modal.show('QrCode')
-      },
+export default {
+  name: 'DeviceForm',
+  components: {
+    FileList,
+  },
+  data: () => ({
+    options: [],
+    icons: {
+      mdiContentCopy,
+      mdiLockReset,
+      mdiFilePdf,
+      mdiQrcode,
+      mdiContentSave,
     },
-    mounted() {
-      this.getDoctypes()
+    formData: {},
+    initFormData: {
+      sn: '',
+      companie: { name: '' },
+      part: { title: '' },
+      doctype: { title: '' },
+      files: [],
     },
-  }
+    doctypeTitle: '',
+  }),
+  computed: {
+    ...mapGetters(['companies', 'doctypes', 'parts', 'currentDevice']),
+    companieOptions() {
+      return this.companies.map((comp) => comp.name);
+    },
+    partsOptions() {
+      return this.parts.map((part) => part.title);
+    },
+    doctypeOptions() {
+      return this.doctypes.map((doc) => doc.title);
+    },
+  },
+  methods: {
+    ...mapActions(['setCurrentDevice', 'pushDevice']),
+
+    genPass() {
+      let hash = 0;
+
+      if (this.formData.sn === '') return hash;
+
+      for (let i = 0; i < this.formData.sn.length; i++) {
+        const char = this.formData.sn.charCodeAt(i);
+        hash = (hash << 3) - hash + char;
+        hash = hash & hash;
+      }
+
+      this.formData.pass = hash;
+    },
+    toClipboard(text) {
+      navigator.clipboard.writeText(text).then(
+        function() {
+          /* clipboard successfully set */
+          console.log('Copy was succefull');
+        },
+        function() {
+          /* clipboard write failed */
+          console.log('Copy failed');
+        },
+      );
+    },
+    uploadFile(event) {
+      const selectedFile = event.target.files[0];
+      let doctypeId = 0;
+      if (this.doctypeTitle) {
+        const doctype = this.doctypes.find(
+          (doc) => doc.title === this.doctypeTitle,
+        );
+        doctypeId = doctype.id;
+      }
+      const file = {
+        filename: selectedFile.name,
+        doctype: doctypeId,
+        url: {
+          id: NaN,
+          created_at: selectedFile.lastModified,
+          mime: selectedFile.type,
+          name: selectedFile.name,
+          size: selectedFile.size,
+        },
+      };
+      this.formData.files.push(file);
+    },
+    GenQrCode() {
+      this.$modal.show('QrCode');
+    },
+    saveData() {
+      // TODO Form Validation and Error Handling
+      this.pushDevice(this.formData);
+    },
+  },
+  watch: {
+    formData(val) {
+      this.setCurrentDevice(val);
+    },
+    doctypeTitle(val) {
+      console.log(val);
+    },
+  },
+  created() {
+    // only if the currentDevice not empty copy to formData
+    if (this.currentDevice && this.currentDevice.sn) {
+      this.formData = { ...this.currentDevice };
+    }
+    // otherwise copy the initFormData
+    else {
+      this.formData = { ...this.initFormData, pass: '' };
+    }
+  },
+};
 </script>
 
 <style scoped>
-  h1 {
-    display: flex;
-    justify-content: center;
-  }
-  .addedSnPass {
-    display: flex;
-    align-items: center;
-  }
-  .v-application p {
-    margin-bottom: 0;
-  }
-  .input {
-    margin: 10px;
-  }
-  .downloadFile {
-    display: flex;
-    align-items: baseline;
-  }
-  .my-2 {
-    margin: 10px;
-  }
-  .btnGroup {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .btn {
-    margin: 10px;
-  }
+h1 {
+  display: flex;
+  justify-content: center;
+}
+.addedSnPass {
+  display: flex;
+  align-items: center;
+}
+.v-application p {
+  margin-bottom: 0;
+}
+.input {
+  margin: 10px;
+}
+.downloadFile {
+  display: flex;
+  align-items: baseline;
+}
+.my-2 {
+  margin: 10px;
+}
+.btnGroup {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn {
+  margin: 10px;
+}
 </style>

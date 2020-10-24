@@ -129,6 +129,7 @@ export default {
       'setDevices',
       'setCurrentDevice',
       'setDoctypes',
+      'setParts',
     ]),
     /**
      * @vue-method addNew
@@ -147,7 +148,7 @@ export default {
      * @returns {ModalComponent}
      */
     genQr(id) {
-      this.setCurrentDevice(id);
+      this.setCurrentDevice({ deviceId: id });
       this.modalName = 'QrCode';
       this.showModal();
     },
@@ -158,7 +159,7 @@ export default {
      * @returns {ModalComponent}
      */
     editDevice(id) {
-      this.setCurrentDevice(id);
+      this.setCurrentDevice({ deviceId: id });
       this.modalName = 'DeviceForm';
       this.showModal();
     },
@@ -186,17 +187,17 @@ export default {
   },
   watch: {
     selectedDevice(val) {
-      this.setCurrentDevice(
-        this.devices.find(
-          (device) => device.sn === val || device.companie.name.includes(val),
-        )['id'],
-      );
+      const devId = this.devices.find(
+        (device) => device.sn === val || device.companie.name.includes(val),
+      )['id'];
+      this.setCurrentDevice({ deviceId: devId });
     },
   },
   mounted() {
     this.setCompanies();
     this.setDevices();
     this.setDoctypes();
+    this.setParts();
   },
 };
 </script>
