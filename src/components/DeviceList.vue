@@ -161,7 +161,7 @@ export default {
     editDevice(id) {
       this.setCurrentDevice({ deviceId: id });
       this.modalName = 'DeviceForm';
-      this.showModal();
+      this.showModal('update');
     },
     /**
      * @vue-method deleteDevice
@@ -177,10 +177,10 @@ export default {
      * @description a helper function to open a new modal component
      * @returns {ModalComponent}
      */
-    showModal() {
+    showModal(mode = 'new') {
       this.$modal.show(
         this.currentModal.component,
-        this.currentModal.attrs,
+        { ...this.currentModal.attrs, mode: mode },
         this.currentModal.props,
       );
     },

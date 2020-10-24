@@ -94,8 +94,16 @@
         <v-btn
           class="btn"
           type="submit"
+          v-if="mode === 'new'"
         >
           <v-icon>{{ icons.mdiContentSave }} </v-icon> Save
+        </v-btn>
+        <v-btn
+          class="btn"
+          type="submit"
+          v-if="mode === 'update'"
+        >
+          <v-icon>{{ icons.mdiContentSave }} </v-icon> Update
         </v-btn>
       </v-btn-toggle>
     </v-form>
@@ -118,6 +126,12 @@ export default {
   name: 'DeviceForm',
   components: {
     FileList,
+  },
+  props: {
+    mode: {
+      type: String,
+      default: 'new',
+    },
   },
   data: () => ({
     options: [],
@@ -178,8 +192,8 @@ export default {
         },
       );
     },
-    uploadFile(event) {
-      const selectedFile = event.target.files[0];
+    async uploadFile(event) {
+      const selectedFile = await event.target.files[0];
       let doctypeId = 0;
       if (this.doctypeTitle) {
         const doctype = this.doctypes.find(
@@ -188,10 +202,10 @@ export default {
         doctypeId = doctype.id;
       }
       const file = {
+        id: new Date().getTime(),
         filename: selectedFile.name,
         doctype: doctypeId,
         url: {
-          id: NaN,
           created_at: selectedFile.lastModified,
           mime: selectedFile.type,
           name: selectedFile.name,
@@ -203,9 +217,20 @@ export default {
     GenQrCode() {
       this.$modal.show('QrCode');
     },
+    closeModal() {
+      this.$modal.hideAll();
+    },
     saveData() {
       // TODO Form Validation and Error Handling
-      this.pushDevice(this.formData);
+      if (this.mode === 'new') {
+        // ID only temporär
+        this.formData.id = new Date().getTime();
+        this.pushDevice(this.formData);
+      } else if (this.mode === 'update') {
+        console.log('Update fires');
+      }
+
+      this.closeModal();
     },
   },
   watch: {
@@ -213,7 +238,7 @@ export default {
       this.setCurrentDevice(val);
     },
     doctypeTitle(val) {
-      console.log(val);
+      return val;
     },
   },
   created() {
