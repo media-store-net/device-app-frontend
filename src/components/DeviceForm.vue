@@ -210,6 +210,7 @@ export default {
           mime: selectedFile.type,
           name: selectedFile.name,
           size: selectedFile.size,
+          url: '/' + selectedFile.name,
         },
       };
       this.formData.files.push(file);
