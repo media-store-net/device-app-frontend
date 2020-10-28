@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import DeviceList from './components/DeviceList';
+import DeviceList from './components/DeviceList'
 
 export default {
   name: 'App',
@@ -17,5 +17,12 @@ export default {
   components: {
     DeviceList,
   },
-};
+}
 </script>
+
+<style>
+.container,
+.QrLabel {
+  font-family: 'Roboto';
+}
+</style>
