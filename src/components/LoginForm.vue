@@ -21,12 +21,24 @@
             required
           />
         </v-col>
-        <v-col cols="6" class="offset-3">
-          <v-btn type="submit" color="primary" outlined block>
+        <v-col
+          cols="6"
+          class="offset-3"
+        >
+          <v-btn
+            type="submit"
+            color="primary"
+            outlined
+            block
+          >
             Login
           </v-btn>
         </v-col>
-        <v-col cols="6" offset="3" class="text-center">
+        <v-col
+          cols="6"
+          offset="3"
+          class="text-center"
+        >
           Passwort vergessen?
           <span @click="passIsVisible != passIsVisible">Click</span>
         </v-col>

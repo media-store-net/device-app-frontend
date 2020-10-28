@@ -1,10 +1,16 @@
 <template>
   <v-container class="d-flex justify-center align-center">
     <v-row>
-      <v-col cols="12" class="text-center mt-6 mb-10">
+      <v-col
+        cols="12"
+        class="text-center mt-6 mb-10"
+      >
         <h1>Powasert® Kunden Login</h1>
       </v-col>
-      <login-form mode="customer" @submit-form="onSubmitForm" />
+      <login-form
+        mode="customer"
+        @submit-form="onSubmitForm"
+      />
     </v-row>
   </v-container>
 </template>
