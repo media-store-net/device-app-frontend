@@ -62,7 +62,7 @@
         />
 
         <v-btn
-          color="blue"
+          :style="{ backgroundColor: '#4baf4f', color: 'white' }"
           class="col-3"
           @click="$refs.inputUpload.click()"
         >

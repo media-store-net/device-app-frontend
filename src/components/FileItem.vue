@@ -14,7 +14,13 @@
         :href="filelink"
         target="_blank"
       >
-        <v-btn color="primary">
+        <v-btn
+          :style="{
+            backgroundColor: '#1976d2',
+            color: 'white',
+            textDecoration: 'underline',
+          }"
+        >
           Download
         </v-btn>
       </a>
@@ -23,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 /**
  * @description FileItem - represent one given File Object
@@ -54,7 +60,7 @@ export default {
   computed: {
     ...mapGetters(['doctypes']),
     filelink() {
-      return process.env.VUE_APP_API_URL + this.url.url;
+      return process.env.VUE_APP_API_URL + this.url.url
     },
   },
   methods: {
@@ -65,11 +71,11 @@ export default {
      * @returns {string}  - returns a title from the doctype
      */
     fileDoctype(id) {
-      let doctype = this.doctypes.find((doc) => doc.id === id);
-      return doctype && doctype.title ? doctype.title : '';
+      let doctype = this.doctypes.find((doc) => doc.id === id)
+      return doctype && doctype.title ? doctype.title : ''
     },
   },
-};
+}
 </script>
 
 <style scoped>
