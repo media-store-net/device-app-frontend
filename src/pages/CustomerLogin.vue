@@ -28,6 +28,7 @@ export default {
   methods: {
     onSubmitForm() {
       console.log('onSubmitForm fired...');
+      this.$router.push('devices');
     },
   },
 };
