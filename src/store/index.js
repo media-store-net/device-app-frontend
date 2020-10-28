@@ -98,6 +98,18 @@ export const actions = {
       console.error(error)
     }
   },
+  loginCustomer: async (context, payload) => {
+    try {
+      const res = await api.deviceLogin({ sn: payload.sn, pass: payload.pass })
+      console.log(res)
+      if (res.statusText !== 'OK') {
+        console.log('Something went wrong')
+      }
+      context.commit('setCurrentDevice', res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  },
   pushDevice: (context, payload) => {
     context.state.devices.push(payload)
   },

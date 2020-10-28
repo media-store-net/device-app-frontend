@@ -18,5 +18,8 @@ export default {
   getParts() {
     let params = new URLSearchParams()
     return API.get('/parts', params)
+  },
+  deviceLogin(params) {
+    return API.post('/devices/customer-login', params)
   }
 }
