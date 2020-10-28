@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <v-container>
     <h1>POWASERT® Device Form</h1>
@@ -111,16 +109,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 import {
   mdiContentCopy,
   mdiLockReset,
   mdiFilePdf,
   mdiQrcode,
   mdiContentSave,
-} from '@mdi/js';
+} from '@mdi/js'
 
-import FileList from '@/components/FileList';
+import FileList from '@/components/FileList'
 
 export default {
   name: 'DeviceForm',
@@ -155,51 +153,51 @@ export default {
   computed: {
     ...mapGetters(['companies', 'doctypes', 'parts', 'currentDevice']),
     companieOptions() {
-      return this.companies.map((comp) => comp.name);
+      return this.companies.map((comp) => comp.name)
     },
     partsOptions() {
-      return this.parts.map((part) => part.title);
+      return this.parts.map((part) => part.title)
     },
     doctypeOptions() {
-      return this.doctypes.map((doc) => doc.title);
+      return this.doctypes.map((doc) => doc.title)
     },
   },
   methods: {
     ...mapActions(['setCurrentDevice', 'pushDevice']),
 
     genPass() {
-      let hash = 0;
+      let hash = 0
 
-      if (this.formData.sn === '') return hash;
+      if (this.formData.sn === '') return hash
 
       for (let i = 0; i < this.formData.sn.length; i++) {
-        const char = this.formData.sn.charCodeAt(i);
-        hash = (hash << 3) - hash + char;
-        hash = hash & hash;
+        const char = this.formData.sn.charCodeAt(i)
+        hash = (hash << 3) - hash + char
+        hash = hash & hash
       }
 
-      this.formData.pass = hash;
+      this.formData.pass = hash
     },
     toClipboard(text) {
       navigator.clipboard.writeText(text).then(
         function() {
           /* clipboard successfully set */
-          console.log('Copy was succefull');
+          console.log('Copy was succefull')
         },
         function() {
           /* clipboard write failed */
-          console.log('Copy failed');
-        },
-      );
+          console.log('Copy failed')
+        }
+      )
     },
     async uploadFile(event) {
-      const selectedFile = await event.target.files[0];
-      let doctypeId = 0;
+      const selectedFile = await event.target.files[0]
+      let doctypeId = 0
       if (this.doctypeTitle) {
         const doctype = this.doctypes.find(
-          (doc) => doc.title === this.doctypeTitle,
-        );
-        doctypeId = doctype.id;
+          (doc) => doc.title === this.doctypeTitle
+        )
+        doctypeId = doctype.id
       }
       const file = {
         id: new Date().getTime(),
@@ -211,47 +209,47 @@ export default {
           name: selectedFile.name,
           size: selectedFile.size,
         },
-      };
-      this.formData.files.push(file);
+      }
+      this.formData.files.push(file)
     },
     GenQrCode() {
-      this.$modal.show('QrCode');
+      this.$modal.show('QrCode')
     },
     closeModal() {
-      this.$modal.hideAll();
+      this.$modal.hideAll()
     },
     saveData() {
       // TODO Form Validation and Error Handling
       if (this.mode === 'new') {
         // ID only temporär
-        this.formData.id = new Date().getTime();
-        this.pushDevice(this.formData);
+        this.formData.id = new Date().getTime()
+        this.pushDevice(this.formData)
       } else if (this.mode === 'update') {
-        console.log('Update fires');
+        console.log('Update fires')
       }
 
-      this.closeModal();
+      this.closeModal()
     },
   },
   watch: {
     formData(val) {
-      this.setCurrentDevice(val);
+      this.setCurrentDevice(val)
     },
     doctypeTitle(val) {
-      return val;
+      return val
     },
   },
   created() {
     // only if the currentDevice not empty copy to formData
     if (this.currentDevice && this.currentDevice.sn) {
-      this.formData = { ...this.currentDevice };
+      this.formData = { ...this.currentDevice }
     }
     // otherwise copy the initFormData
     else {
-      this.formData = { ...this.initFormData, pass: '' };
+      this.formData = { ...this.initFormData, pass: '' }
     }
   },
-};
+}
 </script>
 
 <style scoped>
