@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import CustomerLogin from '../pages/CustomerLogin'
 import AdminLogin from '../pages/AdminLogin'
 import Devices from '../pages/Devices'
+import CustomerView from '../pages/CustomerView'
 
 Vue.use(VueRouter)
 
@@ -27,9 +28,9 @@ const routes = [
     component: Devices,
   },
   {
-    path: '/cutomerDevice',
-    name: 'customer-device',
-    //component: AdminLogin,
+    path: '/customer-view',
+    name: 'customer-view',
+    component: CustomerView,
   },
   // {
   //   path: '/about',

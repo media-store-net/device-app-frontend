@@ -20,54 +20,59 @@
           </v-list-item-title>
         </v-list-item-content>
 
-        <v-card-actions>
-          <v-row>
-            <v-col cols="12">
-              <v-btn
-                text
-                color="primary"
-                @click="$emit('gen-qr', id)"
-              >
-                <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
-              </v-btn>
-
-              <v-btn
-                text
-                color="success"
-                @click="$emit('edit-device', id)"
-              >
-                <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
-              </v-btn>
-
-              <v-btn
-                text
-                color="red"
-                @click="$emit('delete-device', id)"
-              >
-                <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
-              </v-btn>
-            </v-col>
-
-            <v-col
-              cols="12"
-              class="badge-container"
-            >
-              <div
-                class="badge"
-                @click="showFiles = !showFiles"
-              >
-                <v-icon
-                  color="success"
-                  class="mr-3"
-                  size="1.5em"
+        <div class="">
+          <v-card-actions v-if="isAdmin">
+            <v-row>
+              <v-col cols="12">
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$emit('gen-qr', id)"
                 >
-                  {{ icons.mdiFile }}
-                </v-icon>
-                <span>{{ files.length }}</span>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card-actions>
+                  <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
+                </v-btn>
+
+                <v-btn
+                  text
+                  color="success"
+                  @click="$emit('edit-device', id)"
+                >
+                  <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
+                </v-btn>
+
+                <v-btn
+                  text
+                  color="red"
+                  @click="$emit('delete-device', id)"
+                >
+                  <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+          <v-card-actions>
+            <v-row>
+              <v-col
+                cols="12"
+                class="badge-container"
+              >
+                <div
+                  class="badge"
+                  @click="showFiles = !showFiles"
+                >
+                  <v-icon
+                    color="success"
+                    class="mr-3"
+                    size="1.5em"
+                  >
+                    {{ icons.mdiFile }}
+                  </v-icon>
+                  <span>{{ files.length }}</span>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </div>
       </v-list-item>
       <div v-if="showFiles">
         <file-list :items="files" />
@@ -76,9 +81,9 @@
   </transition>
 </template>
 <script>
-import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js'
+import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
 
-import FileList from '@/components/FileList.vue'
+import FileList from '@/components/FileList.vue';
 /**
  * @description DeviceItem is a Component to reflect functionality of one device object
  *
@@ -125,9 +130,9 @@ export default {
         mdiFile,
       },
       showFiles: false,
-    }
+    };
   },
-}
+};
 </script>
 <style scoped>
 .list {
@@ -140,7 +145,6 @@ export default {
   margin-left: 4em;
 }
 .badge {
-  width: 35%;
   text-align: center;
   padding: 10px 20px;
   border: 1px solid #4caf50;

@@ -18,7 +18,11 @@
       </div>
 
       <div>
-        <qrcode-vue :value="link" :size="size" level="H" />
+        <qrcode-vue
+          :value="link"
+          :size="size"
+          level="H"
+        />
       </div>
     </div>
   </div>

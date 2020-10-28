@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import LoginForm from '../components/LoginForm';
 
 export default {
@@ -36,9 +38,14 @@ export default {
     },
   },
   methods: {
-    onSubmitForm() {
-      console.log('onSubmitForm fired...');
-      this.$router.push('devices');
+    ...mapActions(['loginCustomer']),
+    async onSubmitForm(eventdata) {
+      // console.log(JSON.stringify(eventdata));
+      await this.loginCustomer({
+        sn: eventdata.username,
+        pass: eventdata.pass,
+      });
+      this.$router.push('customer-view');
     },
   },
 };
