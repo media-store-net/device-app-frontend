@@ -22,3 +22,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.container,
+.QrLabel {
+  font-family: 'Roboto';
+}
+</style>

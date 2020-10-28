@@ -4,16 +4,16 @@
       <div>
         <h1>POWASERT®</h1>
         <div class="item">
-          <p>Firma: {{ currentDevice.companie.name }}</p>
+          <p><strong>Firma:</strong> {{ currentDevice.companie.name }}</p>
         </div>
         <div class="item">
-          <p>Art.Nr: {{ currentDevice.part.title }}</p>
+          <p><strong>Art.Nr:</strong> {{ currentDevice.part.title }}</p>
         </div>
         <div class="item">
-          <p>SN: {{ currentDevice.sn }}</p>
+          <p><strong>SN:</strong> {{ currentDevice.sn }}</p>
         </div>
         <div class="item">
-          <p>Link: {{ link }}</p>
+          <p><strong>Link:</strong> {{ link }}</p>
         </div>
       </div>
 
@@ -28,9 +28,9 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
-import QrcodeVue from 'qrcode.vue';
+import QrcodeVue from 'qrcode.vue'
 
 /**
  * @description QrCode - Component with the generated QrCode of one specific device
@@ -43,18 +43,18 @@ export default {
   data() {
     return {
       size: 155,
-    };
+    }
   },
   computed: {
     ...mapGetters(['currentDevice']),
     link() {
-      return process.env.VUE_APP_QR_LINK + '?sn=' + this.currentDevice.sn;
+      return process.env.VUE_APP_QR_LINK + '?sn=' + this.currentDevice.sn
     },
   },
   components: {
     QrcodeVue,
   },
-};
+}
 </script>
 
 <style scoped>

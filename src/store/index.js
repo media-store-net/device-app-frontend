@@ -1,5 +1,3 @@
-/** @format */
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -94,14 +92,14 @@ export const actions = {
   },
   setParts: async ({ commit }) => {
     try {
-      const res = await api.getParts();
+      const res = await api.getParts()
       commit('setParts', res.data)
     } catch (error) {
       console.error(error)
     }
   },
   pushDevice: (context, payload) => {
-    context.state.devices.push(payload);
+    context.state.devices.push(payload)
   },
   /**
    * @method setCurrentDevice
@@ -109,14 +107,15 @@ export const actions = {
    * @param {Object} payload given {deviceId: x} of one device object or completed device-object from devices array
    */
   setCurrentDevice: (context, payload = {}) => {
-    let device = {};
+    let device = {}
     if (payload && payload['deviceId']) {
-      device = context.getters.devices.find(dev => dev.id === payload.deviceId);
-    }
-    else {
+      device = context.getters.devices.find(
+        (dev) => dev.id === payload.deviceId
+      )
+    } else {
       device = payload
     }
-    context.commit('setCurrentDevice', device);
+    context.commit('setCurrentDevice', device)
   },
   setModals: ({ commit }, payload) => commit('setModals', payload),
 }

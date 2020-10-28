@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <transition
     name="device"
@@ -78,9 +76,9 @@
   </transition>
 </template>
 <script>
-import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
+import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js'
 
-import FileList from '@/components/FileList.vue';
+import FileList from '@/components/FileList.vue'
 /**
  * @description DeviceItem is a Component to reflect functionality of one device object
  *
@@ -127,9 +125,9 @@ export default {
         mdiFile,
       },
       showFiles: false,
-    };
+    }
   },
-};
+}
 </script>
 <style scoped>
 .list {
