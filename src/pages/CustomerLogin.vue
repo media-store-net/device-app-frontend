@@ -9,6 +9,7 @@
       </v-col>
       <login-form
         mode="customer"
+        :sn="snQuery"
         @submit-form="onSubmitForm"
       />
     </v-row>
@@ -24,6 +25,15 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    snQuery() {
+      if (this.$route.query.sn) {
+        return this.$route.query.sn;
+      }
+
+      return '';
+    },
   },
   methods: {
     onSubmitForm() {

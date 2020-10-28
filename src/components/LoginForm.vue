@@ -61,6 +61,10 @@ export default {
       type: String,
       default: 'customer',
     },
+    sn: {
+      type: String,
+      default: null,
+    },
   },
   emits: ['submit-form', 'forgot-pass'],
   data() {
@@ -70,7 +74,7 @@ export default {
         user: mdiAccount,
         device: mdiLaptopWindows,
       },
-      username: '',
+      username: this.sn,
       pass: '',
       passIsVisible: false,
     };

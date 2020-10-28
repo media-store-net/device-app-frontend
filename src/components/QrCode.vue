@@ -18,19 +18,15 @@
       </div>
 
       <div>
-        <qrcode-vue
-          :value="link"
-          :size="size"
-          level="H"
-        />
+        <qrcode-vue :value="link" :size="size" level="H" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
-import QrcodeVue from 'qrcode.vue'
+import QrcodeVue from 'qrcode.vue';
 
 /**
  * @description QrCode - Component with the generated QrCode of one specific device
@@ -43,18 +39,22 @@ export default {
   data() {
     return {
       size: 155,
-    }
+    };
   },
   computed: {
     ...mapGetters(['currentDevice']),
     link() {
-      return process.env.VUE_APP_QR_LINK + '?sn=' + this.currentDevice.sn
+      return (
+        process.env.VUE_APP_QR_LINK +
+        '/#/customer-login?sn=' +
+        this.currentDevice.sn
+      );
     },
   },
   components: {
     QrcodeVue,
   },
-}
+};
 </script>
 
 <style scoped>
