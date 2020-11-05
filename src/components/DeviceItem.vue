@@ -26,7 +26,7 @@
               <v-col cols="12">
                 <v-btn
                   text
-                  color="primary"
+                  color="accent"
                   @click="$emit('gen-qr', id)"
                 >
                   <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
@@ -34,7 +34,7 @@
 
                 <v-btn
                   text
-                  color="success"
+                  color="primary"
                   @click="$emit('edit-device', id)"
                 >
                   <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
@@ -42,7 +42,7 @@
 
                 <v-btn
                   text
-                  color="red"
+                  color="error darken-1"
                   @click="$emit('delete-device', id)"
                 >
                   <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
@@ -57,11 +57,11 @@
                 class="badge-container"
               >
                 <div
-                  class="badge"
+                  class="accent--text badge"
                   @click="showFiles = !showFiles"
                 >
                   <v-icon
-                    color="success"
+                    color="accent"
                     class="mr-3"
                     size="1.5em"
                   >
@@ -134,7 +134,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .list {
   align-items: end;
   padding: 20px;
@@ -147,11 +147,11 @@ export default {
 .badge {
   text-align: center;
   padding: 10px 20px;
-  border: 1px solid #4caf50;
+  border: 1px solid;
+  border-color: var(--v-accent-base);
   border-radius: 10px;
   margin: 0 auto;
   background: transparent;
-  color: #4caf50;
   cursor: pointer;
 }
 .device-enter-active {

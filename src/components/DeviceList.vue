@@ -22,7 +22,8 @@
           </template>
         </search-select>
         <v-btn
-          color="success"
+          color="primary"
+          outlined
           @click="addNew"
         >
           Add New

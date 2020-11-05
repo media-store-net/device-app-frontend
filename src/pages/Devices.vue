@@ -5,7 +5,9 @@
         cols="12"
         class="text-center"
       >
-        <h1>Device List</h1>
+        <h1 class="accent--text">
+          Device List
+        </h1>
       </v-col>
       <device-list />
     </v-row>
