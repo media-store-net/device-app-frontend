@@ -71,11 +71,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js';
+import { mapGetters, mapActions } from 'vuex'
+import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js'
 
-import api from '@/api/api';
-import DeviceItem from '@/components/DeviceItem';
+import api from '@/api/api'
+import DeviceItem from '@/components/DeviceItem'
 
 /**
  * @description DeviceList - is the initial component used in the App.vue
@@ -118,7 +118,7 @@ export default {
   computed: {
     ...mapGetters(['companies', 'devices', 'currentDevice', 'modals']),
     currentModal() {
-      return this.modals[this.modalName];
+      return this.modals[this.modalName]
     },
   },
   methods: {
@@ -135,9 +135,9 @@ export default {
      * @returns {void}
      */
     addNew() {
-      this.setCurrentDevice(null);
-      this.modalName = 'DeviceForm';
-      this.showModal();
+      this.setCurrentDevice(null)
+      this.modalName = 'DeviceForm'
+      this.showModal()
     },
     /**
      * @vue-method genQr
@@ -146,9 +146,9 @@ export default {
      * @returns {ModalComponent}
      */
     genQr(id) {
-      this.setCurrentDevice({ deviceId: id });
-      this.modalName = 'QrCode';
-      this.showModal();
+      this.setCurrentDevice({ deviceId: id })
+      this.modalName = 'QrCode'
+      this.showModal()
     },
     /**
      * @vue-method editDevice
@@ -157,9 +157,9 @@ export default {
      * @returns {ModalComponent}
      */
     editDevice(id) {
-      this.setCurrentDevice({ deviceId: id });
-      this.modalName = 'DeviceForm';
-      this.showModal('update');
+      this.setCurrentDevice({ deviceId: id })
+      this.modalName = 'DeviceForm'
+      this.showModal('update')
     },
     /**
      * @vue-method deleteDevice
@@ -168,7 +168,7 @@ export default {
      * @returns {boolean}
      */
     deleteDevice(id) {
-      alert(id);
+      alert(id)
     },
     /**
      * @vue-method showModal
@@ -179,25 +179,25 @@ export default {
       this.$modal.show(
         this.currentModal.component,
         { ...this.currentModal.attrs, mode: mode },
-        this.currentModal.props,
-      );
+        this.currentModal.props
+      )
     },
   },
   watch: {
     selectedDevice(val) {
       const devId = this.devices.find(
-        (device) => device.sn === val || device.companie.name.includes(val),
-      )['id'];
-      this.setCurrentDevice({ deviceId: devId });
+        (device) => device.sn === val || device.companie.name.includes(val)
+      )['id']
+      this.setCurrentDevice({ deviceId: devId })
     },
   },
   mounted() {
-    this.setCompanies();
-    this.setDevices();
-    this.setDoctypes();
-    this.setParts();
+    this.setCompanies()
+    this.setDevices()
+    this.setDoctypes()
+    this.setParts()
   },
-};
+}
 </script>
 
 <style scoped>
