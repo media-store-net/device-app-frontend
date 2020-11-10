@@ -8,24 +8,39 @@
 
       <v-spacer />
 
-      <v-btn icon>
+      <v-btn
+        icon
+        title="Show Logs"
+      >
         <v-icon>{{ icons.mdiMathLog }}</v-icon>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon>{{ icons.mdiFormDropdown }}</v-icon>
+      <v-btn
+        icon
+        title="Add new Item"
+      >
+        <v-icon>{{ icons.mdiPlusThick }}</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn
+        icon
+        title="Show Files"
+      >
         <v-icon>{{ icons.mdiFile }}</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn
+        icon
+        title="Show Devices"
+      >
         <v-icon>{{ icons.mdiCellphoneLink }}</v-icon>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon>{{ icons.mdiInformationVariant }}</v-icon>
+      <v-btn
+        icon
+        title="User Details"
+      >
+        <v-icon>{{ icons.mdiAccount }}</v-icon>
       </v-btn>
     </v-app-bar>
     <v-sheet
@@ -38,11 +53,11 @@
 <script>
 import {
   mdiMathLog,
-  mdiFormDropdown,
+  mdiPlusThick,
   mdiFile,
   mdiCellphoneLink,
-  mdiInformationVariant,
-} from '@mdi/js'
+  mdiAccount,
+} from '@mdi/js';
 
 export default {
   name: 'Header',
@@ -50,12 +65,12 @@ export default {
     return {
       icons: {
         mdiMathLog,
-        mdiFormDropdown,
+        mdiPlusThick,
         mdiFile,
         mdiCellphoneLink,
-        mdiInformationVariant,
+        mdiAccount,
       },
-    }
+    };
   },
-}
+};
 </script>
