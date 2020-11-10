@@ -11,6 +11,8 @@ Vue.use(Vuex)
 
 export const state = {
   authKey: '',
+  currentUser: null,
+  isAuthenticated: false,
   companies: [],
   devices: [],
   doctypes: [],
@@ -43,6 +45,8 @@ export const state = {
 
 export const getters = {
   authKey: (state) => state.authKey,
+  currentUser: (state) => state.currentUser,
+  isAuthenticated: (state) => state.isAuthenticated,
   companies: (state) => state.companies,
   devices: (state) => state.devices,
   doctypes: (state) => state.doctypes,
@@ -53,6 +57,8 @@ export const getters = {
 
 export const mutations = {
   setAuthKey: (state, payload) => (state.authKey = payload),
+  setCurrentUser: (state, payload) => (state.currentUser = payload),
+  setAuthenticated: (state, payload) => (state.isAuthenticated = payload),
   setCompanies: (state, payload) => (state.companies = payload),
   setDevices: (state, payload) => (state.devices = payload),
   setDoctypes: (state, payload) => (state.doctypes = payload),
@@ -65,7 +71,6 @@ export const mutations = {
  * @description VUEX Actions to commit the changes into the state via mutations
  */
 export const actions = {
-  setAuthKey: ({ commit }, payload) => commit('setAuthKey', payload),
   setCompanies: async ({ commit }) => {
     try {
       const res = await api.getCompanies()
@@ -106,6 +111,29 @@ export const actions = {
         console.log('Something went wrong')
       }
       context.commit('setCurrentDevice', res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  loginUser: async (context, payload) => {
+    try {
+      const res = await api.userLogin({ identifier: payload.username, password: payload.pass })
+      if (res.statusText !== 'OK') {
+        console.log('Something went wrong')
+      }
+      console.log(res.data)
+      if (res.data.user) {
+        context.commit('setCurrentUser', res.data.user);
+        context.commit('setAuthenticated', true);
+      }
+      if (res.data.jwt) {
+        context.commit('setAuthKey', res.data.jwt)
+      }
+      localStorage.setItem('pw_userinfo', JSON.stringify({
+        currentUser: res.data.user,
+        isAuthenticated: true,
+        authKey: res.data.jwt
+      }))
     } catch (error) {
       console.error(error)
     }

@@ -21,5 +21,8 @@ export default {
   },
   deviceLogin(params) {
     return API.post('/devices/customer-login', params)
+  },
+  userLogin(params) {
+    return API.post('/auth/local', params)
   }
 }

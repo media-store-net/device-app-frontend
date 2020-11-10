@@ -100,8 +100,15 @@ export default {
     },
     sendForm() {
       console.log('submit-form fired');
-      this.$emit('submit-form', { username: this.username, pass: this.pass });
-      (this.username = ''), (this.pass = '');
+      // emits the form data
+      if (!this.username || !this.pass.trim()) {
+        //TODO Show error message
+        console.log("Empty form can't be submited");
+      } else {
+        this.$emit('submit-form', { username: this.username, pass: this.pass });
+        //reset des Formulars
+        (this.username = null), (this.pass = '');
+      }
     },
     forgotPass() {
       console.log('Forgot password fired');

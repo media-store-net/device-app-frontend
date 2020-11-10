@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import LoginForm from '../components/LoginForm';
 
 export default {
@@ -25,10 +26,17 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+  },
   methods: {
-    onSubmitForm() {
+    ...mapActions(['loginUser']),
+    async onSubmitForm(event) {
       console.log('onSubmitForm fired...');
-      this.$router.push('devices');
+      console.log(event);
+      // call action to login user from API
+      await this.loginUser(event);
+      if (this.isAuthenticated) this.$router.push('devices');
     },
   },
 };
