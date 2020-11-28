@@ -1,17 +1,27 @@
 <template>
   <v-card>
-    <v-app-bar color="primary" dark>
+    <v-app-bar
+      color="primary"
+      dark
+    >
       <v-toolbar-title>Devices</v-toolbar-title>
 
       <v-spacer />
 
-      <v-btn icon title="Show Logs">
+      <v-btn
+        icon
+        title="Show Logs"
+      >
         <v-icon>{{ icons.mdiMathLog }}</v-icon>
       </v-btn>
 
       <v-menu nudge-bottom="56px">
         <template v-slot:activator="{ on }">
-          <v-btn icon title="Add new Item" v-on="on">
+          <v-btn
+            icon
+            title="Add new Item"
+            v-on="on"
+          >
             <v-icon>{{ icons.mdiPlusThick }}</v-icon>
           </v-btn>
         </template>
@@ -31,17 +41,32 @@
         </v-list>
       </v-menu>
 
-      <v-btn icon title="Show Files" @click="showFiles">
+      <v-btn
+        icon
+        title="Show Files"
+        @click="showFiles"
+      >
         <v-icon>{{ icons.mdiFile }}</v-icon>
       </v-btn>
 
-      <v-btn icon title="Show Devices" @click="showDevices">
+      <v-btn
+        icon
+        title="Show Devices"
+        @click="showDevices"
+      >
         <v-icon>{{ icons.mdiCellphoneLink }}</v-icon>
       </v-btn>
 
-      <v-menu nudge-bottom="56px" left>
+      <v-menu
+        nudge-bottom="56px"
+        left
+      >
         <template v-slot:activator="{ on }">
-          <v-btn icon title="User Details" v-on="on">
+          <v-btn
+            icon
+            title="User Details"
+            v-on="on"
+          >
             <v-icon>{{ icons.mdiAccount }}</v-icon>
           </v-btn>
         </template>
@@ -58,7 +83,10 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-sheet class="overflow-y-auto" max-height="600" />
+    <v-sheet
+      class="overflow-y-auto"
+      max-height="600"
+    />
   </v-card>
 </template>
 
