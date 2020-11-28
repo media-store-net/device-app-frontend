@@ -138,6 +138,16 @@ export const actions = {
       console.error(error)
     }
   },
+  logoutUser: async (context) => {
+    try {
+      localStorage.removeItem('pw_userinfo');
+      context.commit('setCurrentUser', null);
+      context.commit('setAuthKey', '');
+      context.commit('setAuthenticated', false)
+    } catch (error) {
+      console.error(error)
+    }
+  },
   pushDevice: (context, payload) => {
     context.state.devices.push(payload)
   },
