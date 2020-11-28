@@ -5,7 +5,7 @@
 
       <v-spacer />
 
-      <v-btn icon title="Show Logs">
+      <v-btn icon title="Show Logs" @click="showLogs">
         <v-icon>{{ icons.mdiMathLog }}</v-icon>
       </v-btn>
 
@@ -104,6 +104,9 @@ export default {
     },
     showUser() {
       if (this.$route.name !== 'user') this.$router.push('user');
+    },
+    showLogs() {
+      if (this.$route.name !== 'logs') this.$router.push('logs');
     },
     showDevices() {
       if (this.$route.name !== 'devices') this.$router.push('devices');

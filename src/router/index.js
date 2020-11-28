@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CustomerLogin from '../pages/CustomerLogin'
+import CustomerView from '../pages/CustomerView'
 import AdminLogin from '../pages/AdminLogin'
 import Devices from '../pages/Devices'
 import Files from '../pages/Files'
 import User from '../pages/User'
-import CustomerView from '../pages/CustomerView'
+import Logs from '../pages/Logs'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/files',
     name: 'files',
     component: Files
+  },
+  {
+    path: '/logs',
+    name: 'logs',
+    component: Logs
   },
   {
     path: '/user',
