@@ -4,6 +4,7 @@ import CustomerLogin from '../pages/CustomerLogin'
 import AdminLogin from '../pages/AdminLogin'
 import Devices from '../pages/Devices'
 import Files from '../pages/Files'
+import User from '../pages/User'
 import CustomerView from '../pages/CustomerView'
 
 Vue.use(VueRouter)
@@ -32,6 +33,11 @@ const routes = [
     path: '/files',
     name: 'files',
     component: Files
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: User
   },
   {
     path: '/customer-view',
