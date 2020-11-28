@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-app-bar color="primary" dark>
-      <v-toolbar-title>Devices</v-toolbar-title>
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
 
       <v-spacer />
 
@@ -74,6 +74,12 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Header',
+  props: {
+    title: {
+      type: String,
+      default: 'Powasert Geräteverwaltung',
+    },
+  },
   data() {
     return {
       icons: {

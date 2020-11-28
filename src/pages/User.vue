@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <Header title="User Dashboard" />
     <v-container class="d-flex justify-center">
       <v-row>
         <v-col cols="12" class="text-center">
