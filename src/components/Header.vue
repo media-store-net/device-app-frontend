@@ -103,7 +103,7 @@ export default {
       if (this.$route.name !== 'devices') this.$router.push('devices');
     },
     showFiles() {
-      alert('Show Files');
+      if (this.$route.name !== 'files') this.$router.push('files');
     },
     newCompany() {
       alert('New Company');

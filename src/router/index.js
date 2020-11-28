@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import CustomerLogin from '../pages/CustomerLogin'
 import AdminLogin from '../pages/AdminLogin'
 import Devices from '../pages/Devices'
+import Files from '../pages/Files'
 import CustomerView from '../pages/CustomerView'
 
 Vue.use(VueRouter)
@@ -26,6 +27,11 @@ const routes = [
     path: '/devices',
     name: 'devices',
     component: Devices,
+  },
+  {
+    path: '/files',
+    name: 'files',
+    component: Files
   },
   {
     path: '/customer-view',

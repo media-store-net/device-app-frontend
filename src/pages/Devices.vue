@@ -3,10 +3,7 @@
     <Header />
     <v-container class="d-flex justify-center">
       <v-row>
-        <v-col
-          cols="12"
-          class="text-center"
-        >
+        <v-col cols="12" class="text-center">
           <h1 class="accent--text">
             Device List
           </h1>
@@ -33,14 +30,14 @@ export default {
   beforeMount() {
     // Get Userdata from localstorage
     const localUserData = JSON.parse(localStorage.getItem('pw_userinfo'));
-    console.log(localUserData);
+    //console.log(localUserData);
     if (localUserData) {
       this.$store.commit('setCurrentUser', localUserData.user);
       this.$store.commit('setAuthenticated', localUserData.isAuthenticated);
       this.$store.commit('setAuthKey', localUserData.authKey);
     }
 
-    if (!this.isAuthenticated) this.$router.push('admin-login');
+    //if (!this.isAuthenticated) this.$router.push('admin-login');
   },
 };
 </script>
