@@ -89,10 +89,14 @@ export default {
         mdiCellphoneLink,
         mdiAccount,
       },
+      modalName: '',
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated']),
+    ...mapGetters(['isAuthenticated', 'modals']),
+    currentModal() {
+      return this.modals[this.modalName];
+    },
   },
   methods: {
     ...mapActions(['logoutUser']),
@@ -115,7 +119,8 @@ export default {
       if (this.$route.name !== 'files') this.$router.push('files');
     },
     newCompany() {
-      alert('New Company');
+      this.modalName = 'CompanyForm';
+      this.showModal();
     },
     newPart() {
       alert('new Part');
@@ -126,12 +131,22 @@ export default {
     newDevice() {
       alert('new Device');
     },
+    showModal(mode = 'new') {
+      this.$modal.show(
+        this.currentModal.component,
+        { ...this.currentModal.attrs, mode: mode },
+        this.currentModal.props,
+      );
+    },
   },
   watch: {
     isAuthenticated(newValue, oldValue) {
       if (newValue !== oldValue && newValue === false)
         this.$router.push('admin-login');
     },
+  },
+  created() {
+    if (!this.isAuthenticated) this.$router.push('admin-login');
   },
 };
 </script>

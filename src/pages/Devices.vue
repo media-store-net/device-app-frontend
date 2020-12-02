@@ -3,10 +3,7 @@
     <Header />
     <v-container class="d-flex justify-center">
       <v-row>
-        <v-col
-          cols="12"
-          class="text-center"
-        >
+        <v-col cols="12" class="text-center">
           <h1 class="accent--text">
             Device List
           </h1>
@@ -39,8 +36,6 @@ export default {
       this.$store.commit('setAuthenticated', localUserData.isAuthenticated);
       this.$store.commit('setAuthKey', localUserData.authKey);
     }
-
-    //if (!this.isAuthenticated) this.$router.push('admin-login');
   },
 };
 </script>

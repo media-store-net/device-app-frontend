@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import axios from '../api/index'
 import api from '../api/api'
 
 //TODO make this imports dynamic, when they needed
+import CompanyForm from '../components/CompanyForm';
 import DeviceForm from '@/components/DeviceForm'
 import QrCode from '@/components/QrCode'
 
@@ -19,6 +21,17 @@ export const state = {
   parts: [],
   currentDevice: {},
   modals: {
+    CompanyForm: {
+      name: 'CompanyForm',
+      component: CompanyForm,
+      attrs: {},
+      props: {
+        class: 'company-form',
+        height: 'auto',
+        width: '60%',
+        scrollable: false,
+      },
+    },
     DeviceForm: {
       name: 'DeviceForm',
       component: DeviceForm,
@@ -56,7 +69,10 @@ export const getters = {
 }
 
 export const mutations = {
-  setAuthKey: (state, payload) => (state.authKey = payload),
+  setAuthKey: (state, payload) => {
+    state.authKey = payload
+    api.setAuthHeader(payload);
+  },
   setCurrentUser: (state, payload) => (state.currentUser = payload),
   setAuthenticated: (state, payload) => (state.isAuthenticated = payload),
   setCompanies: (state, payload) => (state.companies = payload),
@@ -73,10 +89,29 @@ export const mutations = {
 export const actions = {
   setCompanies: async ({ commit }) => {
     try {
-      const res = await api.getCompanies()
+      const res = await api.companies.get()
       commit('setCompanies', res.data)
     } catch (error) {
       console.error(error)
+    }
+  },
+  newCompanie: async (context, payload) => {
+    try {
+      const res = await api.companies.post(payload);
+      if (res.statusText !== 'OK') {
+        console.log('Something went wrong');
+      }
+      else {
+        console.log('status OK')
+        // copy companies array from state
+        const companies = [...context.getters.companies];
+        // push new item into array
+        companies.push(res.data);
+        // commit back to state
+        context.commit('setCompanies', companies)
+      }
+    } catch (error) {
+      console.error(error);
     }
   },
   setDevices: async ({ commit }) => {
@@ -105,7 +140,7 @@ export const actions = {
   },
   loginCustomer: async (context, payload) => {
     try {
-      const res = await api.deviceLogin({ sn: payload.sn, pass: payload.pass })
+      const res = await api.deviceLogin({ sn: payload.sn, pass: payload.pass.toString() })
       console.log(res)
       if (res.statusText !== 'OK') {
         console.log('Something went wrong')
@@ -121,12 +156,13 @@ export const actions = {
       if (res.statusText !== 'OK') {
         console.log('Something went wrong')
       }
-      console.log(res.data)
+
       if (res.data.user) {
         context.commit('setCurrentUser', res.data.user);
         context.commit('setAuthenticated', true);
       }
       if (res.data.jwt) {
+        // Add a Auth token to default headers
         context.commit('setAuthKey', res.data.jwt)
       }
       localStorage.setItem('pw_userinfo', JSON.stringify({
@@ -140,7 +176,11 @@ export const actions = {
   },
   logoutUser: async (context) => {
     try {
+      // remove localstorage item
       localStorage.removeItem('pw_userinfo');
+      // remove auth headers
+      api.removeAuthHeader();
+      // set the state
       context.commit('setCurrentUser', null);
       context.commit('setAuthKey', '');
       context.commit('setAuthenticated', false)
@@ -168,6 +208,19 @@ export const actions = {
     context.commit('setCurrentDevice', device)
   },
   setModals: ({ commit }, payload) => commit('setModals', payload),
+  genPass: (_, payload) => {
+    let hash = 0;
+
+    if (payload === '') return hash;
+
+    for (let i = 0; i < payload.length; i++) {
+      const char = payload.charCodeAt(i);
+      hash = (hash << 3) - hash + char;
+      hash = hash & hash;
+    }
+
+    return hash;
+  },
 }
 
 export const modules = {}
