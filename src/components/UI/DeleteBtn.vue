@@ -1,5 +1,9 @@
 <template>
-  <v-btn icon color="red" @click="clickDelete">
+  <v-btn
+    icon
+    color="red"
+    @click="clickDelete"
+  >
     <v-icon>{{ deleteBtn }} </v-icon>
   </v-btn>
 </template>
