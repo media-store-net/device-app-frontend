@@ -1,43 +1,49 @@
-import API from './index'
+import API from "./index";
 
 export default {
   setAuthHeader(token) {
-    API.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   },
   removeAuthHeader() {
     delete API.defaults.headers.common["Authorization"];
   },
   companies: {
     get() {
-      let params = new URLSearchParams()
-      return API.get('/companies', params)
+      let params = new URLSearchParams();
+      return API.get("/companies", params);
     },
     post(data) {
-      return API.post('/companies', data)
+      return API.post("/companies", data);
     },
     put(data) {
-      return API.put('/companies', { data: data, headers: header })
+      return API.put("/companies", { data: data, headers: header });
     },
     delete(id) {
-      return API.put('/companies', { data: id, headers: header })
+      return API.put("/companies", { data: id, headers: header });
     }
   },
-  getDiveces() {
-    let params = new URLSearchParams()
-    return API.get('/devices', params)
+  devices: {
+    get() {
+      let params = new URLSearchParams();
+      return API.get("/devices", params);
+    },
+    put() {
+      return API.put("/devices", params);
+    }
   },
+
   getDoctypes() {
-    let params = new URLSearchParams()
-    return API.get('/doctypes ', params)
+    let params = new URLSearchParams();
+    return API.get("/doctypes ", params);
   },
   getParts() {
-    let params = new URLSearchParams()
-    return API.get('/parts', params)
+    let params = new URLSearchParams();
+    return API.get("/parts", params);
   },
   deviceLogin(params) {
-    return API.post('/devices/customer-login', params)
+    return API.post("/devices/customer-login", params);
   },
   userLogin(params) {
-    return API.post('/auth/local', params)
+    return API.post("/auth/local", params);
   }
-}
+};

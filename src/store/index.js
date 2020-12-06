@@ -5,7 +5,7 @@ import axios from "../api/index";
 import api from "../api/api";
 
 //TODO make this imports dynamic, when they needed
-import CompanyForm from "../components/CompanyForm";
+import CompanyForm from "@/components/CompanyForm";
 import DeviceForm from "@/components/DeviceForm";
 import QrCode from "@/components/QrCode";
 
@@ -115,7 +115,7 @@ export const actions = {
   },
   setDevices: async ({ commit }) => {
     try {
-      const res = await api.getDiveces();
+      const res = await api.devices.get();
       commit("setDevices", res.data);
     } catch (error) {
       console.error(error);
@@ -123,7 +123,7 @@ export const actions = {
   },
   setDoctypes: async ({ commit }) => {
     try {
-      const res = await api.getDoctypes();
+      const res = await api.devices.get();
       commit("setDoctypes", res.data);
     } catch (error) {
       console.error(error);
