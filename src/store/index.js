@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-import axios from '../api/index'
-import api from '../api/api'
+import axios from "../api/index";
+import api from "../api/api";
 
 //TODO make this imports dynamic, when they needed
-import CompanyForm from '../components/CompanyForm';
-import DeviceForm from '@/components/DeviceForm'
-import QrCode from '@/components/QrCode'
+import CompanyForm from "@/components/CompanyForm";
+import DeviceForm from "@/components/DeviceForm";
+import QrCode from "@/components/QrCode";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export const state = {
-  authKey: '',
+  authKey: "",
   currentUser: null,
   isAuthenticated: false,
   companies: [],
@@ -22,55 +22,55 @@ export const state = {
   currentDevice: {},
   modals: {
     CompanyForm: {
-      name: 'CompanyForm',
+      name: "CompanyForm",
       component: CompanyForm,
       attrs: {},
       props: {
-        class: 'company-form',
-        height: 'auto',
-        width: '60%',
-        scrollable: false,
-      },
+        class: "company-form",
+        height: "auto",
+        width: "60%",
+        scrollable: false
+      }
     },
     DeviceForm: {
-      name: 'DeviceForm',
+      name: "DeviceForm",
       component: DeviceForm,
       attrs: {},
       props: {
-        class: 'DeviceForm',
-        height: 'auto',
-        width: '700px',
-        scrollable: true,
-      },
+        class: "DeviceForm",
+        height: "auto",
+        width: "700px",
+        scrollable: true
+      }
     },
     QrCode: {
-      name: 'QrCode',
+      name: "QrCode",
       component: QrCode,
       attrs: {},
       props: {
-        class: 'QrCode',
-        height: '280px',
-        width: '60%',
-      },
-    },
-  },
-}
+        class: "QrCode",
+        height: "335px",
+        width: "60%"
+      }
+    }
+  }
+};
 
 export const getters = {
-  authKey: (state) => state.authKey,
-  currentUser: (state) => state.currentUser,
-  isAuthenticated: (state) => state.isAuthenticated,
-  companies: (state) => state.companies,
-  devices: (state) => state.devices,
-  doctypes: (state) => state.doctypes,
-  parts: (state) => state.parts,
-  currentDevice: (state) => state.currentDevice,
-  modals: (state) => state.modals,
-}
+  authKey: state => state.authKey,
+  currentUser: state => state.currentUser,
+  isAuthenticated: state => state.isAuthenticated,
+  companies: state => state.companies,
+  devices: state => state.devices,
+  doctypes: state => state.doctypes,
+  parts: state => state.parts,
+  currentDevice: state => state.currentDevice,
+  modals: state => state.modals
+};
 
 export const mutations = {
   setAuthKey: (state, payload) => {
-    state.authKey = payload
+    state.authKey = payload;
     api.setAuthHeader(payload);
   },
   setCurrentUser: (state, payload) => (state.currentUser = payload),
@@ -80,8 +80,8 @@ export const mutations = {
   setDoctypes: (state, payload) => (state.doctypes = payload),
   setParts: (state, payload) => (state.parts = payload),
   setCurrentDevice: (state, payload) => (state.currentDevice = payload),
-  setModals: (state, payload) => (state.modals = payload),
-}
+  setModals: (state, payload) => (state.modals = payload)
+};
 
 /**
  * @description VUEX Actions to commit the changes into the state via mutations
@@ -89,26 +89,25 @@ export const mutations = {
 export const actions = {
   setCompanies: async ({ commit }) => {
     try {
-      const res = await api.companies.get()
-      commit('setCompanies', res.data)
+      const res = await api.companies.get();
+      commit("setCompanies", res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   newCompanie: async (context, payload) => {
     try {
       const res = await api.companies.post(payload);
-      if (res.statusText !== 'OK') {
-        console.log('Something went wrong');
-      }
-      else {
-        console.log('status OK')
+      if (res.statusText !== "OK") {
+        console.log("Something went wrong");
+      } else {
+        console.log("status OK");
         // copy companies array from state
         const companies = [...context.getters.companies];
         // push new item into array
         companies.push(res.data);
         // commit back to state
-        context.commit('setCompanies', companies)
+        context.commit("setCompanies", companies);
       }
     } catch (error) {
       console.error(error);
@@ -116,26 +115,26 @@ export const actions = {
   },
   setDevices: async ({ commit }) => {
     try {
-      const res = await api.getDiveces()
-      commit('setDevices', res.data)
+      const res = await api.devices.get();
+      commit("setDevices", res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   setDoctypes: async ({ commit }) => {
     try {
-      const res = await api.getDoctypes()
-      commit('setDoctypes', res.data)
+      const res = await api.doctypes.get();
+      commit("setDoctypes", res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   setParts: async ({ commit }) => {
     try {
-      const res = await api.getParts()
-      commit('setParts', res.data)
+      const res = await api.parts.get();
+      commit("setParts", res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   loginCustomer: async (context, payload) => {
@@ -145,51 +144,57 @@ export const actions = {
       if (res.statusText !== 'OK') {
         console.log('Something went wrong')
       }
-      context.commit('setCurrentDevice', res.data)
+      context.commit("setCurrentDevice", res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   loginUser: async (context, payload) => {
     try {
-      const res = await api.userLogin({ identifier: payload.username, password: payload.pass })
-      if (res.statusText !== 'OK') {
-        console.log('Something went wrong')
+      const res = await api.userLogin({
+        identifier: payload.username,
+        password: payload.pass
+      });
+      if (res.statusText !== "OK") {
+        console.log("Something went wrong");
       }
 
       if (res.data.user) {
-        context.commit('setCurrentUser', res.data.user);
-        context.commit('setAuthenticated', true);
+        context.commit("setCurrentUser", res.data.user);
+        context.commit("setAuthenticated", true);
       }
       if (res.data.jwt) {
         // Add a Auth token to default headers
-        context.commit('setAuthKey', res.data.jwt)
+        context.commit("setAuthKey", res.data.jwt);
       }
-      localStorage.setItem('pw_userinfo', JSON.stringify({
-        currentUser: res.data.user,
-        isAuthenticated: true,
-        authKey: res.data.jwt
-      }))
+      localStorage.setItem(
+        "pw_userinfo",
+        JSON.stringify({
+          currentUser: res.data.user,
+          isAuthenticated: true,
+          authKey: res.data.jwt
+        })
+      );
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
-  logoutUser: async (context) => {
+  logoutUser: async context => {
     try {
       // remove localstorage item
-      localStorage.removeItem('pw_userinfo');
+      localStorage.removeItem("pw_userinfo");
       // remove auth headers
       api.removeAuthHeader();
       // set the state
-      context.commit('setCurrentUser', null);
-      context.commit('setAuthKey', '');
-      context.commit('setAuthenticated', false)
+      context.commit("setCurrentUser", null);
+      context.commit("setAuthKey", "");
+      context.commit("setAuthenticated", false);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   pushDevice: (context, payload) => {
-    context.state.devices.push(payload)
+    context.state.devices.push(payload);
   },
   /**
    * @method setCurrentDevice
@@ -197,21 +202,19 @@ export const actions = {
    * @param {Object} payload given {deviceId: x} of one device object or completed device-object from devices array
    */
   setCurrentDevice: (context, payload = {}) => {
-    let device = {}
-    if (payload && payload['deviceId']) {
-      device = context.getters.devices.find(
-        (dev) => dev.id === payload.deviceId
-      )
+    let device = {};
+    if (payload && payload["deviceId"]) {
+      device = context.getters.devices.find(dev => dev.id === payload.deviceId);
     } else {
-      device = payload
+      device = payload;
     }
-    context.commit('setCurrentDevice', device)
+    context.commit("setCurrentDevice", device);
   },
-  setModals: ({ commit }, payload) => commit('setModals', payload),
+  setModals: ({ commit }, payload) => commit("setModals", payload),
   genPass: (_, payload) => {
     let hash = 0;
 
-    if (payload === '') return hash;
+    if (payload === "") return hash;
 
     for (let i = 0; i < payload.length; i++) {
       const char = payload.charCodeAt(i);
@@ -220,10 +223,10 @@ export const actions = {
     }
 
     return hash;
-  },
-}
+  }
+};
 
-export const modules = {}
+export const modules = {};
 
 /**
  * @description Export of VUEX Store Instance
@@ -233,5 +236,5 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions,
-  modules,
-})
+  modules
+});

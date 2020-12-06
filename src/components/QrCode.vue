@@ -1,36 +1,38 @@
 <template>
-  <div class="QrLabel">
-    <div class="QrLabelDesc">
-      <div>
-        <h1>POWASERT®</h1>
-        <div class="item">
-          <p><strong>Firma:</strong> {{ currentDevice.companie.name }}</p>
+  <v-app>
+    <v-container class="QrLabel">
+      <v-card class="QrLabelDesc">
+        <div>
+          <h1>POWASERT®</h1>
+          <div class="item">
+            <p><strong>Firma:</strong> {{ currentDevice.companie.name }}</p>
+          </div>
+          <div class="item">
+            <p><strong>Art.Nr:</strong> {{ currentDevice.part.title }}</p>
+          </div>
+          <div class="item">
+            <p><strong>SN:</strong> {{ currentDevice.sn }}</p>
+          </div>
+          <div class="item">
+            <p><strong>Link:</strong> {{ link }}</p>
+          </div>
         </div>
-        <div class="item">
-          <p><strong>Art.Nr:</strong> {{ currentDevice.part.title }}</p>
-        </div>
-        <div class="item">
-          <p><strong>SN:</strong> {{ currentDevice.sn }}</p>
-        </div>
-        <div class="item">
-          <p><strong>Link:</strong> {{ link }}</p>
-        </div>
-      </div>
 
-      <div>
-        <qrcode-vue
-          :value="link"
-          :size="size"
-          level="H"
-        />
-      </div>
-    </div>
-  </div>
+        <div>
+          <qrcode-vue
+            :value="link"
+            :size="size"
+            level="H"
+          />
+        </div>
+      </v-card>
+    </v-container>
+  </v-app>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import QrcodeVue from 'qrcode.vue';
+import QrcodeVue from "qrcode.vue";
 
 /**
  * @description QrCode - Component with the generated QrCode of one specific device
@@ -39,41 +41,36 @@ import QrcodeVue from 'qrcode.vue';
  * @vue-computed {String} link - computed property, return full url with included urlParam 'sn'
  */
 export default {
-  name: 'QrCode',
+  name: "QrCode",
   data() {
     return {
-      size: 155,
+      size: 155
     };
   },
   computed: {
-    ...mapGetters(['currentDevice']),
+    ...mapGetters(["currentDevice"]),
     link() {
       return (
         process.env.VUE_APP_QR_LINK +
-        '/#/customer-login?sn=' +
+        "/#/customer-login?sn=" +
         this.currentDevice.sn
       );
-    },
+    }
   },
   components: {
-    QrcodeVue,
-  },
+    QrcodeVue
+  }
 };
 </script>
 
 <style scoped>
-.QrLabel {
-  margin: 20px;
-}
 .QrLabelDesc {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  padding: 10px;
   align-items: flex-end;
 }
-.item {
-  margin-top: 20px;
-}
+
 p {
   font-size: 24px;
 }

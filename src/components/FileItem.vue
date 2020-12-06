@@ -1,27 +1,16 @@
 <template>
   <transition name="file">
-    <v-col
-      cols="12"
-      class="file-item-container"
-    >
+    <v-col cols="12" class="file-item-container">
       <v-list-item-content class="item">
         <v-list-item-title class="headline mb-1">
           {{ id }}. {{ fileDoctype(doctypeId) }} |
           {{ url.name }}
         </v-list-item-title>
       </v-list-item-content>
-      <a
-        :href="filelink"
-        target="_blank"
-      >
-        <v-btn
-          :style="{
-            backgroundColor: '#1976d2',
-            color: 'white',
-            textDecoration: 'underline',
-          }"
-        >
-          Download
+      <DeleteBtn @deleteClick="onDelete" />
+      <a :href="filelink" target="_blank">
+        <v-btn icon color="blue">
+          <v-icon>{{ download }}</v-icon>
         </v-btn>
       </a>
     </v-col>
@@ -29,7 +18,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
+
+import { mdiFileDownload } from "@mdi/js";
+import DeleteBtn from "@/components/UI/DeleteBtn";
 
 /**
  * @description FileItem - represent one given File Object
@@ -42,26 +34,34 @@ import { mapGetters } from 'vuex'
  *
  */
 export default {
-  name: 'FileItem',
+  name: "FileItem",
+  components: {
+    DeleteBtn
+  },
   props: {
     id: {
       type: Number,
-      required: true,
+      required: true
     },
     doctypeId: {
       type: Number,
-      required: true,
+      required: true
     },
     url: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
+  },
+  data() {
+    return {
+      download: mdiFileDownload
+    };
   },
   computed: {
-    ...mapGetters(['doctypes']),
+    ...mapGetters(["doctypes"]),
     filelink() {
-      return process.env.VUE_APP_API_URL + this.url.url
-    },
+      return process.env.VUE_APP_API_URL + this.url.url;
+    }
   },
   methods: {
     /**
@@ -71,11 +71,14 @@ export default {
      * @returns {string}  - returns a title from the doctype
      */
     fileDoctype(id) {
-      let doctype = this.doctypes.find((doc) => doc.id === id)
-      return doctype && doctype.title ? doctype.title : ''
+      let doctype = this.doctypes.find(doc => doc.id === id);
+      return doctype && doctype.title ? doctype.title : "";
     },
-  },
-}
+    onDelete(data) {
+      console.log(data);
+    }
+  }
+};
 </script>
 
 <style scoped>
