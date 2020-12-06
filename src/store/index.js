@@ -140,7 +140,7 @@ export const actions = {
   },
   loginCustomer: async (context, payload) => {
     try {
-      const res = await api.deviceLogin({ sn: payload.sn, pass: payload.pass.toString() })
+      const res = await api.deviceLogin({ sn: payload.sn, pass: payload.pass })
       console.log(res)
       if (res.statusText !== 'OK') {
         console.log('Something went wrong')

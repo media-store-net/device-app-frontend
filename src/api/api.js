@@ -16,10 +16,10 @@ export default {
       return API.post('/companies', data)
     },
     put(data) {
-      return API.put('/companies', { data: data, headers: header })
+      return API.put('/companies', data)
     },
     delete(id) {
-      return API.put('/companies', { data: id, headers: header })
+      return API.put('/companies', id)
     }
   },
   getDiveces() {
