@@ -26,19 +26,20 @@ export default {
     get() {
       let params = new URLSearchParams();
       return API.get("/devices", params);
-    },
-    put() {
-      return API.put("/devices", params);
     }
   },
 
-  getDoctypes() {
-    let params = new URLSearchParams();
-    return API.get("/doctypes ", params);
+  doctypes: {
+    get() {
+      let params = new URLSearchParams();
+      return API.get("/doctypes ", params);
+    }
   },
-  getParts() {
-    let params = new URLSearchParams();
-    return API.get("/parts", params);
+  parts: {
+    get() {
+      let params = new URLSearchParams();
+      return API.get("/parts", params);
+    }
   },
   deviceLogin(params) {
     return API.post("/devices/customer-login", params);

@@ -1,9 +1,6 @@
 <template>
   <transition name="file">
-    <v-col
-      cols="12"
-      class="file-item-container"
-    >
+    <v-col cols="12" class="file-item-container">
       <v-list-item-content class="item">
         <v-list-item-title class="headline mb-1">
           {{ id }}. {{ fileDoctype(doctypeId) }} |
@@ -11,14 +8,8 @@
         </v-list-item-title>
       </v-list-item-content>
       <DeleteBtn @deleteClick="onDelete" />
-      <a
-        :href="filelink"
-        target="_blank"
-      >
-        <v-btn
-          icon
-          color="blue"
-        >
+      <a :href="filelink" target="_blank">
+        <v-btn icon color="blue">
           <v-icon>{{ download }}</v-icon>
         </v-btn>
       </a>
@@ -99,12 +90,12 @@ export default {
   padding: 0;
 }
 
-/*.file-enter-active {*/
-/*  animation: list-animation 0.8s ease-out;*/
-/*}*/
-/*.file-leave-active {*/
-/*  animation: list-animation 0.8s ease-in reverse;*/
-/*}*/
+.file-enter-active {
+  animation: list-animation 0.8s ease-out;
+}
+.file-leave-active {
+  animation: list-animation 0.8s ease-in reverse;
+}
 
 @keyframes list-animation {
   from {

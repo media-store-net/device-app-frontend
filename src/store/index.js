@@ -123,7 +123,7 @@ export const actions = {
   },
   setDoctypes: async ({ commit }) => {
     try {
-      const res = await api.devices.get();
+      const res = await api.doctypes.get();
       commit("setDoctypes", res.data);
     } catch (error) {
       console.error(error);
@@ -131,7 +131,7 @@ export const actions = {
   },
   setParts: async ({ commit }) => {
     try {
-      const res = await api.getParts();
+      const res = await api.parts.get();
       commit("setParts", res.data);
     } catch (error) {
       console.error(error);
