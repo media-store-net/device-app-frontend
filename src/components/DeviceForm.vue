@@ -2,12 +2,7 @@
   <v-app>
     <v-container>
       <v-flex class="d-flex justify-end">
-        <v-btn
-          icon
-          right
-          color="accent"
-          @click="closeModal"
-        >
+        <v-btn icon right color="accent" @click="closeModal">
           <v-icon>{{ icons.mdiCloseBox }}</v-icon>
         </v-btn>
       </v-flex>
@@ -23,32 +18,13 @@
             v-model="formData.companie.name"
           />
         </v-col>
-        <v-col
-          cols="12"
-          class="addedSnPass"
-        >
-          <v-text-field
-            class="input"
-            label="SN:"
-            v-model="formData.sn"
-          />
-          <v-text-field
-            class="input"
-            label="Pass:"
-            v-model="formData.pass"
-          />
-          <v-btn
-            text
-            title="Passwort generieren"
-            @click="genPass"
-          >
+        <v-col cols="12" class="addedSnPass">
+          <v-text-field class="input" label="SN:" v-model="formData.sn" />
+          <v-text-field class="input" label="Pass:" v-model="formData.pass" />
+          <v-btn text title="Passwort generieren" @click="genPass">
             <v-icon>{{ icons.mdiLockReset }}</v-icon>
           </v-btn>
-          <v-btn
-            text
-            title="Kopieren"
-            @click="toClipboard(formData.pass)"
-          >
+          <v-btn text title="Kopieren" @click="toClipboard(formData.pass)">
             <v-icon>{{ icons.mdiContentCopy }}</v-icon>
           </v-btn>
         </v-col>
@@ -60,15 +36,9 @@
             v-model="formData.part.title"
           />
         </v-col>
-        <v-col
-          cols="12"
-          class="downloadFile my-8 gray--{lighten}-{3}"
-        >
+        <v-col cols="12" class="downloadFile my-8 gray--{lighten}-{3}">
           <span class="col-1">
-            <v-icon
-              x-large
-              color="error darken-3"
-            >{{
+            <v-icon x-large color="error darken-3">{{
               icons.mdiFilePdf
             }}</v-icon>
           </span>
@@ -91,21 +61,13 @@
             ref="inputUpload"
             type="file"
             @change="uploadFile"
-          >
+          />
         </v-col>
 
         <file-list :items="formData.files" />
 
-        <v-btn-toggle
-          group
-          class="btnGroup mt-3"
-        >
-          <v-btn
-            outlined
-            class="btn"
-            @click="GenQrCode"
-            type="button"
-          >
+        <v-btn-toggle group class="btnGroup mt-3">
+          <v-btn outlined class="btn" @click="GenQrCode" type="button">
             <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
           </v-btn>
           <v-btn
@@ -117,12 +79,7 @@
           >
             <v-icon>{{ icons.mdiContentSave }} </v-icon> Save
           </v-btn>
-          <v-btn
-            outlined
-            class="btn"
-            type="submit"
-            v-if="mode === 'update'"
-          >
+          <v-btn outlined class="btn" type="submit" v-if="mode === 'update'">
             <v-icon>{{ icons.mdiContentSave }} </v-icon> Update
           </v-btn>
         </v-btn-toggle>
@@ -142,6 +99,7 @@ import {
   mdiCloseBox,
 } from '@mdi/js';
 
+import { EventBus } from '../store/eventBus';
 import FileList from '@/components/FileList';
 
 export default {
@@ -256,6 +214,9 @@ export default {
 
       this.closeModal();
     },
+    removeFileFromDevice(fileId) {
+      console.log('File delete Event fired. FileId=>', fileId);
+    },
   },
   watch: {
     formData(val) {
@@ -266,6 +227,8 @@ export default {
     },
   },
   created() {
+    // eventlistening to delete File
+    EventBus.$on('delete-clicked-onFile', this.removeFileFromDevice);
     // only if the currentDevice not empty copy to formData
     if (this.currentDevice && this.currentDevice.sn) {
       this.formData = { ...this.currentDevice };
@@ -275,6 +238,12 @@ export default {
       this.formData = { ...this.initFormData, pass: '' };
     }
   },
+  destroyed() {
+    EventBus.$off('delete-clicked-onFile');
+  },
+  // created() {
+  //
+  // },
 };
 </script>
 

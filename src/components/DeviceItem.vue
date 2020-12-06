@@ -1,22 +1,18 @@
 <template>
-  <transition
-    name="device"
-    mode="out-in"
-  >
+  <transition name="device" mode="out-in">
     <v-card class="mx-auto">
-      <v-list-item
-        three-line
-        class="list"
-      >
+      <v-list-item three-line class="list">
         <v-list-item-content>
           <v-list-item-title class="headline mb-4">
             <strong>SN: </strong><span class="title-span">{{ sn }}</span>
           </v-list-item-title>
           <v-list-item-title class="headline mb-1">
-            <strong>Art.Nr: </strong><span class="title-span">{{ part.title }}</span>
+            <strong>Art.Nr: </strong
+            ><span class="title-span">{{ part.title }}</span>
           </v-list-item-title>
           <v-list-item-title class="headline mb-1">
-            <strong>Firma: </strong><span class="title-span">{{ companie.name }}</span>
+            <strong>Firma: </strong
+            ><span class="title-span">{{ companie.name }}</span>
           </v-list-item-title>
         </v-list-item-content>
 
@@ -24,19 +20,11 @@
           <v-card-actions v-if="isAdmin">
             <v-row>
               <v-col cols="12">
-                <v-btn
-                  text
-                  color="accent"
-                  @click="$emit('gen-qr', id)"
-                >
+                <v-btn text color="accent" @click="$emit('gen-qr', id)">
                   <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
                 </v-btn>
 
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$emit('edit-device', id)"
-                >
+                <v-btn text color="primary" @click="$emit('edit-device', id)">
                   <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
                 </v-btn>
 
@@ -52,19 +40,9 @@
           </v-card-actions>
           <v-card-actions>
             <v-row>
-              <v-col
-                cols="12"
-                class="badge-container"
-              >
-                <div
-                  class="accent--text badge"
-                  @click="showFiles = !showFiles"
-                >
-                  <v-icon
-                    color="accent"
-                    class="mr-3"
-                    size="1.5em"
-                  >
+              <v-col cols="12" class="badge-container">
+                <div class="accent--text badge" @click="showFiles = !showFiles">
+                  <v-icon color="accent" class="mr-3" size="1.5em">
                     {{ icons.mdiFile }}
                   </v-icon>
                   <span>{{ files.length }}</span>

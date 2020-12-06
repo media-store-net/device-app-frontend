@@ -1,28 +1,24 @@
 <template>
-  <v-btn
-    icon
-    color="red"
-    @click="clickDelete"
-  >
+  <v-btn icon color="red" @click="clickDelete">
     <v-icon>{{ deleteBtn }} </v-icon>
   </v-btn>
 </template>
 
 <script>
-import { mdiDelete } from "@mdi/js";
+import { mdiDelete } from '@mdi/js';
 
 export default {
-  name: "DeleteBtn",
+  name: 'DeleteBtn',
   data() {
     return {
-      deleteBtn: mdiDelete
+      deleteBtn: mdiDelete,
     };
   },
   methods: {
     clickDelete() {
-      this.$emit("deleteClick", "Delete element");
-    }
-  }
+      this.$emit('click');
+    },
+  },
 };
 </script>
 
