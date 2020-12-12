@@ -33,7 +33,8 @@
                   color="error darken-1"
                   @click="$emit('delete-device', id)"
                 >
-                  <v-icon>{{ icons.mdiDelete }}</v-icon> Delete
+                  <DeleteBtn />
+<!--                  <v-icon>{{ icons.mdiDelete }}</v-icon> Delete-->
                 </v-btn>
               </v-col>
             </v-row>
@@ -62,6 +63,7 @@
 import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
 
 import FileList from '@/components/FileList.vue';
+import DeleteBtn from "@/components/UI/DeleteBtn";
 /**
  * @description DeviceItem is a Component to reflect functionality of one device object
  *
@@ -88,6 +90,7 @@ import FileList from '@/components/FileList.vue';
 export default {
   name: 'DeviceItem',
   components: {
+    DeleteBtn,
     FileList,
   },
   props: {

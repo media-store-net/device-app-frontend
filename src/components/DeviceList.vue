@@ -63,7 +63,7 @@
           :is-admin="true"
           @gen-qr="genQr"
           @edit-device="editDevice"
-          @delete-device="deleteDevice"
+          @delete-device="deleteDevice(device)"
         />
       </v-col>
     </v-container>
@@ -76,6 +76,7 @@ import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js'
 
 import api from '@/api/api'
 import DeviceItem from '@/components/DeviceItem'
+import {EventBus} from "@/store/eventBus";
 
 /**
  * @description DeviceList - is the initial component used in the App.vue
@@ -167,8 +168,8 @@ export default {
      * @param {Number} id the ID of the selected Device
      * @returns {boolean}
      */
-    deleteDevice(id) {
-      alert(id)
+    deleteDevice(device) {
+      console.log(device)
     },
     /**
      * @vue-method showModal
@@ -190,6 +191,21 @@ export default {
       )['id']
       this.setCurrentDevice({ deviceId: devId })
     },
+  },
+  created() {
+    // eventlistening to delete File
+    EventBus.$on('delete-clicked-onFile', this.deleteDevice);
+    // only if the currentDevice not empty copy to formData
+    if (this.currentDevice && this.currentDevice.sn) {
+      this.formData = { ...this.currentDevice };
+    }
+    // otherwise copy the initFormData
+    else {
+      this.formData = { ...this.initFormData, pass: '' };
+    }
+  },
+  destroyed() {
+    EventBus.$off('delete-clicked-onFile');
   },
   mounted() {
     this.setCompanies()
