@@ -8,7 +8,7 @@
 import { mdiPencilOutline } from '@mdi/js';
 
 export default {
-  name: 'DeleteBtn',
+  name: 'EditBtn',
   data() {
     return {
      editBtn: mdiPencilOutline,

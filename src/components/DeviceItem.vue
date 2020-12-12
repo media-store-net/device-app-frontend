@@ -20,19 +20,15 @@
           <v-card-actions v-if="isAdmin">
             <v-row>
               <v-col cols="12">
-                <v-btn text color="accent" @click="$emit('gen-qr', id)">
-                  <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
+                <v-btn text  @click="$emit('gen-qr', id)">
+                 <QrBtn />
                 </v-btn>
 
                 <v-btn text @click="$emit('edit-device', id)">
                   <EditBtn />
                 </v-btn>
 
-                <v-btn
-                  text
-                  color="error darken-1"
-                  @click="$emit('delete-device', id)"
-                >
+                <v-btn text @click="$emit('delete-device', id)">
                   <DeleteBtn />
                 </v-btn>
               </v-col>
@@ -59,11 +55,12 @@
   </transition>
 </template>
 <script>
-import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
+import {  mdiFile } from '@mdi/js';
 
 import FileList from '@/components/FileList.vue';
 import DeleteBtn from "@/components/UI/DeleteBtn";
 import EditBtn from "@/components/UI/EditBtn";
+import QrBtn from "@/components/UI/QrBtn";
 /**
  * @description DeviceItem is a Component to reflect functionality of one device object
  *
@@ -90,6 +87,7 @@ import EditBtn from "@/components/UI/EditBtn";
 export default {
   name: 'DeviceItem',
   components: {
+    QrBtn,
     DeleteBtn,
     FileList,
     EditBtn
@@ -106,9 +104,6 @@ export default {
   data() {
     return {
       icons: {
-        mdiQrcode,
-        mdiPencil,
-        mdiDelete,
         mdiFile,
       },
       showFiles: false,
