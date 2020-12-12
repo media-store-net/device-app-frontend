@@ -24,8 +24,8 @@
                   <v-icon>{{ icons.mdiQrcode }}</v-icon> GenQR
                 </v-btn>
 
-                <v-btn text color="primary" @click="$emit('edit-device', id)">
-                  <v-icon>{{ icons.mdiPencil }}</v-icon> Edit
+                <v-btn text @click="$emit('edit-device', id)">
+                  <EditBtn />
                 </v-btn>
 
                 <v-btn
@@ -34,7 +34,6 @@
                   @click="$emit('delete-device', id)"
                 >
                   <DeleteBtn />
-<!--                  <v-icon>{{ icons.mdiDelete }}</v-icon> Delete-->
                 </v-btn>
               </v-col>
             </v-row>
@@ -64,6 +63,7 @@ import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
 
 import FileList from '@/components/FileList.vue';
 import DeleteBtn from "@/components/UI/DeleteBtn";
+import EditBtn from "@/components/UI/EditBtn";
 /**
  * @description DeviceItem is a Component to reflect functionality of one device object
  *
@@ -92,6 +92,7 @@ export default {
   components: {
     DeleteBtn,
     FileList,
+    EditBtn
   },
   props: {
     id: { type: Number, required: true },
