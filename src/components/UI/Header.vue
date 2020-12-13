@@ -33,6 +33,9 @@
           <v-list-item @click="newPart">
             Artikelnummer
           </v-list-item>
+          <v-list-item @click="newDoctype">
+            Doctype
+          </v-list-item>
           <v-list-item @click="newFile">
             File
           </v-list-item>
@@ -153,6 +156,10 @@ export default {
     },
     newPart() {
       this.modalName = 'PartsForm';
+      this.showModal();
+    },
+    newDoctype() {
+      this.modalName = 'DoctypesForm';
       this.showModal();
     },
     newFile() {

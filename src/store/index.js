@@ -7,6 +7,7 @@ import api from "../api/api";
 //TODO make this imports dynamic, when they needed
 import CompanyForm from "@/components/Forms/CompanyForm";
 import PartsForm from "@/components/Forms/PartsForm";
+import DoctypesForm from "@/components/Forms/DoctypesForm";
 import DeviceForm from "@/components/Forms/DeviceForm";
 import QrCode from "@/components/Devices/QrCode";
 
@@ -39,6 +40,17 @@ export const state = {
 			attrs: {},
 			props: {
 				class: "parts-form",
+				height: "auto",
+				width: "60%",
+				scrollable: true
+			}
+		},
+		DoctypesForm: {
+			name: "DoctypesForm",
+			component: DoctypesForm,
+			attrs: {},
+			props: {
+				class: "doctype-form",
 				height: "auto",
 				width: "60%",
 				scrollable: true
@@ -138,6 +150,24 @@ export const actions = {
 				parts.push(res.data);
 				// commit back to state
 				context.commit("setParts", parts);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	},
+	newDoctype: async (context, payload) => {
+		try {
+			const res = await api.doctypes.post(payload);
+			if (res.statusText !== "OK") {
+				console.log("Something went wrong");
+			} else {
+				console.log("status OK");
+				// copy parts array from state
+				const doctypes = [...context.getters.doctypes];
+				// push new item into array
+				doctypes.push(res.data);
+				// commit back to state
+				context.commit("setDoctypes", doctypes);
 			}
 		} catch (error) {
 			console.error(error);

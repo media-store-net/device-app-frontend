@@ -33,7 +33,16 @@ export default {
     get() {
       let params = new URLSearchParams();
       return API.get("/doctypes ", params);
-    }
+    },
+	  post(data) {
+		  return API.post("/doctypes", data);
+	  },
+	  put(data) {
+		  return API.put('/doctypes', data)
+	  },
+	  delete(id) {
+		  return API.put('/doctypes', id)
+	  }
   },
   parts: {
     get() {

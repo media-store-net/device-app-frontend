@@ -11,14 +11,14 @@
               class="mr-10"
               @click="closeModal"
             />
-            <h1>Parts Form</h1>
+            <h1>Doctype Form</h1>
             <v-form
               @submit.prevent="sendForm"
               class="mx-10"
             >
               <v-text-field
                 type="text"
-                label="* Artikelbezeichnung"
+                label="* Doctype"
                 v-model="title"
               />
               <v-textarea
@@ -47,7 +47,7 @@ import {mapActions} from 'vuex';
 import CloseBtn from '../UI/CloseBtn';
 
 export default {
-  name: "PartsForm",
+  name: "DoctypesForm",
   components: {
     CloseBtn
   },
@@ -58,11 +58,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['newPart']),
+    ...mapActions(['newDoctype']),
     async sendForm() {
       //TODO Validate User Input
       // Send the Data on Api/Store
-      await this.newPart({
+      await this.newDoctype({
         title: this.title,
         desc: this.desc,
       });
