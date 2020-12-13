@@ -39,7 +39,16 @@ export default {
     get() {
       let params = new URLSearchParams();
       return API.get("/parts", params);
-    }
+    },
+	  post(data) {
+		  return API.post("/parts", data);
+	  },
+	  put(data) {
+		  return API.put('/parts', data)
+	  },
+	  delete(id) {
+		  return API.put('/parts', id)
+	  }
   },
   deviceLogin(params) {
     return API.post("/devices/customer-login", params);

@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 import CloseBtn from '../UI/CloseBtn';
 
 export default {
@@ -50,9 +52,22 @@ export default {
     CloseBtn
   },
   data() {
-    return {}
+    return {
+      title: '',
+      desc: ''
+    }
   },
   methods: {
+    ...mapActions(['newPart']),
+    async sendForm() {
+      //TODO Validate User Input
+      // Send the Data on Api/Store
+      await this.newPart({
+        title: this.title,
+        desc: this.desc,
+      });
+      this.closeModal();
+    },
     closeModal() {
       this.$modal.hideAll();
     },

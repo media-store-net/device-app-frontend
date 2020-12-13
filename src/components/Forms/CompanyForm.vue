@@ -102,7 +102,7 @@ export default {
     },
     async sendForm() {
       //TODO Validate User Input
-      //TODO Send the Data on Api/Store
+      // Send the Data on Api/Store
       await this.newCompanie({
         name: this.name,
         kdnr: this.kdnr,
