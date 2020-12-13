@@ -181,7 +181,7 @@ export default {
       doctype: {title: ''},
       files: [],
     },
-    doctypeTitle: '',
+    doctypeTitle: 'User-Manual',
   }),
   computed: {
     ...mapGetters(['companies', 'doctypes', 'parts', 'currentDevice']),
