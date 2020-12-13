@@ -152,7 +152,8 @@ export default {
       this.showModal();
     },
     newPart() {
-      alert('new Part');
+      this.modalName = 'PartsForm';
+      this.showModal();
     },
     newFile() {
       alert('new File');

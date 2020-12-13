@@ -1,0 +1,66 @@
+<template>
+  <v-app>
+    <v-container class="d-flex justify-center align-center">
+      <v-row>
+        <v-col
+            cols="12"
+            class="text-center mt-6 mb-10 col-md-8 offset-md-2"
+        >
+          <v-card class="py-8">
+            <close-btn
+                class="mr-10"
+                @click="closeModal"
+            />
+            <h1>Parts Form</h1>
+            <v-form
+                @submit.prevent="sendForm"
+                class="mx-10"
+            >
+              <v-text-field
+                  type="text"
+                  label="* Artikelbezeichnung"
+                  v-model="title"
+              />
+              <v-textarea
+                  label="kurze Beschreibung"
+                  v-model="desc"
+              />
+              <v-flex class="d-flex justify-end mt-3 mr-10">
+                <v-btn
+                    class="primary"
+                    type="submit"
+                >
+                  Speichern
+                </v-btn>
+              </v-flex>
+            </v-form>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
+</template>
+
+<script>
+import CloseBtn from '../UI/CloseBtn';
+
+export default {
+  name: "PartsForm",
+  components: {
+    CloseBtn
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    closeModal() {
+      this.$modal.hideAll();
+    },
+
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

@@ -6,6 +6,7 @@ import api from "../api/api";
 
 //TODO make this imports dynamic, when they needed
 import CompanyForm from "@/components/Forms/CompanyForm";
+import PartsForm from "@/components/Forms/PartsForm";
 import DeviceForm from "@/components/Devices/DeviceForm";
 import QrCode from "@/components/Devices/QrCode";
 
@@ -32,6 +33,17 @@ export const state = {
         scrollable: true
       }
     },
+	  PartsForm: {
+		  name: "PartsForm",
+		  component: PartsForm,
+		  attrs: {},
+		  props: {
+			  class: "parts-form",
+			  height: "auto",
+			  width: "60%",
+			  scrollable: true
+		  }
+	  },
     DeviceForm: {
       name: "DeviceForm",
       component: DeviceForm,
