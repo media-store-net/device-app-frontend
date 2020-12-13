@@ -1,5 +1,8 @@
 <template>
-  <v-btn icon color="accent" >
+  <v-btn
+    icon
+    color="accent"
+  >
     <v-icon>{{ qrBtn }} </v-icon>
   </v-btn>
 </template>

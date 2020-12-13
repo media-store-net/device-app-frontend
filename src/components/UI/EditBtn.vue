@@ -1,5 +1,8 @@
 <template>
-  <v-btn icon color="primary" >
+  <v-btn
+    icon
+    color="primary"
+  >
     <v-icon>{{ editBtn }} </v-icon>
   </v-btn>
 </template>
