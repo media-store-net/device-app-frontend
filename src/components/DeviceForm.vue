@@ -2,7 +2,12 @@
   <v-app>
     <v-container>
       <v-flex class="d-flex justify-end">
-        <v-btn icon right color="accent" @click="closeModal">
+        <v-btn
+          icon
+          right
+          color="accent"
+          @click="closeModal"
+        >
           <v-icon>{{ icons.mdiCloseBox }}</v-icon>
         </v-btn>
       </v-flex>
@@ -18,13 +23,32 @@
             v-model="formData.companie.name"
           />
         </v-col>
-        <v-col cols="12" class="addedSnPass">
-          <v-text-field class="input" label="SN:" v-model="formData.sn" />
-          <v-text-field class="input" label="Pass:" v-model="formData.pass" />
-          <v-btn text title="Passwort generieren" @click="genPass">
+        <v-col
+          cols="12"
+          class="addedSnPass"
+        >
+          <v-text-field
+            class="input"
+            label="SN:"
+            v-model="formData.sn"
+          />
+          <v-text-field
+            class="input"
+            label="Pass:"
+            v-model="formData.pass"
+          />
+          <v-btn
+            text
+            title="Passwort generieren"
+            @click="genPass"
+          >
             <v-icon>{{ icons.mdiLockReset }}</v-icon>
           </v-btn>
-          <v-btn text title="Kopieren" @click="toClipboard(formData.pass)">
+          <v-btn
+            text
+            title="Kopieren"
+            @click="toClipboard(formData.pass)"
+          >
             <v-icon>{{ icons.mdiContentCopy }}</v-icon>
           </v-btn>
         </v-col>
@@ -36,9 +60,15 @@
             v-model="formData.part.title"
           />
         </v-col>
-        <v-col cols="12" class="downloadFile my-8 gray--{lighten}-{3}">
+        <v-col
+          cols="12"
+          class="downloadFile my-8 gray--{lighten}-{3}"
+        >
           <span class="col-1">
-            <v-icon x-large color="error darken-3">{{
+            <v-icon
+              x-large
+              color="error darken-3"
+            >{{
               icons.mdiFilePdf
             }}</v-icon>
           </span>
@@ -60,15 +90,28 @@
             v-show="false"
             ref="inputUpload"
             type="file"
+            multiple
             @change="uploadFile"
-          />
+          >
         </v-col>
 
-        <file-list :items="formData.files" />
+        <file-list
+          :items="formData.files"
+          :is-admin="true"
+        />
 
-        <v-btn-toggle group class="btnGroup mt-3">
-          <v-btn outlined class="btn" @click="GenQrCode" type="button">
-            <v-icon>{{ icons.mdiQrcode }} </v-icon> Gen QrCode
+        <v-btn-toggle
+          group
+          class="btnGroup mt-3"
+        >
+          <v-btn
+            outlined
+            class="btn"
+            @click="GenQrCode"
+            type="button"
+          >
+            <v-icon>{{ icons.mdiQrcode }}</v-icon>
+            Gen QrCode
           </v-btn>
           <v-btn
             outlined
@@ -77,10 +120,17 @@
             type="submit"
             v-if="mode === 'new'"
           >
-            <v-icon>{{ icons.mdiContentSave }} </v-icon> Save
+            <v-icon>{{ icons.mdiContentSave }}</v-icon>
+            Save
           </v-btn>
-          <v-btn outlined class="btn" type="submit" v-if="mode === 'update'">
-            <v-icon>{{ icons.mdiContentSave }} </v-icon> Update
+          <v-btn
+            outlined
+            class="btn"
+            type="submit"
+            v-if="mode === 'update'"
+          >
+            <v-icon>{{ icons.mdiContentSave }}</v-icon>
+            Update
           </v-btn>
         </v-btn-toggle>
       </v-form>
@@ -89,7 +139,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 import {
   mdiContentCopy,
   mdiLockReset,
@@ -99,7 +149,7 @@ import {
   mdiCloseBox,
 } from '@mdi/js';
 
-import { EventBus } from '../store/eventBus';
+import {EventBus} from '../store/eventBus';
 import FileList from '@/components/FileList';
 
 export default {
@@ -126,9 +176,9 @@ export default {
     formData: {},
     initFormData: {
       sn: '',
-      companie: { name: '' },
-      part: { title: '' },
-      doctype: { title: '' },
+      companie: {name: ''},
+      part: {title: ''},
+      doctype: {title: ''},
       files: [],
     },
     doctypeTitle: '',
@@ -163,25 +213,28 @@ export default {
     },
     toClipboard(text) {
       navigator.clipboard.writeText(text).then(
-        function() {
-          /* clipboard successfully set */
-          console.log('Copy was succefull');
-        },
-        function() {
-          /* clipboard write failed */
-          console.log('Copy failed');
-        },
+          function () {
+            /* clipboard successfully set */
+            console.log('Copy was succefull');
+          },
+          function () {
+            /* clipboard write failed */
+            console.log('Copy failed');
+          },
       );
     },
     async uploadFile(event) {
+      console.log(event.target.files)
+      //TODO make selected files as a loop
       const selectedFile = await event.target.files[0];
       let doctypeId = 0;
       if (this.doctypeTitle) {
         const doctype = this.doctypes.find(
-          (doc) => doc.title === this.doctypeTitle,
+            (doc) => doc.title === this.doctypeTitle,
         );
         doctypeId = doctype.id;
       }
+      //TODO id is only temporery, should be removed by calling API
       const file = {
         id: new Date().getTime(),
         filename: selectedFile.name,
@@ -194,6 +247,7 @@ export default {
           url: '/' + selectedFile.name,
         },
       };
+      //TODO push files only if thruety from API
       this.formData.files.push(file);
     },
     GenQrCode() {
@@ -214,8 +268,12 @@ export default {
 
       this.closeModal();
     },
-    removeFileFromDevice(fileId) {
-      console.log('File delete Event fired. FileId=>', fileId);
+    removeFileFromDevice(payload) {
+      //check if payload exists and contains "fileId" key
+      if (payload && payload.fileId) {
+        const files = [...this.formData.files]
+        this.formData.files = files.filter(file => file.id !== payload.fileId)
+      }
     },
   },
   watch: {
@@ -227,19 +285,20 @@ export default {
     },
   },
   created() {
-    // eventlistening to delete File
-    EventBus.$on('delete-clicked-onFile', this.removeFileFromDevice);
     // only if the currentDevice not empty copy to formData
     if (this.currentDevice && this.currentDevice.sn) {
-      this.formData = { ...this.currentDevice };
+      this.formData = {...this.currentDevice};
     }
     // otherwise copy the initFormData
     else {
-      this.formData = { ...this.initFormData, pass: '' };
+      this.formData = {...this.initFormData, pass: ''};
     }
+
+    // eventlistening to delete File
+    EventBus.$on('delBtnClicked', payload => this.removeFileFromDevice(payload));
   },
   destroyed() {
-    EventBus.$off('delete-clicked-onFile');
+    EventBus.$off('delBtnClicked');
   },
   // created() {
   //
@@ -252,27 +311,34 @@ h1 {
   display: flex;
   justify-content: center;
 }
+
 .addedSnPass {
   display: flex;
   align-items: center;
 }
+
 .v-application p {
   margin-bottom: 0;
 }
+
 .input {
   margin: 10px;
 }
+
 .downloadFile {
   display: flex;
   align-items: baseline;
 }
+
 .my-2 {
   margin: 10px;
 }
+
 .btnGroup {
   display: flex;
   justify-content: flex-end;
 }
+
 .btn {
   margin: 10px;
 }
