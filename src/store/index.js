@@ -7,7 +7,7 @@ import api from "../api/api";
 //TODO make this imports dynamic, when they needed
 import CompanyForm from "@/components/Forms/CompanyForm";
 import PartsForm from "@/components/Forms/PartsForm";
-import DeviceForm from "@/components/Devices/DeviceForm";
+import DeviceForm from "@/components/Forms/DeviceForm";
 import QrCode from "@/components/Devices/QrCode";
 
 Vue.use(Vuex);
