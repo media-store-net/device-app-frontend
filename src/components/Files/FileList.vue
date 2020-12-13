@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import FileItem from '@/components/FileItem.vue';
+import FileItem from '@/components/Files/FileItem.vue';
 
 //TODO Docu for prop isAdmin
 /**

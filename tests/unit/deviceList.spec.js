@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import DeviceList from "../../src/components/DeviceList";
+import DeviceList from "@/components/Devices/DeviceList";
 
 describe("DeviceList.test.js", () => {
     let cmp;

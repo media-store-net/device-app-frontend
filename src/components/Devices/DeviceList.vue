@@ -75,7 +75,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js'
 
 import api from '@/api/api'
-import DeviceItem from '@/components/DeviceItem'
+import DeviceItem from '@/components/Devices/DeviceItem'
 import {EventBus} from "@/store/eventBus";
 
 /**

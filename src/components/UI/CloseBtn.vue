@@ -15,7 +15,7 @@
 import { mdiCloseBox } from '@mdi/js';
 
 export default {
-  emits: ['close-click'],
+  emits: ['click'],
   data() {
     return {
       closeBtn: mdiCloseBox,
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     onClose() {
-      this.$emit('close-click');
+      this.$emit('click');
     },
   },
 };

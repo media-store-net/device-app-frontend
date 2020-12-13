@@ -5,9 +5,9 @@ import axios from "../api/index";
 import api from "../api/api";
 
 //TODO make this imports dynamic, when they needed
-import CompanyForm from "@/components/CompanyForm";
-import DeviceForm from "@/components/DeviceForm";
-import QrCode from "@/components/QrCode";
+import CompanyForm from "@/components/Forms/CompanyForm";
+import DeviceForm from "@/components/Devices/DeviceForm";
+import QrCode from "@/components/Devices/QrCode";
 
 Vue.use(Vuex);
 
@@ -29,7 +29,7 @@ export const state = {
         class: "company-form",
         height: "auto",
         width: "60%",
-        scrollable: false
+        scrollable: true
       }
     },
     DeviceForm: {
@@ -50,7 +50,7 @@ export const state = {
       props: {
         class: "QrCode",
         height: "335px",
-        width: "60%"
+        width: "60%",
       }
     }
   }

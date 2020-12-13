@@ -9,7 +9,7 @@
           <v-card class="py-8">
             <close-btn
               class="mr-10"
-              @close-click="closeModal"
+              @click="closeModal"
             />
             <h1>Company Form</h1>
             <v-form
@@ -71,7 +71,7 @@
 import { mapActions } from 'vuex';
 import { mdiContentCopy, mdiLockReset } from '@mdi/js';
 
-import CloseBtn from './UI/CloseBtn';
+import CloseBtn from '../UI/CloseBtn';
 
 export default {
   components: {

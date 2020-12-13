@@ -22,7 +22,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import DeviceItem from '../components/DeviceItem';
+import DeviceItem from '../components/Devices/DeviceItem';
 
 export default {
   components: {

@@ -2,6 +2,7 @@
   <v-btn
     icon
     color="accent"
+    @click="$emit('click')"
   >
     <v-icon>{{ qrBtn }} </v-icon>
   </v-btn>

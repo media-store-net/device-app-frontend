@@ -19,7 +19,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/Forms/LoginForm';
 
 export default {
   components: {

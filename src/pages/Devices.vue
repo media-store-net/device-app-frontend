@@ -19,8 +19,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Header from '@/components/Header';
-import DeviceList from '../components/DeviceList';
+import Header from '@/components/UI/Header';
+import DeviceList from '../components/Devices/DeviceList';
 
 export default {
   components: {

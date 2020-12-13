@@ -2,6 +2,7 @@
   <v-btn
     icon
     color="primary"
+    @click="$emit('click')"
   >
     <v-icon>{{ editBtn }} </v-icon>
   </v-btn>

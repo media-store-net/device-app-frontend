@@ -149,8 +149,8 @@ import {
   mdiCloseBox,
 } from '@mdi/js';
 
-import {EventBus} from '../store/eventBus';
-import FileList from '@/components/FileList';
+import {EventBus} from '../../store/eventBus';
+import FileList from '@/components/Files/FileList';
 
 export default {
   name: 'DeviceForm',

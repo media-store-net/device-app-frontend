@@ -24,26 +24,11 @@
           <v-card-actions v-if="isAdmin">
             <v-row>
               <v-col cols="12">
-                <v-btn
-                  text
-                  @click="$emit('gen-qr', id)"
-                >
-                  <QrBtn />
-                </v-btn>
+                <QrBtn @click="$emit('gen-qr', id)" />
 
-                <v-btn
-                  text
-                  @click="$emit('edit-device', id)"
-                >
-                  <EditBtn />
-                </v-btn>
+                <EditBtn @click="$emit('edit-device', id)" />
 
-                <v-btn
-                  text
-                  @click="$emit('delete-device', id)"
-                >
-                  <DeleteBtn />
-                </v-btn>
+                <DeleteBtn @click="$emit('delete-device', id)" />
               </v-col>
             </v-row>
           </v-card-actions>
@@ -78,12 +63,13 @@
   </transition>
 </template>
 <script>
-import {  mdiFile } from '@mdi/js';
+import {mdiFile} from '@mdi/js';
 
-import FileList from '@/components/FileList.vue';
+import FileList from '@/components/Files/FileList.vue';
 import DeleteBtn from "@/components/UI/DeleteBtn";
 import EditBtn from "@/components/UI/EditBtn";
 import QrBtn from "@/components/UI/QrBtn";
+
 /**
  * @description DeviceItem is a Component to reflect functionality of one device object
  *
@@ -116,12 +102,12 @@ export default {
     EditBtn
   },
   props: {
-    id: { type: Number, required: true },
-    companie: { type: Object, required: true },
-    part: { type: Object, required: true },
-    sn: { type: String, required: true },
-    files: { type: Array, required: false, default: () => [] },
-    isAdmin: { type: Boolean, default: false },
+    id: {type: Number, required: true},
+    companie: {type: Object, required: true},
+    part: {type: Object, required: true},
+    sn: {type: String, required: true},
+    files: {type: Array, required: false, default: () => []},
+    isAdmin: {type: Boolean, default: false},
   },
   emits: ['gen-qr', 'edit-device', 'delete-device'],
   data() {
@@ -139,11 +125,13 @@ export default {
   align-items: end;
   padding: 20px;
 }
+
 .title-span {
   position: absolute;
   left: 2em;
   margin-left: 4em;
 }
+
 .badge {
   text-align: center;
   padding: 10px 20px;
@@ -154,12 +142,15 @@ export default {
   background: transparent;
   cursor: pointer;
 }
+
 .device-enter-active {
   animation: device-animation 0.8s ease-out;
 }
+
 .device-leave-active {
   animation: device-animation 0.5s ease-in reverse;
 }
+
 @keyframes device-animation {
   from {
     opacity: 0;

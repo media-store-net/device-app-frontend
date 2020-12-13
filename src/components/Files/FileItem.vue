@@ -33,7 +33,7 @@
 import {mapGetters} from 'vuex';
 
 import {mdiFileDownload} from '@mdi/js';
-import {EventBus} from '../store/eventBus';
+import {EventBus} from '../../store/eventBus';
 import DeleteBtn from '@/components/UI/DeleteBtn';
 //TODO Docu for isAdmin prop
 /**
