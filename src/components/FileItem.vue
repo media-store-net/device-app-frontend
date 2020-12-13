@@ -1,15 +1,27 @@
 <template>
   <transition name="file">
-    <v-col cols="12" class="file-item-container">
+    <v-col
+      cols="12"
+      class="file-item-container"
+    >
       <v-list-item-content class="item">
         <v-list-item-title class="headline mb-1">
           {{ id }}. {{ fileDoctype(doctypeId) }} |
           {{ url.name }}
         </v-list-item-title>
       </v-list-item-content>
-      <DeleteBtn @click="onDelete" />
-      <a :href="filelink" target="_blank">
-        <v-btn icon color="blue">
+      <DeleteBtn
+        v-if="isAdmin"
+        @click="onDelete"
+      />
+      <a
+        :href="filelink"
+        target="_blank"
+      >
+        <v-btn
+          icon
+          color="blue"
+        >
           <v-icon>{{ download }}</v-icon>
         </v-btn>
       </a>
@@ -18,12 +30,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
-import { mdiFileDownload } from '@mdi/js';
-import { EventBus } from '../store/eventBus';
+import {mdiFileDownload} from '@mdi/js';
+import {EventBus} from '../store/eventBus';
 import DeleteBtn from '@/components/UI/DeleteBtn';
-
+//TODO Docu for isAdmin prop
 /**
  * @description FileItem - represent one given File Object
  *
@@ -52,6 +64,7 @@ export default {
       type: Object,
       required: true,
     },
+    isAdmin: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -76,7 +89,7 @@ export default {
       return doctype && doctype.title ? doctype.title : '';
     },
     onDelete() {
-      EventBus.$emit('delete-clicked-onFile', this.id);
+      EventBus.onDeleteBtn({fileId: this.id})
     },
   },
 };
@@ -87,6 +100,7 @@ export default {
   display: inline-flex;
   padding: 0 1.5rem;
 }
+
 .item {
   padding: 0;
 }
@@ -94,6 +108,7 @@ export default {
 .file-enter-active {
   animation: list-animation 0.8s ease-out;
 }
+
 .file-leave-active {
   animation: list-animation 0.8s ease-in reverse;
 }

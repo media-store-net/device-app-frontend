@@ -8,6 +8,7 @@
         :id="file.id"
         :doctype-id="file.doctype"
         :url="file.url"
+        :is-admin="isAdmin"
       />
     </v-card-actions>
   </v-row>
@@ -16,6 +17,7 @@
 <script>
 import FileItem from '@/components/FileItem.vue';
 
+//TODO Docu for prop isAdmin
 /**
  * @description FileList - represent the Files Array Component in action cards
  *
@@ -31,6 +33,7 @@ export default {
       type: Array,
       default: () => [],
     },
+    isAdmin: {type: Boolean, default: false},
   },
 };
 </script>
