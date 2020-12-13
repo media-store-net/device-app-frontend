@@ -44,7 +44,7 @@
           :is-admin="true"
           @gen-qr="genQr"
           @edit-device="editDevice"
-          @delete-device="deleteDevice"
+          @delete-device="deleteDevice(currentDevice)"
         />
       </v-col>
 
@@ -169,7 +169,10 @@ export default {
      * @returns {boolean}
      */
     deleteDevice(device) {
-      console.log(device)
+      //TODO api call to delete the device
+      if(confirm('You want realy delete?')) {
+        console.log(device)
+      }
     },
     /**
      * @vue-method showModal
