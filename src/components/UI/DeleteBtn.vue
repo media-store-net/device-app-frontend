@@ -1,11 +1,15 @@
 <template>
-  <v-btn icon color="red" @click="clickDelete">
-    <v-icon>{{ deleteBtn }} </v-icon>
+  <v-btn
+    icon
+    color="red"
+    @click="clickDelete"
+  >
+    <v-icon>{{ deleteBtn }}</v-icon>
   </v-btn>
 </template>
 
 <script>
-import { mdiDelete } from '@mdi/js';
+import {mdiDelete} from '@mdi/js';
 
 export default {
   name: 'DeleteBtn',
