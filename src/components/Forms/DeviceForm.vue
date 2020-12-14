@@ -90,6 +90,7 @@
             v-show="false"
             ref="inputUpload"
             type="file"
+            name="files"
             multiple
             @change="uploadFile"
           >
@@ -151,6 +152,7 @@ import {
 
 import {EventBus} from '../../store/eventBus';
 import FileList from '@/components/Files/FileList';
+import api from "@/api/api";
 
 export default {
   name: 'DeviceForm',
@@ -224,9 +226,30 @@ export default {
       );
     },
     async uploadFile(event) {
-      console.log(event.target.files)
+      // create HTML Form Element
+      const formEl = document.createElement("form");
+      // append new inputs
+      formEl.append(event.target)
+      // await the upload of all files
+      const response = await api.upload.post(new FormData(formEl));
+
+      const uploads = response.data;
+      // loop through the uploaded data
+      uploads.map(async upload => {
+        const file = {
+          filename: upload.name,
+          url: upload
+        }
+        // send the file metadata to api
+        const fileRes = await api.files.post(file);
+        // store the result from api
+        const uploadedFile = fileRes.data;
+        // push it to the files array of a device
+        this.formData.files.push(uploadedFile);
+      })
+
       //TODO make selected files as a loop
-      const selectedFile = await event.target.files[0];
+      /*const selectedFile = await event.target.files[0];
       let doctypeId = 0;
       if (this.doctypeTitle) {
         const doctype = this.doctypes.find(
@@ -248,7 +271,7 @@ export default {
         },
       };
       //TODO push files only if thruety from API
-      this.formData.files.push(file);
+      this.formData.files.push(file);*/
     },
     GenQrCode() {
       this.$modal.show('QrCode');
