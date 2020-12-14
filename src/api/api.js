@@ -22,11 +22,50 @@ export default {
       return API.put('/companies', id)
     }
   },
+	upload: {
+		get() {
+			let params = new URLSearchParams();
+			return API.get("/upload", params);
+		},
+		post(data) {
+			return API.post("/upload", data);
+		},
+		put(data) {
+			return API.put('/upload', data)
+		},
+		delete(id) {
+			return API.put('/upload', id)
+		}
+	},
+	files: {
+		get() {
+			let params = new URLSearchParams();
+			return API.get("/files", params);
+		},
+		post(data) {
+			return API.post("/files", data);
+		},
+		put(data) {
+			return API.put('/files', data)
+		},
+		delete(id) {
+			return API.put('/files', id)
+		}
+	},
   devices: {
     get() {
       let params = new URLSearchParams();
       return API.get("/devices", params);
-    }
+    },
+	  post(data) {
+		  return API.post("/devices", data);
+	  },
+	  put(data) {
+		  return API.put('/devices', data)
+	  },
+	  delete(id) {
+		  return API.put('/devices', id)
+	  }
   },
 
   doctypes: {
