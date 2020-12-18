@@ -230,6 +230,7 @@ export default {
       const formEl = document.createElement("form");
       // append new inputs
       formEl.append(event.target)
+      // TODO logic to upload and send file to server over store
       // await the upload of all files
       const response = await api.upload.post(new FormData(formEl));
 
@@ -247,31 +248,6 @@ export default {
         // push it to the files array of a device
         this.formData.files.push(uploadedFile);
       })
-
-      //TODO make selected files as a loop
-      /*const selectedFile = await event.target.files[0];
-      let doctypeId = 0;
-      if (this.doctypeTitle) {
-        const doctype = this.doctypes.find(
-            (doc) => doc.title === this.doctypeTitle,
-        );
-        doctypeId = doctype.id;
-      }
-      //TODO id is only temporery, should be removed by calling API
-      const file = {
-        id: new Date().getTime(),
-        filename: selectedFile.name,
-        doctype: doctypeId,
-        url: {
-          created_at: selectedFile.lastModified,
-          mime: selectedFile.type,
-          name: selectedFile.name,
-          size: selectedFile.size,
-          url: '/' + selectedFile.name,
-        },
-      };
-      //TODO push files only if thruety from API
-      this.formData.files.push(file);*/
     },
     GenQrCode() {
       this.$modal.show('QrCode');

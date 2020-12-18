@@ -42,14 +42,14 @@ export default {
 			let params = new URLSearchParams();
 			return API.get("/files", params);
 		},
-		post(data) {
-			return API.post("/files", data);
+		post(file) {
+			return API.post("/files", file);
 		},
-		put(data) {
-			return API.put('/files', data)
+		put(file) {
+			return API.put('/files', file)
 		},
 		delete(id) {
-			return API.put('/files', id)
+			return API.put('/files/' + id)
 		}
 	},
   devices: {
@@ -57,14 +57,14 @@ export default {
       let params = new URLSearchParams();
       return API.get("/devices", params);
     },
-	  post(data) {
-		  return API.post("/devices", data);
+	  post(device) {
+		  return API.post("/devices", device);
 	  },
-	  put(data) {
-		  return API.put('/devices', data)
+	  put(device) {
+		  return API.put(`/devices/${device.id}`, device)
 	  },
 	  delete(id) {
-		  return API.put('/devices', id)
+		  return API.put('/devices/' + id)
 	  }
   },
 

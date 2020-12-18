@@ -111,14 +111,17 @@ export const mutations = {
  * @description VUEX Actions to commit the changes into the state via mutations
  */
 export const actions = {
+	// TODO Docs
 	setCompanies: async ({commit}) => {
 		try {
 			const res = await api.companies.get();
 			commit("setCompanies", res.data);
 		} catch (error) {
+			// TODO Errors Component (maybe as modal)
 			console.error(error);
 		}
 	},
+	// TODO Docs
 	newCompanie: async (context, payload) => {
 		try {
 			const res = await api.companies.post(payload);
@@ -134,27 +137,11 @@ export const actions = {
 				context.commit("setCompanies", companies);
 			}
 		} catch (error) {
+			// TODO Errors Component (maybe as modal)
 			console.error(error);
 		}
 	},
-	newPart: async (context, payload) => {
-		try {
-			const res = await api.parts.post(payload);
-			if (res.statusText !== "OK") {
-				console.log("Something went wrong");
-			} else {
-				console.log("status OK");
-				// copy parts array from state
-				const parts = [...context.getters.parts];
-				// push new item into array
-				parts.push(res.data);
-				// commit back to state
-				context.commit("setParts", parts);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	},
+	// TODO Docs
 	newDoctype: async (context, payload) => {
 		try {
 			const res = await api.doctypes.post(payload);
@@ -170,9 +157,103 @@ export const actions = {
 				context.commit("setDoctypes", doctypes);
 			}
 		} catch (error) {
+			// TODO Errors Component (maybe as modal)
 			console.error(error);
 		}
 	},
+	// TODO Docs
+	setDoctypes: async ({commit}) => {
+		try {
+			const res = await api.doctypes.get();
+			commit("setDoctypes", res.data);
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+			console.error(error);
+		}
+	},
+	// TODO Docs
+	newPart: async (context, payload) => {
+		try {
+			const res = await api.parts.post(payload);
+			if (res.statusText !== "OK") {
+				console.log("Something went wrong");
+			} else {
+				console.log("status OK");
+				// copy parts array from state
+				const parts = [...context.getters.parts];
+				// push new item into array
+				parts.push(res.data);
+				// commit back to state
+				context.commit("setParts", parts);
+			}
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+			console.error(error);
+		}
+	},
+	// TODO Docs
+	setParts: async ({commit}) => {
+		try {
+			const res = await api.parts.get();
+			commit("setParts", res.data);
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+			console.error(error);
+		}
+	},
+	// TODO Docs
+	newFile: async (context, payload) => {
+		try {
+			// send new File to API
+			// return the object
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+		}
+	},
+	// TODO Docs
+	removeFile: async (context, payload) => {
+		try {
+			// send the id of file to remove from server
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+		}
+	},
+	// TODO Docs
+	setFiles: async (context, payload) => {
+		try {
+			// get Files Array from API and sets to state (nedded only on the files page)
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+		}
+	},
+	// TODO Docs
+	newDevice: async (context, payload) => {
+		try {
+			// send data to API
+			// push device to devices array (this.pushDevice)
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+		}
+	},
+	// TODO Docs
+	updateDevice: async (context, payload) => {
+		try {
+			// send data to API
+			// filter the device in the devices array
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+		}
+	},
+	// TODO Docs
+	removeDevice: async (context, payload) => {
+		try {
+			// send id to API
+			// remove from devices array
+		} catch (error) {
+			// TODO Errors Component (maybe as modal)
+		}
+	},
+	// TODO Docs
 	setDevices: async ({commit}) => {
 		try {
 			const res = await api.devices.get();
@@ -181,22 +262,7 @@ export const actions = {
 			console.error(error);
 		}
 	},
-	setDoctypes: async ({commit}) => {
-		try {
-			const res = await api.doctypes.get();
-			commit("setDoctypes", res.data);
-		} catch (error) {
-			console.error(error);
-		}
-	},
-	setParts: async ({commit}) => {
-		try {
-			const res = await api.parts.get();
-			commit("setParts", res.data);
-		} catch (error) {
-			console.error(error);
-		}
-	},
+	// TODO Docs
 	loginCustomer: async (context, payload) => {
 		try {
 			const res = await api.deviceLogin({sn: payload.sn, pass: payload.pass})
@@ -209,6 +275,7 @@ export const actions = {
 			console.error(error);
 		}
 	},
+	// TODO Docs
 	loginUser: async (context, payload) => {
 		try {
 			const res = await api.userLogin({
@@ -239,6 +306,7 @@ export const actions = {
 			console.error(error);
 		}
 	},
+	// Docs
 	logoutUser: async context => {
 		try {
 			// remove localstorage item
