@@ -229,8 +229,15 @@ export const actions = {
 	// TODO Docs
 	newDevice: async (context, payload) => {
 		try {
+			console.log(payload)
 			// send data to API
-			// push device to devices array (this.pushDevice)
+			const res = await api.devices.post(payload);
+			if (res.statusText !== "OK") {
+				console.log("Something went wrong");
+			} else {
+				// push device to devices array (this.pushDevice)
+				this.pushDevice(res.data);
+			}
 		} catch (error) {
 			// TODO Errors Component (maybe as modal)
 		}
@@ -239,7 +246,13 @@ export const actions = {
 	updateDevice: async (context, payload) => {
 		try {
 			// send data to API
-			// filter the device in the devices array
+			const res = await api.devices.put(payload);
+			if (res.statusText !== "OK") {
+				console.log("Something went wrong");
+			} else {
+				// TODO filter the device in the devices array
+				console.log(res.data)
+			}
 		} catch (error) {
 			// TODO Errors Component (maybe as modal)
 		}

@@ -40,7 +40,7 @@
           <v-btn
             text
             title="Passwort generieren"
-            @click="genPass"
+            @click="generatePass"
           >
             <v-icon>{{ icons.mdiLockReset }}</v-icon>
           </v-btn>
@@ -198,20 +198,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['setCurrentDevice', 'pushDevice']),
+    ...mapActions(['setCurrentDevice', 'genPass', 'newDevice', 'updateDevice', 'pushDevice']),
 
-    genPass() {
-      let hash = 0;
-
-      if (this.formData.sn === '') return hash;
-
-      for (let i = 0; i < this.formData.sn.length; i++) {
-        const char = this.formData.sn.charCodeAt(i);
-        hash = (hash << 3) - hash + char;
-        hash = hash & hash;
-      }
-
-      this.formData.pass = hash;
+    async generatePass() {
+      const pass = await this.genPass(this.formData.sn)
+      this.formData.pass = pass.toString();
     },
     toClipboard(text) {
       navigator.clipboard.writeText(text).then(
@@ -255,14 +246,29 @@ export default {
     closeModal() {
       this.$modal.hideAll();
     },
-    saveData() {
+    async saveData() {
       // TODO Form Validation and Error Handling
+      // Find the right company object
+      const company = this.companies.find(cmp => cmp.name === this.formData.companie.name)
+      this.formData.companie.id = company.id
+      // Find the right part object
+      const part = this.parts.find(part => part.title === this.formData.part.title)
+      this.formData.part.id = part.id
+
       if (this.mode === 'new') {
         // ID only temporär
-        this.formData.id = new Date().getTime();
-        this.pushDevice(this.formData);
+        /*this.formData.id = new Date().getTime();
+        this.pushDevice(this.formData);*/
+        //console.log(this.formData)
+        // send data to action
+        await this.newDevice(this.formData);
+        this.closeModal();
+
       } else if (this.mode === 'update') {
         console.log('Update fires');
+        // send data to action
+        await this.updateDevice(this.currentDevice);
+        this.closeModal();
       }
 
       this.closeModal();
