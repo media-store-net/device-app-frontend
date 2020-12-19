@@ -256,16 +256,10 @@ export default {
       this.formData.part.id = part.id
 
       if (this.mode === 'new') {
-        // ID only temporär
-        /*this.formData.id = new Date().getTime();
-        this.pushDevice(this.formData);*/
-        //console.log(this.formData)
         // send data to action
-        await this.newDevice(this.formData);
+        await this.newDevice(this.currentDevice);
         this.closeModal();
-
       } else if (this.mode === 'update') {
-        console.log('Update fires');
         // send data to action
         await this.updateDevice(this.currentDevice);
         this.closeModal();

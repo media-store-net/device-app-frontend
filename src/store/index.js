@@ -229,7 +229,6 @@ export const actions = {
 	// TODO Docs
 	newDevice: async (context, payload) => {
 		try {
-			console.log(payload)
 			// send data to API
 			const res = await api.devices.post(payload);
 			if (res.statusText !== "OK") {
