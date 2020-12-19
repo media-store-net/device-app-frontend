@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import { mdiQrcode, mdiPencil, mdiDelete } from '@mdi/js'
+import {mapGetters, mapActions} from 'vuex'
+import {mdiQrcode, mdiPencil, mdiDelete} from '@mdi/js'
 
 import api from '@/api/api'
 import DeviceItem from '@/components/Devices/DeviceItem'
@@ -129,6 +129,7 @@ export default {
       'setCurrentDevice',
       'setDoctypes',
       'setParts',
+      'removeDevice'
     ]),
     /**
      * @vue-method addNew
@@ -147,7 +148,7 @@ export default {
      * @returns {ModalComponent}
      */
     genQr(id) {
-      this.setCurrentDevice({ deviceId: id })
+      this.setCurrentDevice({deviceId: id})
       this.modalName = 'QrCode'
       this.showModal()
     },
@@ -158,7 +159,7 @@ export default {
      * @returns {ModalComponent}
      */
     editDevice(id) {
-      this.setCurrentDevice({ deviceId: id })
+      this.setCurrentDevice({deviceId: id})
       this.modalName = 'DeviceForm'
       this.showModal('update')
     },
@@ -168,10 +169,11 @@ export default {
      * @param {Number} id the ID of the selected Device
      * @returns {boolean}
      */
-    deleteDevice(device) {
+    async deleteDevice(device) {
       //TODO api call to delete the device
-      if(confirm('You want realy delete?')) {
-        console.log(device)
+      if (confirm('You want realy delete?')) {
+        console.log(device.id)
+        await this.removeDevice(device.id)
       }
     },
     /**
@@ -181,18 +183,18 @@ export default {
      */
     showModal(mode = 'new') {
       this.$modal.show(
-        this.currentModal.component,
-        { ...this.currentModal.attrs, mode: mode },
-        this.currentModal.props
+          this.currentModal.component,
+          {...this.currentModal.attrs, mode: mode},
+          this.currentModal.props
       )
     },
   },
   watch: {
     selectedDevice(val) {
       const devId = this.devices.find(
-        (device) => device.sn === val || device.companie.name.includes(val)
+          (device) => device.sn === val || device.companie.name.includes(val)
       )['id']
-      this.setCurrentDevice({ deviceId: devId })
+      this.setCurrentDevice({deviceId: devId})
     },
   },
   created() {
@@ -200,11 +202,11 @@ export default {
     EventBus.$on('delete-clicked-onFile', this.deleteDevice);
     // only if the currentDevice not empty copy to formData
     if (this.currentDevice && this.currentDevice.sn) {
-      this.formData = { ...this.currentDevice };
+      this.formData = {...this.currentDevice};
     }
     // otherwise copy the initFormData
     else {
-      this.formData = { ...this.initFormData, pass: '' };
+      this.formData = {...this.initFormData, pass: ''};
     }
   },
   destroyed() {
@@ -229,25 +231,31 @@ h1 {
 .v-application p {
   margin-bottom: 0;
 }
+
 .addNew {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
+
 .select {
   width: 100%;
   margin-right: 20px;
 }
+
 .mx-auto {
   margin-top: 40px;
 }
+
 .list {
   align-items: end;
   padding: 20px;
 }
+
 .item {
   padding: 0;
 }
+
 .QrCode {
   display: flex;
   justify-content: center;
@@ -258,6 +266,7 @@ h1 {
 .device-list-enter-active {
   animation: dev-list-animation 0.8s ease;
 }
+
 .device-list-leave-active {
   animation: dev-list-animation 0.8s ease reverse;
 }

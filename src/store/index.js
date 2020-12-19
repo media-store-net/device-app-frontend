@@ -235,7 +235,7 @@ export const actions = {
 				console.log("Something went wrong");
 			} else {
 				// push device to devices array (this.pushDevice)
-				this.pushDevice(res.data);
+				context.dispatch('pushDevice', res.data);
 			}
 		} catch (error) {
 			// TODO Errors Component (maybe as modal)
@@ -260,7 +260,14 @@ export const actions = {
 	removeDevice: async (context, payload) => {
 		try {
 			// send id to API
+			const res = await api.devices.delete(payload)
 			// remove from devices array
+			if (res.statusText !== "OK") {
+				console.log("Something went wrong");
+			} else {
+				// delete device in the devices array
+				context.dispatch('spliceDevice', res.data);
+			}
 		} catch (error) {
 			// TODO Errors Component (maybe as modal)
 		}
@@ -334,7 +341,16 @@ export const actions = {
 		}
 	},
 	pushDevice: (context, payload) => {
-		context.state.devices.push(payload);
+		// payload is the device object from server
+		const devices = [...context.getters.devices];
+		devices.push(payload)
+		context.commit('setDevices', devices)
+	},
+	spliceDevice: (context, payload) => {
+		// payload is the device object from server
+		const devices = [...context.getters.devices];
+		const filteredDevices = devices.filter(dev => dev.id !== payload.id)
+		context.commit('setDevices', filteredDevices)
 	},
 	/**
 	 * @method setCurrentDevice

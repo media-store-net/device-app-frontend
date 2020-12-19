@@ -64,7 +64,7 @@ export default {
 		  return API.put(`/devices/${device.id}`, device)
 	  },
 	  delete(id) {
-		  return API.put('/devices/' + id)
+		  return API.delete('/devices/' + id)
 	  }
   },
 
