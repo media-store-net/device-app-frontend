@@ -1,19 +1,32 @@
 <template>
   <v-btn
     icon
+    :color="color"
+    @click="$emit('click')"
   >
-    <v-icon>{{ addHarddiskBtn }} </v-icon>
+    <v-icon :size="size">
+      {{ addHarddiskBtn }}
+    </v-icon>
   </v-btn>
 </template>
 
 <script>
-import { mdiHarddiskPlus } from '@mdi/js';
+import {mdiHarddiskPlus} from '@mdi/js';
 
 export default {
   name: 'AddHarddiskBtn',
+  props: {
+    size: {
+      type: String
+    },
+    color: {
+      type: String
+    }
+  },
+  emits: ['click'],
   data() {
     return {
-     addHarddiskBtn: mdiHarddiskPlus,
+      addHarddiskBtn: mdiHarddiskPlus,
     };
   },
 };

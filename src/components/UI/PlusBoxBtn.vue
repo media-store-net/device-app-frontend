@@ -1,8 +1,12 @@
 <template>
   <v-btn
     icon
+    :color="color"
+    @click="$emit('click')"
   >
-    <v-icon>{{ plusBoxBtn }} </v-icon>
+    <v-icon :size="size">
+      {{ plusBoxBtn }}
+    </v-icon>
   </v-btn>
 </template>
 
@@ -11,6 +15,15 @@ import { mdiPlusBox } from '@mdi/js';
 
 export default {
   name: 'PlusBoxBtn',
+  props: {
+    size: {
+      type: String
+    },
+    color: {
+      type: String
+    }
+  },
+  emits: ['click'],
   data() {
     return {
      plusBoxBtn: mdiPlusBox,
