@@ -17,11 +17,19 @@
       <v-form @submit.prevent="saveData">
         <v-col cols="12">
           <p>Firma</p>
-          <search-select
-            label="firma"
-            :options="companieOptions"
-            v-model="formData.companie.name"
-          />
+          <v-flex class="d-flex justify-space-between align-center">
+            <search-select
+              label="firma"
+              class="col-11"
+              :options="companieOptions"
+              v-model="formData.companie.name"
+            />
+            <PlusBoxBtn
+              color="accent"
+              size="2.6rem"
+              @click="newCompanieModal"
+            />
+          </v-flex>
         </v-col>
         <v-col
           cols="12"
@@ -54,46 +62,63 @@
         </v-col>
         <v-col cols="12">
           <p>Art. Nr.</p>
-          <search-select
-            label="parts"
-            :options="partsOptions"
-            v-model="formData.part.title"
-          />
+          <v-flex class="d-flex justify-space-between align-center">
+            <search-select
+              label="parts"
+              class="col-11"
+              :options="partsOptions"
+              v-model="formData.part.title"
+            />
+            <PlusBoxBtn
+              color="accent"
+              size="2.6rem"
+              @click="newPartsModal"
+            />
+          </v-flex>
         </v-col>
         <v-col
           cols="12"
           class="downloadFile my-8 gray--{lighten}-{3}"
         >
-          <span class="col-1">
-            <v-icon
-              x-large
-              color="error darken-3"
-            >{{
-              icons.mdiFilePdf
-            }}</v-icon>
-          </span>
-          <search-select
-            label="doctypes"
-            :options="doctypeOptions"
-            v-model="doctypeTitle"
-            class="col-8"
-          />
-
-          <v-btn
-            color="primary"
-            class="col-3"
-            @click="$refs.inputUpload.click()"
-          >
-            Select File
-          </v-btn>
-          <input
-            v-show="false"
-            ref="inputUpload"
-            type="file"
-            name="files"
-            multiple
-            @change="uploadFile"
-          >
+          <v-flex class="d-flex justify-space-between align-center">
+            <PlusBoxBtn
+              color="error"
+              size="2.6rem"
+              @click="newDoctypeModal"
+            />
+            <!-- TODO  check if vSelect can be scrollable-->
+            <search-select
+              label="doctypes"
+              :options="doctypeOptions"
+              v-model="doctypeTitle"
+              class="col-10"
+            />
+            <CloudBtn
+              color="accent"
+              size="2rem"
+              @click="filesModal"
+            />
+            <HarddiskBtn
+              color="primary"
+              size="2rem"
+              @click="$refs.inputUpload.click()"
+            />
+            <!--            <v-btn
+                color="primary"
+                class="col-3"
+                @click="$refs.inputUpload.click()"
+            >
+              Select File
+            </v-btn>-->
+            <input
+              v-show="false"
+              ref="inputUpload"
+              type="file"
+              name="files"
+              multiple
+              @change="uploadFile"
+            >
+          </v-flex>
         </v-col>
 
         <file-list
@@ -152,12 +177,19 @@ import {
 
 import {EventBus} from '../../store/eventBus';
 import FileList from '@/components/Files/FileList';
+import PlusBoxBtn from "@/components/UI/PlusBoxBtn";
+import HarddiskBtn from "@/components/UI/HarddiskBtn";
+import CloudBtn from "@/components/UI/CloudBtn";
+
 import api from "@/api/api";
 
 export default {
   name: 'DeviceForm',
   components: {
     FileList,
+    PlusBoxBtn,
+    HarddiskBtn,
+    CloudBtn
   },
   props: {
     mode: {
@@ -183,10 +215,11 @@ export default {
       doctype: {title: ''},
       files: [],
     },
-    doctypeTitle: 'User-Manual',
+    doctypeTitle: 'Dokumentation',
+    modalName: ''
   }),
   computed: {
-    ...mapGetters(['companies', 'doctypes', 'parts', 'currentDevice']),
+    ...mapGetters(['companies', 'doctypes', 'parts', 'currentDevice', 'modals']),
     companieOptions() {
       return this.companies.map((comp) => comp.name);
     },
@@ -196,10 +229,43 @@ export default {
     doctypeOptions() {
       return this.doctypes.map((doc) => doc.title);
     },
+    currentModal() {
+      return this.modals[this.modalName]
+    },
   },
   methods: {
     ...mapActions(['setCurrentDevice', 'genPass', 'newDevice', 'updateDevice', 'pushDevice']),
-
+    newCompanieModal() {
+      //set current modal to "CompanyForm"
+      this.modalName = 'CompanyForm'
+      this.$modal.show(
+          this.currentModal.component,
+          this.currentModal.attrs,
+          this.currentModal.props
+      )
+    },
+    newPartsModal() {
+      // set current modal to "PartsForm"
+      this.modalName = 'PartsForm'
+      this.$modal.show(
+          this.currentModal.component,
+          this.currentModal.attrs,
+          this.currentModal.props
+      )
+    },
+    newDoctypeModal() {
+      // set current modal to "DoctypesForm"
+      this.modalName = 'DoctypesForm'
+      this.$modal.show(
+          this.currentModal.component,
+          this.currentModal.attrs,
+          this.currentModal.props
+      )
+    },
+    filesModal() {
+      // TODO open files from server as Modal
+      alert('Files from Server...')
+    },
     async generatePass() {
       const pass = await this.genPass(this.formData.sn)
       this.formData.pass = pass.toString();
@@ -221,7 +287,7 @@ export default {
       const formEl = document.createElement("form");
       // append new inputs
       formEl.append(event.target)
-      // TODO logic to upload and send file to server over store
+      // TODO move logic to upload and send file to server over store
       // await the upload of all files
       const response = await api.upload.post(new FormData(formEl));
 

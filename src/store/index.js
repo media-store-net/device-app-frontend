@@ -63,7 +63,7 @@ export const state = {
 			props: {
 				class: "DeviceForm",
 				height: "auto",
-				width: "700px",
+				width: "95%",
 				scrollable: true
 			}
 		},
