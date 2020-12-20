@@ -35,16 +35,17 @@
         v-if="selectedDevice"
       >
         <device-item
-          :key="currentDevice.id"
-          :id="currentDevice.id"
-          :companie="currentDevice.companie"
-          :part="currentDevice.part"
-          :sn="currentDevice.sn"
-          :files="currentDevice.files"
+          v-for="device in deviceResults"
+          :key="device.id"
+          :id="device.id"
+          :companie="device.companie"
+          :part="device.part"
+          :sn="device.sn"
+          :files="device.files"
           :is-admin="true"
           @gen-qr="genQr"
           @edit-device="editDevice"
-          @delete-device="deleteDevice(currentDevice)"
+          @delete-device="deleteDevice(device)"
         />
       </v-col>
 
@@ -114,6 +115,7 @@ export default {
       mdiDelete,
     },
     selectedDevice: '',
+    deviceResults: [],
     modalName: 'DeviceForm',
   }),
   computed: {
@@ -191,10 +193,11 @@ export default {
   },
   watch: {
     selectedDevice(val) {
-      const devId = this.devices.find(
+      const devId = this.devices.filter(
           (device) => device.sn === val || device.companie.name.includes(val)
-      )['id']
-      this.setCurrentDevice({deviceId: devId})
+      )
+      this.deviceResults = devId;
+      //this.setCurrentDevice({deviceId: devId[0]['id']})
     },
   },
   created() {
