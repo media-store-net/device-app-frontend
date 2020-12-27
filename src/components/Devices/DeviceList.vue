@@ -172,7 +172,7 @@ export default {
      * @returns {boolean}
      */
     async deleteDevice(device) {
-      //TODO api call to delete the device
+      // api call to delete the device
       if (confirm('You want realy delete?')) {
         console.log(device.id)
         await this.removeDevice(device.id)
