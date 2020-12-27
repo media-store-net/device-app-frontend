@@ -4,67 +4,67 @@
       <small>Search Device or Customer...</small>
       <div class="addNew">
         <search-select
-          class="select"
-          :options="[
+            class="select"
+            :options="[
             ...devices.map((device) => device.sn),
             ...companies.map((c) => c.name),
           ]"
-          v-model="selectedDevice"
+            v-model="selectedDevice"
         >
           <template v-slot:no-options="{ search, searching }">
             <template v-if="searching">
               No results found for <em>{{ search }}</em>.
             </template>
             <em
-              style="opacity: 0.5;"
-              v-else
+                style="opacity: 0.5;"
+                v-else
             >Search Device or Customer...</em>
           </template>
         </search-select>
         <v-btn
-          color="primary"
-          outlined
-          @click="addNew"
+            color="primary"
+            outlined
+            @click="addNew"
         >
           Add New
         </v-btn>
       </div>
 
       <v-col
-        class="pa-0"
-        v-if="selectedDevice"
+          class="pa-0"
+          v-if="selectedDevice"
       >
         <device-item
-          v-for="device in deviceResults"
-          :key="device.id"
-          :id="device.id"
-          :companie="device.companie"
-          :part="device.part"
-          :sn="device.sn"
-          :files="device.files"
-          :is-admin="true"
-          @gen-qr="genQr"
-          @edit-device="editDevice"
-          @delete-device="deleteDevice(device)"
+            v-for="device in deviceResults"
+            :key="device.id"
+            :id="device.id"
+            :companie="device.companie"
+            :part="device.part"
+            :sn="device.sn"
+            :files="device.files"
+            :is-admin="true"
+            @gen-qr="genQr"
+            @edit-device="editDevice"
+            @delete-device="deleteDevice(device)"
         />
       </v-col>
 
       <v-col
-        class="pa-0"
-        v-if="!selectedDevice"
+          class="pa-0"
+          v-if="!selectedDevice"
       >
         <device-item
-          v-for="device in devices"
-          :key="device.id"
-          :id="device.id"
-          :companie="device.companie"
-          :part="device.part"
-          :sn="device.sn"
-          :files="device.files"
-          :is-admin="true"
-          @gen-qr="genQr"
-          @edit-device="editDevice"
-          @delete-device="deleteDevice(device)"
+            v-for="device in devices"
+            :key="device.id"
+            :id="device.id"
+            :companie="device.companie"
+            :part="device.part"
+            :sn="device.sn"
+            :files="device.files"
+            :is-admin="true"
+            @gen-qr="genQr"
+            @edit-device="editDevice"
+            @delete-device="deleteDevice(device)"
         />
       </v-col>
     </v-container>
@@ -201,6 +201,9 @@ export default {
     },
   },
   created() {
+    this.modalName = "Loader";
+    this.selectedModal = this.showModal();
+
     // eventlistening to delete File
     EventBus.$on('delete-clicked-onFile', this.deleteDevice);
     // only if the currentDevice not empty copy to formData
@@ -217,9 +220,11 @@ export default {
   },
   mounted() {
     this.setCompanies()
-    this.setDevices()
     this.setDoctypes()
     this.setParts()
+    this.setDevices().then(() => {
+      this.$modal.hideAll()
+    })
   },
 }
 </script>
