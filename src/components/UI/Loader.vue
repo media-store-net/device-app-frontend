@@ -2,14 +2,14 @@
   <v-app class="loader">
     <v-container class="d-flex justify-center align-center flex-fill">
       <div class="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
       </div>
     </v-container>
   </v-app>
