@@ -43,6 +43,7 @@
 
 <script>
 import {mapActions} from 'vuex';
+import {EventBus} from "@/store/eventBus";
 
 import CloseBtn from '../UI/CloseBtn';
 
@@ -69,7 +70,7 @@ export default {
       this.closeModal();
     },
     closeModal() {
-      this.$modal.hideAll();
+      EventBus.hideModal('PartsForm');
     },
 
   }

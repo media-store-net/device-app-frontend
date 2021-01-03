@@ -3,10 +3,10 @@
     <v-container>
       <v-flex class="d-flex justify-end">
         <v-btn
-          icon
-          right
-          color="accent"
-          @click="closeModal"
+            icon
+            right
+            color="accent"
+            @click="closeModal"
         >
           <v-icon>{{ icons.mdiCloseBox }}</v-icon>
         </v-btn>
@@ -19,43 +19,43 @@
           <p>Firma</p>
           <v-flex class="d-flex justify-space-between align-center">
             <search-select
-              label="firma"
-              class="col-11"
-              :options="companieOptions"
-              v-model="formData.companie.name"
+                label="firma"
+                class="col-11"
+                :options="companieOptions"
+                v-model="formData.companie.name"
             />
             <PlusBoxBtn
-              color="accent"
-              size="2.6rem"
-              @click="newCompanieModal"
+                color="accent"
+                size="2.6rem"
+                @click="newCompanieModal"
             />
           </v-flex>
         </v-col>
         <v-col
-          cols="12"
-          class="addedSnPass"
+            cols="12"
+            class="addedSnPass"
         >
           <v-text-field
-            class="input"
-            label="SN:"
-            v-model="formData.sn"
+              class="input"
+              label="SN:"
+              v-model="formData.sn"
           />
           <v-text-field
-            class="input"
-            label="Pass:"
-            v-model="formData.pass"
+              class="input"
+              label="Pass:"
+              v-model="formData.pass"
           />
           <v-btn
-            text
-            title="Passwort generieren"
-            @click="generatePass"
+              text
+              title="Passwort generieren"
+              @click="generatePass"
           >
             <v-icon>{{ icons.mdiLockReset }}</v-icon>
           </v-btn>
           <v-btn
-            text
-            title="Kopieren"
-            @click="toClipboard(formData.pass)"
+              text
+              title="Kopieren"
+              @click="toClipboard(formData.pass)"
           >
             <v-icon>{{ icons.mdiContentCopy }}</v-icon>
           </v-btn>
@@ -64,44 +64,44 @@
           <p>Art. Nr.</p>
           <v-flex class="d-flex justify-space-between align-center">
             <search-select
-              label="parts"
-              class="col-11"
-              :options="partsOptions"
-              v-model="formData.part.title"
+                label="parts"
+                class="col-11"
+                :options="partsOptions"
+                v-model="formData.part.title"
             />
             <PlusBoxBtn
-              color="accent"
-              size="2.6rem"
-              @click="newPartsModal"
+                color="accent"
+                size="2.6rem"
+                @click="newPartsModal"
             />
           </v-flex>
         </v-col>
         <v-col
-          cols="12"
-          class="downloadFile my-8 gray--{lighten}-{3}"
+            cols="12"
+            class="downloadFile my-8 gray--{lighten}-{3}"
         >
           <v-flex class="d-flex justify-space-between align-center">
             <PlusBoxBtn
-              color="error"
-              size="2.6rem"
-              @click="newDoctypeModal"
+                color="error"
+                size="2.6rem"
+                @click="newDoctypeModal"
             />
             <!-- TODO  check if vSelect can be scrollable-->
             <search-select
-              label="doctypes"
-              :options="doctypeOptions"
-              v-model="doctypeTitle"
-              class="col-10"
+                label="doctypes"
+                :options="doctypeOptions"
+                v-model="doctypeTitle"
+                class="col-10"
             />
             <CloudBtn
-              color="accent"
-              size="2rem"
-              @click="filesModal"
+                color="accent"
+                size="2rem"
+                @click="filesModal"
             />
             <HarddiskBtn
-              color="primary"
-              size="2rem"
-              @click="$refs.inputUpload.click()"
+                color="primary"
+                size="2rem"
+                @click="$refs.inputUpload.click()"
             />
             <!--            <v-btn
                 color="primary"
@@ -111,49 +111,49 @@
               Select File
             </v-btn>-->
             <input
-              v-show="false"
-              ref="inputUpload"
-              type="file"
-              name="files"
-              multiple
-              @change="uploadFile"
+                v-show="false"
+                ref="inputUpload"
+                type="file"
+                name="files"
+                multiple
+                @change="uploadFile"
             >
           </v-flex>
         </v-col>
 
         <file-list
-          :items="formData.files"
-          :is-admin="true"
+            :items="formData.files"
+            :is-admin="true"
         />
 
         <v-btn-toggle
-          group
-          class="btnGroup mt-3"
+            group
+            class="btnGroup mt-3"
         >
           <v-btn
-            outlined
-            class="btn"
-            @click="GenQrCode"
-            type="button"
+              outlined
+              class="btn"
+              @click="GenQrCode"
+              type="button"
           >
             <v-icon>{{ icons.mdiQrcode }}</v-icon>
             Gen QrCode
           </v-btn>
           <v-btn
-            outlined
-            color="primary"
-            class="btn"
-            type="submit"
-            v-if="mode === 'new'"
+              outlined
+              color="primary"
+              class="btn"
+              type="submit"
+              v-if="mode === 'new'"
           >
             <v-icon>{{ icons.mdiContentSave }}</v-icon>
             Save
           </v-btn>
           <v-btn
-            outlined
-            class="btn"
-            type="submit"
-            v-if="mode === 'update'"
+              outlined
+              class="btn"
+              type="submit"
+              v-if="mode === 'update'"
           >
             <v-icon>{{ icons.mdiContentSave }}</v-icon>
             Update
@@ -237,30 +237,18 @@ export default {
     ...mapActions(['setCurrentDevice', 'genPass', 'newDevice', 'updateDevice', 'pushDevice']),
     newCompanieModal() {
       //set current modal to "CompanyForm"
-      this.modalName = 'CompanyForm'
-      this.$modal.show(
-          this.currentModal.component,
-          this.currentModal.attrs,
-          this.currentModal.props
-      )
+      EventBus.modalName = 'CompanyForm'
+      EventBus.showModal();
     },
     newPartsModal() {
       // set current modal to "PartsForm"
-      this.modalName = 'PartsForm'
-      this.$modal.show(
-          this.currentModal.component,
-          this.currentModal.attrs,
-          this.currentModal.props
-      )
+      EventBus.modalName = 'PartsForm';
+      EventBus.showModal();
     },
     newDoctypeModal() {
       // set current modal to "DoctypesForm"
-      this.modalName = 'DoctypesForm'
-      this.$modal.show(
-          this.currentModal.component,
-          this.currentModal.attrs,
-          this.currentModal.props
-      )
+      EventBus.modalName = 'DoctypesForm'
+      EventBus.showModal();
     },
     filesModal() {
       // TODO open files from server as Modal
@@ -307,10 +295,11 @@ export default {
       })
     },
     GenQrCode() {
-      this.$modal.show('QrCode');
+      EventBus.modalName = 'QrCode'
+      EventBus.showModal();
     },
     closeModal() {
-      this.$modal.hideAll();
+      EventBus.hideModal('DeviceForm')
     },
     async saveData() {
       // TODO Form Validation and Error Handling
@@ -358,16 +347,12 @@ export default {
     else {
       this.formData = {...this.initFormData, pass: ''};
     }
-
     // eventlistening to delete File
     EventBus.$on('delBtnClicked', payload => this.removeFileFromDevice(payload));
   },
   destroyed() {
     EventBus.$off('delBtnClicked');
   },
-  // created() {
-  //
-  // },
 };
 </script>
 

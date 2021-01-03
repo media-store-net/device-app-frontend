@@ -3,58 +3,58 @@
     <v-container class="d-flex justify-center align-center">
       <v-row>
         <v-col
-          cols="12"
-          class="text-center mt-6 mb-10 col-md-8 offset-md-2"
+            cols="12"
+            class="text-center mt-6 mb-10 col-md-8 offset-md-2"
         >
           <v-card class="py-8">
             <close-btn
-              class="mr-10"
-              @click="closeModal"
+                class="mr-10"
+                @click="closeModal"
             />
             <h1>Company Form</h1>
             <v-form
-              @submit.prevent="sendForm"
-              class="mx-10"
+                @submit.prevent="sendForm"
+                class="mx-10"
             >
               <v-text-field
-                type="text"
-                label="* Firmenname"
-                v-model="name"
+                  type="text"
+                  label="* Firmenname"
+                  v-model="name"
               />
               <v-text-field
-                type="number"
-                label="* Kundennummer"
-                v-model="kdnr"
+                  type="number"
+                  label="* Kundennummer"
+                  v-model="kdnr"
               />
               <v-flex class="d-flex">
                 <v-text-field
-                  class="input"
-                  label="Pass:"
-                  v-model="pass"
+                    class="input"
+                    label="Pass:"
+                    v-model="pass"
                 />
                 <v-btn
-                  text
-                  title="Passwort generieren"
-                  @click="genarate"
+                    text
+                    title="Passwort generieren"
+                    @click="genarate"
                 >
                   <v-icon>{{ icons.mdiLockReset }}</v-icon>
                 </v-btn>
                 <v-btn
-                  text
-                  title="Kopieren"
-                  @click="true"
+                    text
+                    title="Kopieren"
+                    @click="true"
                 >
                   <v-icon>{{ icons.mdiContentCopy }}</v-icon>
                 </v-btn>
               </v-flex>
               <v-textarea
-                label="kurze Beschreibung"
-                v-model="desc"
+                  label="kurze Beschreibung"
+                  v-model="desc"
               />
               <v-flex class="d-flex justify-end mt-3 mr-10">
                 <v-btn
-                  class="primary"
-                  type="submit"
+                    class="primary"
+                    type="submit"
                 >
                   Speichern
                 </v-btn>
@@ -68,8 +68,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { mdiContentCopy, mdiLockReset } from '@mdi/js';
+import {mapActions} from 'vuex';
+import {EventBus} from "@/store/eventBus";
+
+import {mdiContentCopy, mdiLockReset} from '@mdi/js';
 
 import CloseBtn from '../UI/CloseBtn';
 
@@ -93,12 +95,12 @@ export default {
     ...mapActions(['newCompanie', 'genPass']),
     genarate() {
       this.genPass(this.kdnr)
-        .then((result) => {
-          this.pass = result;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((result) => {
+            this.pass = result;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     },
     async sendForm() {
       //TODO Validate User Input
@@ -113,7 +115,7 @@ export default {
       this.closeModal();
     },
     closeModal() {
-      this.$modal.hideAll();
+      EventBus.hideModal('CompanyForm');
     },
   },
   watch: {
