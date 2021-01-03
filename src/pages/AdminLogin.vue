@@ -32,8 +32,6 @@ export default {
   methods: {
     ...mapActions(['loginUser']),
     async onSubmitForm(event) {
-      console.log('onSubmitForm fired...');
-      console.log(event);
       // call action to login user from API
       await this.loginUser(event);
       if (this.isAuthenticated) this.$router.push('devices');
