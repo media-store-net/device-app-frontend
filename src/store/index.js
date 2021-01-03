@@ -25,10 +25,10 @@ export const state = {
 	currentDevice: {},
 	modals: {
 		CompanyForm: {
-			name: "CompanyForm",
 			component: CompanyForm,
 			attrs: {},
 			props: {
+				name: "CompanyForm",
 				class: "company-form",
 				height: "auto",
 				width: "60%",
@@ -36,10 +36,10 @@ export const state = {
 			}
 		},
 		PartsForm: {
-			name: "PartsForm",
 			component: PartsForm,
 			attrs: {},
 			props: {
+				name: "PartsForm",
 				class: "parts-form",
 				height: "auto",
 				width: "60%",
@@ -47,10 +47,10 @@ export const state = {
 			}
 		},
 		DoctypesForm: {
-			name: "DoctypesForm",
 			component: DoctypesForm,
 			attrs: {},
 			props: {
+				name: "DoctypesForm",
 				class: "doctype-form",
 				height: "auto",
 				width: "60%",
@@ -58,10 +58,10 @@ export const state = {
 			}
 		},
 		DeviceForm: {
-			name: "DeviceForm",
 			component: DeviceForm,
 			attrs: {},
 			props: {
+				name: "DeviceForm",
 				class: "DeviceForm",
 				height: "auto",
 				width: "95%",
@@ -69,28 +69,28 @@ export const state = {
 			}
 		},
 		QrCode: {
-			name: "QrCode",
 			component: QrCode,
 			attrs: {},
 			props: {
+				name: "QrCode",
 				class: "QrCode",
 				height: "335px",
 				width: "60%"
 			}
 		},
 		Loader: {
-			name: "Loader",
 			component: Loader,
 			props: {
+				name: "Loader",
 				class: "loader",
 				height: "100%",
 				width: "100%"
 			}
 		},
 		MessageBox: {
-			name: "MessageBox",
 			component: MessageBox,
 			props: {
+				name: "MessageBox",
 				type: ["success", "warning", "error"]
 			}
 		}
