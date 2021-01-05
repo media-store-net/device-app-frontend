@@ -43,7 +43,6 @@
 
 <script>
 import {mapActions} from 'vuex';
-import {EventBus} from "@/store/eventBus";
 
 import CloseBtn from '../UI/CloseBtn';
 
@@ -59,17 +58,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['hideModal','newPart']),
+    ...mapActions(['showModal', 'hideModal', 'newPart']),
     async sendForm() {
       //TODO Validate User Input
+      this.showModal({name: 'Loader'})
       // Send the Data on Api/Store
       await this.newPart({
         title: this.title,
         desc: this.desc,
       });
-      this.closeModal();
-    },
-    closeModal() {
+      this.hideModal('Loader')
       this.hideModal('PartsForm');
     },
 

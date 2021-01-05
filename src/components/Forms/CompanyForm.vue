@@ -69,7 +69,6 @@
 
 <script>
 import {mapActions} from 'vuex';
-import {EventBus} from "@/store/eventBus";
 
 import {mdiContentCopy, mdiLockReset} from '@mdi/js';
 
@@ -92,7 +91,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['hideModal','newCompanie', 'genPass']),
+    ...mapActions(['showModal', 'hideModal', 'newCompanie', 'genPass']),
     genarate() {
       this.genPass(this.kdnr)
           .then((result) => {
@@ -104,6 +103,7 @@ export default {
     },
     async sendForm() {
       //TODO Validate User Input
+      this.showModal({name: 'Loader'})
       // Send the Data on Api/Store
       await this.newCompanie({
         name: this.name,
@@ -112,9 +112,7 @@ export default {
         desc: this.desc,
       });
       // close the Modal
-      this.closeModal();
-    },
-    closeModal() {
+      this.hideModal('Loader')
       this.hideModal('CompanyForm');
     },
   },

@@ -43,7 +43,6 @@
 
 <script>
 import {mapActions} from 'vuex';
-import {EventBus} from "@/store/eventBus";
 
 import CloseBtn from '../UI/CloseBtn';
 
@@ -59,19 +58,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['hideModal','newDoctype']),
+    ...mapActions(['showModal', 'hideModal', 'newDoctype']),
     async sendForm() {
       //TODO Validate User Input
       // Send the Data on Api/Store
+      this.showModal({name: 'Loader'})
       await this.newDoctype({
         title: this.title,
         desc: this.desc,
       });
-      this.closeModal();
-    },
-    closeModal() {
+      this.hideModal('Loader');
       this.hideModal('DoctypesForm')
-    },
+    }
 
   }
 }
