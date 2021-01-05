@@ -137,8 +137,16 @@ export const mutations = {
 
 /**
  * @description VUEX Actions to commit the changes into the state via mutations
+ * @type {{}}
+ * @see https://vuex.vuejs.org/guide/actions.html
  */
 export const actions = {
+	/**
+	 * @method showModal
+	 * @description global method to call the $modal from the Vue-Instance
+	 * @param {Object} context - Store Context
+	 * @param {Object} payload - expected a Object {name: 'name of the modal from store-array', componentProps: {}}
+	 */
   showModal: async (context, payload)  => {
     const currentModal = context.getters.modals[payload.name];
     const componentProps = payload.componentProps;
@@ -151,10 +159,20 @@ export const actions = {
       );
     }
   },
+	/**
+	 * @method hideModal
+	 * @description global method to close the $modal from the Vue-Instance
+	 * @param {Object} _ - Store Context (not used)
+	 * @param {String} payload - expected a modal name as string
+	 */
   hideModal: async (_, name) => {
     await app;
     app.$modal.hide(name);
   },
+	/**
+	 * @method hideAllModals
+	 * @description global method to close all active $modals from the Vue-Instance
+	 */
   hideAllModals: async () => {
     await app;
     app.$modal.hideAll();
