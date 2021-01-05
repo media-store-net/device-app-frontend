@@ -307,11 +307,11 @@ export default {
       if (this.mode === 'new') {
         // send data to action
         await this.newDevice(this.currentDevice);
-        this.closeModal();
+        this.hideModal('DeviceForm');
       } else if (this.mode === 'update') {
         // send data to action
         await this.updateDevice(this.currentDevice);
-        this.closeModal();
+        this.hideModal('DeviceForm');
       }
 
       this.hideModal('DeviceForm');
