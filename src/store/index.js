@@ -165,7 +165,6 @@ export const actions = {
       const res = await api.companies.get();
       context.commit("setCompanies", res.data);
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
@@ -181,7 +180,7 @@ export const actions = {
     try {
       const res = await api.companies.post(payload);
       if (res.statusText !== "OK") {
-        console.log("Something went wrong");
+        console.log(res);
       } else {
         console.log("status OK");
         // copy companies array from state
@@ -192,13 +191,12 @@ export const actions = {
         context.commit("setCompanies", companies);
       }
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: `Fehler: ${error.message} - <br> Firma konnte nicht gespeichert werden`
+          message: `Fehler: ${error.message} - Firma konnte nicht gespeichert werden`
         }
       });
     }
@@ -219,7 +217,6 @@ export const actions = {
         context.commit("setDoctypes", doctypes);
       }
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
@@ -236,7 +233,6 @@ export const actions = {
       const res = await api.doctypes.get();
       context.commit("setDoctypes", res.data);
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
@@ -263,7 +259,6 @@ export const actions = {
         context.commit("setParts", parts);
       }
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
@@ -280,7 +275,6 @@ export const actions = {
       const res = await api.parts.get();
       commit("setParts", res.data);
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
@@ -490,7 +484,6 @@ export const actions = {
         })
       );
     } catch (error) {
-      console.error(error);
       // Show error messageBox
       context.dispatch("showModal", {
         name: "MessageBox",
