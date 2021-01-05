@@ -139,7 +139,7 @@ export const mutations = {
  * @description VUEX Actions to commit the changes into the state via mutations
  */
 export const actions = {
-  async showModal(context, payload) {
+  showModal: async (context, payload)  => {
     const currentModal = context.getters.modals[payload.name];
     const componentProps = payload.componentProps;
     await app;
@@ -151,11 +151,11 @@ export const actions = {
       );
     }
   },
-  async hideModal(_, name) {
+  hideModal: async (_, name) => {
     await app;
     app.$modal.hide(name);
   },
-  async hideAllModals() {
+  hideAllModals: async () => {
     await app;
     app.$modal.hideAll();
   },

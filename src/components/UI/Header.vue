@@ -102,7 +102,7 @@ import {
   mdiCellphoneLink,
   mdiAccount,
 } from '@mdi/js';
-import { mapGetters, mapActions } from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
 export default {
   name: 'Header',
@@ -131,7 +131,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['logoutUser']),
+    ...mapActions(['showModal', 'hideModal', 'setCurrentDevice', 'logoutUser']),
     logout() {
       this.logoutUser();
     },
@@ -151,29 +151,25 @@ export default {
       if (this.$route.name !== 'files') this.$router.push('files');
     },
     newCompany() {
-      this.modalName = 'CompanyForm';
-      this.showModal();
+      this.showModal({name: 'CompanyForm'});
     },
     newPart() {
-      this.modalName = 'PartsForm';
-      this.showModal();
+      this.showModal({name: 'PartsForm'});
     },
     newDoctype() {
-      this.modalName = 'DoctypesForm';
-      this.showModal();
+      this.showModal({name: 'DoctypesForm'});
     },
     newFile() {
       alert('new File');
     },
     newDevice() {
-      alert('new Device');
-    },
-    showModal(mode = 'new') {
-      this.$modal.show(
-        this.currentModal.component,
-        { ...this.currentModal.attrs, mode: mode },
-        this.currentModal.props,
-      );
+      this.setCurrentDevice(null)
+      this.showModal({
+        name: 'DeviceForm',
+        componentProps: {
+          mode: 'new'
+        }
+      })
     },
   },
   watch: {

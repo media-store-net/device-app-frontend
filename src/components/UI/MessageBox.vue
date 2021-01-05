@@ -1,9 +1,9 @@
 <template xmlns:slot="http://www.w3.org/1999/html">
   <v-app class="d-flex">
     <v-alert
-        dismissible
-        :close-icon="CloseBtn"
-        :type="type"
+      dismissible
+      :close-icon="CloseBtn"
+      :type="type"
     >
       {{ message }}
     </v-alert>

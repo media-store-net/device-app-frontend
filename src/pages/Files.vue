@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Header title="Dateien"/>
+    <Header title="Dateien" />
     <v-container class="d-flex justify-center">
       <v-row>
         <v-col
-            cols="12"
-            class="text-center"
+          cols="12"
+          class="text-center"
         >
           <h1 class="accent--text">
             File List
@@ -15,7 +15,10 @@
     </v-container>
     <v-container>
       <template v-if="files">
-        <file-list :items="files" is-admin></file-list>
+        <file-list
+          :items="files"
+          is-admin
+        />
       </template>
     </v-container>
   </div>
