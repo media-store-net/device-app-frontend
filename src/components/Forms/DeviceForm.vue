@@ -292,8 +292,7 @@ export default {
       })
     },
     GenQrCode() {
-      EventBus.modalName = 'QrCode'
-      EventBus.showModal();
+      this.showModal({name: 'QrCode'});
     },
 
     async saveData() {
