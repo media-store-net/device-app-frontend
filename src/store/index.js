@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import api from "../api/api";
 
 //TODO make this imports dynamic, when they needed
+import {app} from '../main';
 import CompanyForm from "@/components/Forms/CompanyForm";
 import PartsForm from "@/components/Forms/PartsForm";
 import DoctypesForm from "@/components/Forms/DoctypesForm";
@@ -128,6 +129,26 @@ export const mutations = {
  * @description VUEX Actions to commit the changes into the state via mutations
  */
 export const actions = {
+	async showModal(context, payload) {
+		const currentModal = context.getters.modals[payload.name];
+		const componentProps = payload.componentProps;
+		await app;
+		if (currentModal) {
+			app.$modal.show(
+				currentModal.component,
+				{...currentModal.attrs, componentProps},
+				currentModal.props
+			)
+		}
+	},
+	async hideModal(_, name) {
+		await app;
+		app.$modal.hide(name)
+	},
+	async hideAllModals() {
+		await app;
+		app.$modal.hideAll();
+	},
 	// TODO Docs
 	setCompanies: async ({commit}) => {
 		try {
@@ -404,10 +425,12 @@ export const modules = {};
 /**
  * @description Export of VUEX Store Instance
  */
-export default new Vuex.Store({
-	state,
-	getters,
-	mutations,
-	actions,
-	modules
-});
+export default function makeStore() {
+	return new Vuex.Store({
+		state,
+		getters,
+		mutations,
+		actions,
+		modules
+	});
+}

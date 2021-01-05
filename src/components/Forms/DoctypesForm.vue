@@ -59,7 +59,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['newDoctype']),
+    ...mapActions(['hideModal','newDoctype']),
     async sendForm() {
       //TODO Validate User Input
       // Send the Data on Api/Store
@@ -70,7 +70,7 @@ export default {
       this.closeModal();
     },
     closeModal() {
-      EventBus.hideModal('DoctypesForm')
+      this.hideModal('DoctypesForm')
     },
 
   }

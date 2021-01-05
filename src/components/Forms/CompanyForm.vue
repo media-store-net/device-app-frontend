@@ -92,7 +92,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['newCompanie', 'genPass']),
+    ...mapActions(['hideModal','newCompanie', 'genPass']),
     genarate() {
       this.genPass(this.kdnr)
           .then((result) => {
@@ -115,7 +115,7 @@ export default {
       this.closeModal();
     },
     closeModal() {
-      EventBus.hideModal('CompanyForm');
+      this.hideModal('CompanyForm');
     },
   },
   watch: {
