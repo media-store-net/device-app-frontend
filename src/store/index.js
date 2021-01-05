@@ -171,7 +171,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+          message: `Fehler: ${error.code} - <br> Companies konnten nicht abgerufen werden`
         }
       });
     }
@@ -198,7 +198,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+          message: `Fehler: ${error.message} - <br> Firma konnte nicht gespeichert werden`
         }
       });
     }
@@ -225,7 +225,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Doctype konnte nicht gespeichert werden`
         }
       });
     }
@@ -242,7 +242,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Doctypes konnten nicht geladen werden`
         }
       });
     }
@@ -269,7 +269,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Artikelnummer konnte nicht gespeichert werden`
         }
       });
     }
@@ -286,7 +286,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Artikelnummern konnten nicht geladen werden`
         }
       });
     }
@@ -302,7 +302,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Datei konnte nicht gespeichert werden`
         }
       });
     }
@@ -317,7 +317,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Datei konnte nicht gelöscht werden`
         }
       });
     }
@@ -346,7 +346,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Dateien konnten nicht geladen werden`
         }
       });
     }
@@ -368,7 +368,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Gerät konnte nicht gespeichert werden`
         }
       });
     }
@@ -390,7 +390,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Gerät konnte nicht aktualisiert werden`
         }
       });
     }
@@ -413,7 +413,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Gerät konnte nicht gelöscht werden`
         }
       });
     }
@@ -424,7 +424,14 @@ export const actions = {
       const res = await api.devices.get();
       commit("setDevices", res.data);
     } catch (error) {
-      console.error(error);
+	    // Show error messageBox
+	    context.dispatch("showModal", {
+		    name: "MessageBox",
+		    componentProps: {
+			    type: "error",
+			    message: `Fehler: ${error.message} - Geräte konnten nicht geladen werden`
+		    }
+	    });
     }
   },
   // TODO Docs
@@ -437,7 +444,14 @@ export const actions = {
       }
       context.commit("setCurrentDevice", res.data);
     } catch (error) {
-      console.error(error);
+	    // Show error messageBox
+	    context.dispatch("showModal", {
+		    name: "MessageBox",
+		    componentProps: {
+			    type: "error",
+			    message: `Fehler: ${error.message} - Login derzeit nicht möglich`
+		    }
+	    });
     }
   },
   // TODO Docs
@@ -453,10 +467,10 @@ export const actions = {
           name: "MessageBox",
           componentProps: {
             type: "warning",
-            message: "Something went wrong! Try again later"
+	          message: `Fehler: ${res.error.message} - Login derzeit nicht möglich`
           }
         });
-        console.log("Something went wrong! Try again later");
+        console.log(res);
       }
 
       if (res.data.user) {
@@ -482,7 +496,7 @@ export const actions = {
         name: "MessageBox",
         componentProps: {
           type: "error",
-          message: "Login incorrect or connection failed"
+	        message: `Fehler: ${error.message} - Login derzeit nicht möglich`
         }
       });
     }
@@ -499,7 +513,14 @@ export const actions = {
       context.commit("setAuthKey", "");
       context.commit("setAuthenticated", false);
     } catch (error) {
-      console.error(error);
+	    // Show MessageBox
+	    context.dispatch("showModal", {
+		    name: "MessageBox",
+		    componentProps: {
+			    type: "warning",
+			    message: `Fehler: ${error.message} - Logout fehlgeschlagen`
+		    }
+	    });
     }
   },
   pushDevice: (context, payload) => {
