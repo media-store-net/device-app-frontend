@@ -21,6 +21,7 @@ export const state = {
 	isAuthenticated: false,
 	companies: [],
 	devices: [],
+	files: [],
 	doctypes: [],
 	parts: [],
 	currentDevice: {},
@@ -111,6 +112,7 @@ export const getters = {
 	isAuthenticated: state => state.isAuthenticated,
 	companies: state => state.companies,
 	devices: state => state.devices,
+	files: state => state.files,
 	doctypes: state => state.doctypes,
 	parts: state => state.parts,
 	currentDevice: state => state.currentDevice,
@@ -126,6 +128,7 @@ export const mutations = {
 	setAuthenticated: (state, payload) => (state.isAuthenticated = payload),
 	setCompanies: (state, payload) => (state.companies = payload),
 	setDevices: (state, payload) => (state.devices = payload),
+	setFiles: (state, payload) => (state.files = payload),
 	setDoctypes: (state, payload) => (state.doctypes = payload),
 	setParts: (state, payload) => (state.parts = payload),
 	setCurrentDevice: (state, payload) => (state.currentDevice = payload),
@@ -264,11 +267,32 @@ export const actions = {
 		}
 	},
 	// TODO Docs
-	setFiles: async (context, payload) => {
+	setFiles: async (context) => {
 		try {
 			// get Files Array from API and sets to state (nedded only on the files page)
+			const res = await api.files.get();
+			if (res.statusText !== "OK") {
+				// Show MessageBox
+				context.dispatch('showModal', {
+					name: 'MessageBox',
+					componentProps: {
+						type: 'warning',
+						message: 'Something went wrong! Try again later'
+					}
+				})
+				console.log("Something went wrong! Try again later");
+			} else {
+				context.commit('setFiles', res.data)
+			}
 		} catch (error) {
-			// TODO Errors Component (maybe as modal)
+			// Show error messageBox
+			context.dispatch('showModal', {
+				name: 'MessageBox',
+				componentProps: {
+					type: 'error',
+					message: 'Login incorrect or connection failed'
+				}
+			})
 		}
 	},
 	// TODO Docs
@@ -353,7 +377,8 @@ export const actions = {
 					componentProps: {
 						type: 'warning',
 						message: 'Something went wrong! Try again later'
-					}})
+					}
+				})
 				console.log("Something went wrong! Try again later");
 			}
 
@@ -381,7 +406,8 @@ export const actions = {
 				componentProps: {
 					type: 'error',
 					message: 'Login incorrect or connection failed'
-				}})
+				}
+			})
 		}
 	},
 	// Docs
