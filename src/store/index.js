@@ -81,6 +81,7 @@ export const state = {
 		},
 		Loader: {
 			component: Loader,
+			attrs: {},
 			props: {
 				name: "Loader",
 				class: "loader",
@@ -90,9 +91,15 @@ export const state = {
 		},
 		MessageBox: {
 			component: MessageBox,
+			attrs: {
+				type: 'success',
+				message: 'Hi, i`m the fallback Message'
+			},
 			props: {
 				name: "MessageBox",
-				type: ["success", "warning", "error"]
+				class: "message-box",
+				height: "30%",
+				width: "50%",
 			}
 		}
 	}
@@ -136,7 +143,7 @@ export const actions = {
 		if (currentModal) {
 			app.$modal.show(
 				currentModal.component,
-				{...currentModal.attrs, componentProps},
+				{...currentModal.attrs, ...componentProps},
 				currentModal.props
 			)
 		}
@@ -340,7 +347,14 @@ export const actions = {
 				password: payload.pass
 			});
 			if (res.statusText !== "OK") {
-				console.log("Something went wrong");
+				// Show MessageBox
+				context.dispatch('showModal', {
+					name: 'MessageBox',
+					componentProps: {
+						type: 'warning',
+						message: 'Something went wrong! Try again later'
+					}})
+				console.log("Something went wrong! Try again later");
 			}
 
 			if (res.data.user) {
@@ -361,6 +375,13 @@ export const actions = {
 			);
 		} catch (error) {
 			console.error(error);
+			// Show error messageBox
+			context.dispatch('showModal', {
+				name: 'MessageBox',
+				componentProps: {
+					type: 'error',
+					message: 'Login incorrect or connection failed'
+				}})
 		}
 	},
 	// Docs
