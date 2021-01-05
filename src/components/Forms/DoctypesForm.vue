@@ -9,7 +9,7 @@
           <v-card class="py-8">
             <close-btn
               class="mr-10"
-              @click="closeModal"
+              @click="hideModal('DoctypesForm')"
             />
             <h1>Doctype Form</h1>
             <v-form

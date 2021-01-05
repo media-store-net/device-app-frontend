@@ -9,7 +9,7 @@
           <v-card class="py-8">
             <close-btn
               class="mr-10"
-              @click="closeModal"
+              @click="hideModal('PartsForm')"
             />
             <h1>Parts Form</h1>
             <v-form
