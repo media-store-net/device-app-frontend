@@ -67,7 +67,6 @@
             @delete-device="deleteDevice(device)"
         />
       </v-col>
-      <Modal/>
     </v-container>
   </transition>
 </template>
