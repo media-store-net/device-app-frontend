@@ -110,7 +110,7 @@ export default {
           });
     },
     async sendForm() {
-      if (this.name.length == 0 ) {
+      if (this.name.length === 0 ) {
         //TODO ubersetzen auf Deutsch
         this.message = `Поле Firmenname не заполнено!!!`
       } else if (this.kdnr.length == 0) {
@@ -137,6 +137,7 @@ export default {
         return newValue;
       }
     },
+
   },
 };
 </script>

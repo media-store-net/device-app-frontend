@@ -1,6 +1,6 @@
 <template xmlns:slot="http://www.w3.org/1999/html">
   <v-alert
-    dismissible
+    dense
     :type="type"
   >
     {{ message }}
