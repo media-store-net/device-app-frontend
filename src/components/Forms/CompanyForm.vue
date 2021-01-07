@@ -55,7 +55,7 @@
                 v-if="message.length > 0"
                 type="error"
                 :message="message"
-              ></message-box>
+              />
               <v-flex class="d-flex justify-end mt-3 mr-10">
                 <v-btn
                   class="primary"
