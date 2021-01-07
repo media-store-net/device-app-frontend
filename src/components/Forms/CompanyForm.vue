@@ -51,6 +51,11 @@
                 label="kurze Beschreibung"
                 v-model="desc"
               />
+              <message-box
+                v-if="message.length > 0"
+                type="error"
+                :message="message"
+              ></message-box>
               <v-flex class="d-flex justify-end mt-3 mr-10">
                 <v-btn
                   class="primary"
@@ -73,9 +78,11 @@ import {mapActions} from 'vuex';
 import {mdiContentCopy, mdiLockReset} from '@mdi/js';
 
 import CloseBtn from '../UI/CloseBtn';
+import MessageBox from '@/components/UI/MessageBox';
 
 export default {
   components: {
+    MessageBox,
     CloseBtn,
   },
   data() {
@@ -84,6 +91,7 @@ export default {
       kdnr: '',
       pass: '',
       desc: '',
+      message: '',
       icons: {
         mdiContentCopy,
         mdiLockReset,
@@ -102,18 +110,25 @@ export default {
           });
     },
     async sendForm() {
-      //TODO Validate User Input
-      this.showModal({name: 'Loader'})
-      // Send the Data on Api/Store
-      await this.newCompanie({
-        name: this.name,
-        kdnr: this.kdnr,
-        pass: this.pass.toString(),
-        desc: this.desc,
-      });
-      // close the Modal
-      this.hideModal('Loader')
-      this.hideModal('CompanyForm');
+      if (this.name.length == 0 ) {
+        //TODO ubersetzen auf Deutsch
+        this.message = `Поле Firmenname не заполнено!!!`
+      } else if (this.kdnr.length == 0) {
+        this.message = `Поле Kundennummer не заполнено!!!`
+      } else {
+        this.message = ''
+        this.showModal({name: 'Loader'})
+        // Send the Data on Api/Store
+        await this.newCompanie({
+          name: this.name,
+          kdnr: this.kdnr,
+          pass: this.pass.toString(),
+          desc: this.desc,
+        });
+        // close the Modal
+        this.hideModal('Loader')
+        this.hideModal('CompanyForm');
+      }
     },
   },
   watch: {

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Devices/DeviceList.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Devices/DeviceList.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;transition name="device-list">
+    &lt;v-container>
+      &lt;small>Search Device or Customer...&lt;/small>
+      &lt;div class="addNew">
+        &lt;search-select
+            class="select"
+            :options="[
+            ...devices.map((device) => device.sn),
+            ...companies.map((c) => c.name),
+          ]"
+            v-model="selectedDevice"
+        >
+          &lt;template v-slot:no-options="{ search, searching }">
+            &lt;template v-if="searching">
+              No results found for &lt;em>{{ search }}&lt;/em>.
+            &lt;/template>
+            &lt;em
+                style="opacity: 0.5;"
+                v-else
+            >Search Device or Customer...&lt;/em>
+          &lt;/template>
+        &lt;/search-select>
+        &lt;v-btn
+            color="primary"
+            outlined
+            @click="addNew"
+        >
+          Add New
+        &lt;/v-btn>
+      &lt;/div>
+
+      &lt;v-col
+          class="pa-0"
+          v-if="selectedDevice"
+      >
+        &lt;device-item
+            v-for="device in deviceResults"
+            :key="device.id"
+            :id="device.id"
+            :companie="device.companie"
+            :part="device.part"
+            :sn="device.sn"
+            :files="device.files"
+            :is-admin="true"
+            @gen-qr="genQr"
+            @edit-device="editDevice"
+            @delete-device="deleteDevice(device)"
+        />
+      &lt;/v-col>
+
+      &lt;v-col
+          class="pa-0"
+          v-if="!selectedDevice"
+      >
+        &lt;device-item
+            v-for="device in devices"
+            :key="device.id"
+            :id="device.id"
+            :companie="device.companie"
+            :part="device.part"
+            :sn="device.sn"
+            :files="device.files"
+            :is-admin="true"
+            @gen-qr="genQr"
+            @edit-device="editDevice"
+            @delete-device="deleteDevice(device)"
+        />
+      &lt;/v-col>
+    &lt;/v-container>
+  &lt;/transition>
+&lt;/template>
+
+&lt;script>
+import {mapGetters, mapActions} from 'vuex'
+import {mdiQrcode, mdiPencil, mdiDelete} from '@mdi/js'
+
+import DeviceItem from '@/components/Devices/DeviceItem'
+import {EventBus} from "@/store/eventBus";
+
+/**
+ * @description DeviceList - is the initial component used in the App.vue
+ * to render the devices as list from DB / Api Endpoint
+ *
+ * @vue-data {object} [icons={}] - used MDI Icons inside the component {@link https://materialdesignicons.com}
+ * @vue-data {string} [selectedDevice=''] - vModel for the search/select field
+ * @vue-data {string} [modalName='DeviceForm'] - allows to set dynamic a component to the modal view,
+ * awailable modal objects will be found under Global -> state {@link global#state}
+ *
+ * @vue-computed {Array&lt;object>} companies - this property will be loaded via mapGetters()-Method
+ * from the VUEX state if the component is mounted
+ *
+ * @vue-computed {Array&lt;DeviceItem>} devices - this property will be loaded via mapGetters()-Method
+ * from the VUEX state if the component is mounted
+ *
+ * @vue-computed {DeviceItem} currentDevice - this property will be loaded via mapGetters()-Method
+ * from the VUEX state if the component is mounted
+ *
+ * @vue-computed {object} modals - this property will be loaded via mapGetters()-Method
+ * from the VUEX state if the component is mounted
+ *
+ * @vue-computed {object} currentModal - computed property returns an modal-object from the modals state
+ *
+ */
+export default {
+  name: 'DeviceList',
+  components: {
+    DeviceItem,
+  },
+  data: () => ({
+    icons: {
+      mdiQrcode,
+      mdiPencil,
+      mdiDelete,
+    },
+    selectedDevice: '',
+    deviceResults: [],
+    modalName: 'DeviceForm',
+  }),
+  computed: {
+    ...mapGetters(['companies', 'devices', 'currentDevice']),
+  },
+  methods: {
+    ...mapActions([
+      'showModal',
+      'hideModal',
+      'hideAllModals',
+      'setCompanies',
+      'setDevices',
+      'setCurrentDevice',
+      'setDoctypes',
+      'setParts',
+      'removeDevice'
+    ]),
+    /**
+     * @vue-method addNew
+     * @description set the currentDeviceID to null and the modalName to DeviceForm and show Modal Component
+     * @returns {void}
+     */
+    addNew() {
+      this.setCurrentDevice(null)
+      this.showModal({
+        name: 'DeviceForm',
+        componentProps: {
+          mode: 'new'
+        }
+      })
+    },
+    /**
+     * @vue-method genQr
+     * @description set the modalName to QrCode and show the Modal Component
+     * @param {Number} id the ID of the selected Device
+     * @returns {ModalComponent}
+     */
+    genQr(id) {
+      this.setCurrentDevice({deviceId: id})
+      this.showModal({name: 'QrCode'})
+    },
+    /**
+     * @vue-method editDevice
+     * @description set the currentDevice to given id, sets modalName to QrCode and show the Modal Component
+     * @param {Number} id the ID of the selected Device
+     * @returns {ModalComponent}
+     */
+    editDevice(id) {
+      this.setCurrentDevice({deviceId: id})
+      this.showModal({
+        name: 'DeviceForm',
+        componentProps: {
+          mode: 'update'
+        }
+      })
+    },
+    /**
+     * @vue-method deleteDevice
+     * @description remove device of given id from the devices array in the Store
+     * @param {Number} id the ID of the selected Device
+     * @returns {boolean}
+     */
+    async deleteDevice(device) {
+      // api call to delete the device
+      if (confirm('You want realy delete?')) {
+        console.log(device.id)
+        await this.removeDevice(device.id)
+      }
+    },
+  },
+  watch: {
+    selectedDevice(val) {
+      const devId = this.devices.filter(
+          (device) => device.sn === val || device.companie.name.includes(val)
+      )
+      this.deviceResults = devId;
+      //this.setCurrentDevice({deviceId: devId[0]['id']})
+    },
+  },
+  created() {
+    this.showModal({name: 'Loader'});
+
+    // eventlistening to delete File
+    EventBus.$on('delete-clicked-onFile', this.deleteDevice);
+    // only if the currentDevice not empty copy to formData
+    if (this.currentDevice &amp;&amp; this.currentDevice.sn) {
+      this.formData = {...this.currentDevice};
+    }
+    // otherwise copy the initFormData
+    else {
+      this.formData = {...this.initFormData, pass: ''};
+    }
+  },
+  destroyed() {
+    EventBus.$off('delete-clicked-onFile');
+  },
+  mounted() {
+    this.setCompanies()
+    this.setDoctypes()
+    this.setParts()
+    this.setDevices().then(() => {
+      this.hideAllModals()
+    })
+  },
+}
+&lt;/script>
+
+&lt;style scoped>
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
+
+.v-application p {
+  margin-bottom: 0;
+}
+
+.addNew {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.select {
+  width: 100%;
+  margin-right: 20px;
+}
+
+.mx-auto {
+  margin-top: 40px;
+}
+
+.list {
+  align-items: end;
+  padding: 20px;
+}
+
+.item {
+  padding: 0;
+}
+
+.QrCode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.device-list-enter-active {
+  animation: dev-list-animation 0.8s ease;
+}
+
+.device-list-leave-active {
+  animation: dev-list-animation 0.8s ease reverse;
+}
+
+@keyframes dev-list-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Jan 05 2021 20:55:18 GMT+0400 (Samara Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
