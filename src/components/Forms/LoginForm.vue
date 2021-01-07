@@ -55,6 +55,18 @@ import {
   mdiLaptopWindows,
 } from '@mdi/js';
 
+/**
+ * @description LoginForm - LoginForm Component is the user input area to login to the app
+ *
+ * @vue-prop {String} [mode='customer'] - the login-form is usable for customer and the admin
+ * @vue-prop {String} [sn=null] - the serial-number can pass through as a url param to the form
+ * @vue-event {Object} submit-form - emit a submit-form event by sending the form
+ * @vue-event forgot-pass - emit the event by click on forgot-password link
+ * @vue-data {Object} [icons={eye: mdiEyeOutline, user: mdiAccount, device: mdiLaptopWindows,}]
+ * @vue-data {String | null } [username=this.sn] - v-model for the username input element
+ * @vue-data {String} pass - v-model for the password input element
+ * @vue-data {Boolean} passIsVisible - make the password input readable
+ */
 export default {
   props: {
     mode: {
@@ -94,10 +106,20 @@ export default {
     },
   },
   methods: {
+    /**
+     * @vue-method showPass
+     * @description method to make the password field readable
+     * @returns {void}
+     */
     showPass() {
       console.log('shoPass fired');
       this.passIsVisible = !this.passIsVisible;
     },
+    /**
+     * @vue-method sendForm
+     * @description method to validate and submit the user input
+     * @returns {$emit} 'submit-form'-event
+     */
     sendForm() {
       console.log('submit-form fired');
       // emits the form data
@@ -110,6 +132,11 @@ export default {
         (this.username = null), (this.pass = '');
       }
     },
+    /**
+     * @vue-method forgotPass
+     * @description fire the 'forgot-pass' Event with the given username
+     * @returns {$emit} 'forgot-pass'- Event
+     */
     forgotPass() {
       console.log('Forgot password fired');
       this.$emit('forgot-pass', { username: this.username });
