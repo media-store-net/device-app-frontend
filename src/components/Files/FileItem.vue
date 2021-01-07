@@ -35,14 +35,15 @@ import {mapGetters} from 'vuex';
 import {mdiFileDownload} from '@mdi/js';
 import {EventBus} from '../../store/eventBus';
 import DeleteBtn from '@/components/UI/DeleteBtn';
-//TODO Docu for isAdmin prop
+
 /**
  * @description FileItem - represent one given File Object
  *
- * @vue-prop {Number} id - given ID of the current file, prop is required
- * @vue-prop {Number} doctypeId - given ID of doctype, prop is required
- * @vue-prop {Object} url - object with detail info of the given file, like mime, public url, name
- *
+ * @vue-prop {Number} id - (required) given ID of the current file, prop is required
+ * @vue-prop {Number} doctypeId - (required) given ID of doctype, prop is required
+ * @vue-prop {Object} url - (required) object with detail info of the given file, like mime, public url, name
+ * @vue-prop {Boolean} [isAdmin=false] - this prop enable a administrative area to handle the items (edit,delete)
+ * @vue-data {String} [download=mdiFileDownload] - mdi-icon for download
  * @vue-computed {String} filelink - computed property to return the full url of the current file, to make downloads available
  *
  */
@@ -88,6 +89,11 @@ export default {
       let doctype = this.doctypes.find((doc) => doc.id === id);
       return doctype && doctype.title ? doctype.title : '';
     },
+    /**
+     * @vue-method onDelete
+     * @description emits the onDeleteBtn method on EventBus
+     * @return {EventBus} - EventBus $emit
+     */
     onDelete() {
       EventBus.onDeleteBtn({fileId: this.id})
     },

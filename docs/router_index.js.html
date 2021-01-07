@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: FileList</title>
+    <title>JSDoc: Source: router/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,165 +17,97 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: FileList</h1>
+    <h1 class="page-title">Source: router/index.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">FileList - represent the Files Array Component in action cards</p></div></div> 
-
-
-<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3>
-<table data-jsdoc-vuejs="table-props">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default value</th>
-        <th>Required?</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody><tr>
-        <td><code>items</code></td>
-        <td>Array.&lt;FileItem></td>
-        <td><code>[]</code></td>
-        <td>No</td>
-        <td>atterate through an array of FileItem-Objects</td>
-    </tr><tr>
-        <td><code>isAdmin</code></td>
-        <td>Boolean</td>
-        <td><code>false</code></td>
-        <td>No</td>
-        <td>this prop pass trough to the FileItem, to enable a administrative area to handle the items (edit,delete)</td>
-    </tr></tbody>
-</table>
-
-
-
-
-
-
-
-
-
-<div class="container-overview"><div><p> 
-</div>
-        
-
-        
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Vue from 'vue'
+import VueRouter from 'vue-router'
+import CustomerLogin from '../pages/CustomerLogin'
+import CustomerView from '../pages/CustomerView'
+import AdminLogin from '../pages/AdminLogin'
+import Devices from '../pages/Devices'
+import Files from '../pages/Files'
+import User from '../pages/User'
+import Logs from '../pages/Logs'
+
+Vue.use(VueRouter)
+
+/**
+ * @description Array for the Routes
+ *
+ * @type {Object[]}
+ */
+const routes = [
+  {
+    path: '/',
+    redirect: '/customer-login'
+  },
+  {
+    path: '/customer-login',
+    name: 'customer-login',
+    component: CustomerLogin
+  },
+  {
+    path: '/admin-login',
+    name: 'admin-login',
+    component: AdminLogin,
+  },
+  {
+    path: '/devices',
+    name: 'devices',
+    component: Devices,
+  },
+  {
+    path: '/files',
+    name: 'files',
+    component: Files
+  },
+  {
+    path: '/logs',
+    name: 'logs',
+    component: Logs
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: User
+  },
+  {
+    path: '/customer-view',
+    name: 'customer-view',
+    component: CustomerView,
+  },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  // }
+]
+
+/**
+ * @description VueRouter Instance
+ *
+ * @type {VueRouter}
+ */
+const router = new VueRouter({
+  //mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
+</code></pre>
+        </article>
+    </section>
 
 
 

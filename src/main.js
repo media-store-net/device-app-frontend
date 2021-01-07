@@ -11,9 +11,8 @@ import VModal from 'vue-js-modal'
 Vue.use(VModal)
 Vue.config.productionTip = false
 
-/**
- * @description new Vue App
- */
+// new Vue App
+
 export const app =  new Vue({
 	store: makeStore(),
 	router,

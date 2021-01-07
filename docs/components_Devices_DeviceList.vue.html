@@ -32,33 +32,54 @@
       &lt;small>Search Device or Customer...&lt;/small>
       &lt;div class="addNew">
         &lt;search-select
+<<<<<<< HEAD
             class="select"
             :options="[
             ...devices.map((device) => device.sn),
             ...companies.map((c) => c.name),
           ]"
             v-model="selectedDevice"
+=======
+          class="select"
+          :options="[
+            ...devices.map((device) => device.sn),
+            ...companies.map((c) => c.name),
+          ]"
+          v-model="selectedDevice"
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
         >
           &lt;template v-slot:no-options="{ search, searching }">
             &lt;template v-if="searching">
               No results found for &lt;em>{{ search }}&lt;/em>.
             &lt;/template>
             &lt;em
+<<<<<<< HEAD
                 style="opacity: 0.5;"
                 v-else
+=======
+              style="opacity: 0.5;"
+              v-else
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
             >Search Device or Customer...&lt;/em>
           &lt;/template>
         &lt;/search-select>
         &lt;v-btn
+<<<<<<< HEAD
             color="primary"
             outlined
             @click="addNew"
+=======
+          color="primary"
+          outlined
+          @click="addNew"
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
         >
           Add New
         &lt;/v-btn>
       &lt;/div>
 
       &lt;v-col
+<<<<<<< HEAD
           class="pa-0"
           v-if="selectedDevice"
       >
@@ -74,10 +95,28 @@
             @gen-qr="genQr"
             @edit-device="editDevice"
             @delete-device="deleteDevice(device)"
+=======
+        class="pa-0"
+        v-if="selectedDevice"
+      >
+        &lt;device-item
+          v-for="device in deviceResults"
+          :key="device.id"
+          :id="device.id"
+          :companie="device.companie"
+          :part="device.part"
+          :sn="device.sn"
+          :files="device.files"
+          :is-admin="true"
+          @gen-qr="genQr"
+          @edit-device="editDevice"
+          @delete-device="deleteDevice(device)"
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
         />
       &lt;/v-col>
 
       &lt;v-col
+<<<<<<< HEAD
           class="pa-0"
           v-if="!selectedDevice"
       >
@@ -93,6 +132,23 @@
             @gen-qr="genQr"
             @edit-device="editDevice"
             @delete-device="deleteDevice(device)"
+=======
+        class="pa-0"
+        v-if="!selectedDevice"
+      >
+        &lt;device-item
+          v-for="device in devices"
+          :key="device.id"
+          :id="device.id"
+          :companie="device.companie"
+          :part="device.part"
+          :sn="device.sn"
+          :files="device.files"
+          :is-admin="true"
+          @gen-qr="genQr"
+          @edit-device="editDevice"
+          @delete-device="deleteDevice(device)"
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
         />
       &lt;/v-col>
     &lt;/v-container>
@@ -319,13 +375,21 @@ h1 {
 </div>
 
 <nav>
+<<<<<<< HEAD
     <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li></ul>
+=======
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#hideAllModals">hideAllModals</a></li><li><a href="global.html#hideModal">hideModal</a></li><li><a href="global.html#loginCustomer">loginCustomer</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#newCompanie">newCompanie</a></li><li><a href="global.html#newDevice">newDevice</a></li><li><a href="global.html#newDoctype">newDoctype</a></li><li><a href="global.html#newPart">newPart</a></li><li><a href="global.html#pushDevice">pushDevice</a></li><li><a href="global.html#removeDevice">removeDevice</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setCompanies">setCompanies</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li><li><a href="global.html#setDevices">setDevices</a></li><li><a href="global.html#setDoctypes">setDoctypes</a></li><li><a href="global.html#setFiles">setFiles</a></li><li><a href="global.html#setParts">setParts</a></li><li><a href="global.html#showModal">showModal</a></li><li><a href="global.html#spliceDevice">spliceDevice</a></li><li><a href="global.html#updateDevice">updateDevice</a></li></ul>
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
 </nav>
 
 <br class="clear">
 
 <footer>
+<<<<<<< HEAD
     Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Jan 05 2021 20:55:18 GMT+0400 (Samara Standard Time)
+=======
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 07 2021 13:11:32 GMT+0100 (Central European Standard Time)
+>>>>>>> 0d911f9d6f621ed9e0013ba9a228be35ec7aeda0
 </footer>
 
 <script> prettyPrint(); </script>

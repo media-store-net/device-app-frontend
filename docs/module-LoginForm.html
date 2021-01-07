@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: FileItem</title>
+    <title>JSDoc: Module: LoginForm</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: FileItem</h1>
+    <h1 class="page-title">Module: LoginForm</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">FileItem - represent one given File Object</p></div></div> 
+            <div class="description">LoginForm - LoginForm Component is the user input area to login to the app</p></div></div> 
 
 
 <h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3>
@@ -53,29 +53,17 @@
     </tr>
     </thead>
     <tbody><tr>
-        <td><code>id</code></td>
-        <td>Number</td>
-        <td>-</td>
-        <td><b>Yes</b></td>
-        <td>(required) given ID of the current file, prop is required</td>
-    </tr><tr>
-        <td><code>doctypeId</code></td>
-        <td>Number</td>
-        <td>-</td>
-        <td><b>Yes</b></td>
-        <td>(required) given ID of doctype, prop is required</td>
-    </tr><tr>
-        <td><code>url</code></td>
-        <td>Object</td>
-        <td>-</td>
-        <td><b>Yes</b></td>
-        <td>(required) object with detail info of the given file, like mime, public url, name</td>
-    </tr><tr>
-        <td><code>isAdmin</code></td>
-        <td>Boolean</td>
-        <td><code>false</code></td>
+        <td><code>mode</code></td>
+        <td>String</td>
+        <td><code>'customer'</code></td>
         <td>No</td>
-        <td>this prop enable a administrative area to handle the items (edit,delete)</td>
+        <td>the login-form is usable for customer and the admin</td>
+    </tr><tr>
+        <td><code>sn</code></td>
+        <td>String</td>
+        <td><code>null</code></td>
+        <td>No</td>
+        <td>the serial-number can pass through as a url param to the form</td>
     </tr></tbody>
 </table>
 
@@ -92,33 +80,52 @@
     </tr>
     </thead>
     <tbody><tr>
-        <td><code>download</code></td>
+        <td><code>icons</code></td>
+        <td>Object</td>
+        <td><code>{eye: mdiEyeOutline, user: mdiAccount, device: mdiLaptopWindows,}</code></td>
+        <td>-</td>
+    </tr><tr>
+        <td><code>username</code></td>
+        <td>String|null</td>
+        <td><code>this.sn</code></td>
+        <td>v-model for the username input element</td>
+    </tr><tr>
+        <td><code>pass</code></td>
         <td>String</td>
-        <td><code>mdiFileDownload</code></td>
-        <td>mdi-icon for download</td>
+        <td>-</td>
+        <td>v-model for the password input element</td>
+    </tr><tr>
+        <td><code>passIsVisible</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td>make the password input readable</td>
     </tr></tbody>
 </table>
 
 
 
-<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-computed">Computed</h3>
-<table data-jsdoc-vuejs="table-computed">
+
+
+
+<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-event">Events</h3>
+<table data-jsdoc-vuejs="table-event">
     <thead>
     <tr>
         <th>Name</th>
-        <th>Type</th>
+        <th>Payload Type</th>
         <th>Description</th>
     </tr>
     </thead>
     <tbody><tr>
-        <td><code>filelink</code></td>
-        <td>String</td>
-        <td>computed property to return the full url of the current file, to make downloads available</td>
+        <td><code>submit-form</code></td>
+        <td>Object</td>
+        <td>emit a submit-form event by sending the form</td>
+    </tr><tr>
+        <td><code>forgot-pass</code></td>
+        <td></td>
+        <td>emit the event by click on forgot-password link</td>
     </tr></tbody>
 </table>
-
-
-
 
 
 <div class="container-overview"><div><p> 
@@ -223,7 +230,7 @@
     
 
     
-    <h4 class="name" id="fileDoctype"><span class="type-signature"></span>fileDoctype<span class="signature">(id)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="forgotPass"><span class="type-signature"></span>forgotPass<span class="signature">()</span><span class="type-signature"> &rarr; {$emit}</span></h4>
     
 
     
@@ -231,7 +238,7 @@
 
 
 <div class="description">
-    saerch a specific doctype from the doctypes array and return those title
+    fire the 'forgot-pass' Event with the given username
 </div>
 
 
@@ -240,55 +247,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">id from the doctype object</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -324,7 +282,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_Files_FileItem.vue.html">components/Files/FileItem.vue</a>, <a href="components_Files_FileItem.vue.html#line88">line 88</a>
+        <a href="components_Forms_LoginForm.vue.html">components/Forms/LoginForm.vue</a>, <a href="components_Forms_LoginForm.vue.html#line140">line 140</a>
     </li></ul></dd>
     
 
@@ -353,7 +311,7 @@
 
         
 <div class="param-desc">
-    - returns a title from the doctype
+    'forgot-pass'- Event
 </div>
 
 
@@ -364,7 +322,7 @@
     </dt>
     <dd>
         
-<span class="param-type">string</span>
+<span class="param-type">$emit</span>
 
 
     </dd>
@@ -382,7 +340,7 @@
     
 
     
-    <h4 class="name" id="onDelete"><span class="type-signature"></span>onDelete<span class="signature">()</span><span class="type-signature"> &rarr; {EventBus}</span></h4>
+    <h4 class="name" id="sendForm"><span class="type-signature"></span>sendForm<span class="signature">()</span><span class="type-signature"> &rarr; {$emit}</span></h4>
     
 
     
@@ -390,7 +348,7 @@
 
 
 <div class="description">
-    emits the onDeleteBtn method on EventBus
+    method to validate and submit the user input
 </div>
 
 
@@ -434,7 +392,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_Files_FileItem.vue.html">components/Files/FileItem.vue</a>, <a href="components_Files_FileItem.vue.html#line97">line 97</a>
+        <a href="components_Forms_LoginForm.vue.html">components/Forms/LoginForm.vue</a>, <a href="components_Forms_LoginForm.vue.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -463,7 +421,7 @@
 
         
 <div class="param-desc">
-    - EventBus $emit
+    'submit-form'-event
 </div>
 
 
@@ -474,7 +432,113 @@
     </dt>
     <dd>
         
-<span class="param-type">EventBus</span>
+<span class="param-type">$emit</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="showPass"><span class="type-signature"></span>showPass<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    method to make the password field readable
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Forms_LoginForm.vue.html">components/Forms/LoginForm.vue</a>, <a href="components_Forms_LoginForm.vue.html#line114">line 114</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
 
 
     </dd>

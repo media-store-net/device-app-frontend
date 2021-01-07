@@ -10,6 +10,11 @@ import Logs from '../pages/Logs'
 
 Vue.use(VueRouter)
 
+/**
+ * @description Array for the Routes
+ *
+ * @type {Object[]}
+ */
 const routes = [
   {
     path: '/',
@@ -60,6 +65,11 @@ const routes = [
   // }
 ]
 
+/**
+ * @description VueRouter Instance
+ *
+ * @type {VueRouter}
+ */
 const router = new VueRouter({
   //mode: 'history',
   base: process.env.BASE_URL,
