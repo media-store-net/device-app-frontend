@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Forms/LoginForm.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Forms/LoginForm.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;v-container class="d-flex justify-center align-center">
+    &lt;v-card class="col-xs-12 col-md-8">
+      &lt;v-form @submit.prevent="sendForm">
+        &lt;v-col cols="12">
+          &lt;v-text-field
+            type="text"
+            :label="userLabel"
+            :append-icon="activeUserIcon"
+            v-model="username"
+            required
+          />
+        &lt;/v-col>
+        &lt;v-col cols="12">
+          &lt;v-text-field
+            :type="passType"
+            label="Passwort"
+            :append-icon="activePassIcon"
+            @click:append="showPass"
+            v-model="pass"
+            required
+          />
+        &lt;/v-col>
+        &lt;v-col
+          cols="6"
+          class="offset-3"
+        >
+          &lt;v-btn
+            type="submit"
+            color="primary"
+            outlined
+            block
+          >
+            Login
+          &lt;/v-btn>
+        &lt;/v-col>
+        &lt;v-col
+          cols="6"
+          offset="3"
+          class="text-center"
+        >
+          Passwort vergessen?
+          &lt;span @click="passIsVisible != passIsVisible">Click&lt;/span>
+        &lt;/v-col>
+      &lt;/v-form>
+    &lt;/v-card>
+  &lt;/v-container>
+&lt;/template>
+
+&lt;script>
+import {
+  mdiEyeOutline,
+  mdiEyeOffOutline,
+  mdiAccount,
+  mdiLaptopWindows,
+} from '@mdi/js';
+
+/**
+ * @description LoginForm - LoginForm Component is the user input area to login to the app
+ *
+ * @vue-prop {String} [mode='customer'] - the login-form is usable for customer and the admin
+ * @vue-prop {String} [sn=null] - the serial-number can pass through as a url param to the form
+ * @vue-event {Object} submit-form - emit a submit-form event by sending the form
+ * @vue-event forgot-pass - emit the event by click on forgot-password link
+ * @vue-data {Object} [icons={eye: mdiEyeOutline, user: mdiAccount, device: mdiLaptopWindows,}]
+ * @vue-data {String | null } [username=this.sn] - v-model for the username input element
+ * @vue-data {String} pass - v-model for the password input element
+ * @vue-data {Boolean} passIsVisible - make the password input readable
+ */
+export default {
+  props: {
+    mode: {
+      type: String,
+      default: 'customer',
+    },
+    sn: {
+      type: String,
+      default: null,
+    },
+  },
+  emits: ['submit-form', 'forgot-pass'],
+  data() {
+    return {
+      icons: {
+        eye: mdiEyeOutline,
+        user: mdiAccount,
+        device: mdiLaptopWindows,
+      },
+      username: this.sn,
+      pass: '',
+      passIsVisible: false,
+    };
+  },
+  computed: {
+    userLabel() {
+      return this.mode === 'customer' ? 'Gerätenummer' : 'Username';
+    },
+    passType() {
+      return !this.passIsVisible ? 'password' : 'text';
+    },
+    activeUserIcon() {
+      return this.mode === 'customer' ? mdiLaptopWindows : mdiAccount;
+    },
+    activePassIcon() {
+      return !this.passIsVisible ? mdiEyeOutline : mdiEyeOffOutline;
+    },
+  },
+  methods: {
+    /**
+     * @vue-method showPass
+     * @description method to make the password field readable
+     * @returns {void}
+     */
+    showPass() {
+      console.log('shoPass fired');
+      this.passIsVisible = !this.passIsVisible;
+    },
+    /**
+     * @vue-method sendForm
+     * @description method to validate and submit the user input
+     * @returns {$emit} 'submit-form'-event
+     */
+    sendForm() {
+      console.log('submit-form fired');
+      // emits the form data
+      if (!this.username || !this.pass.trim()) {
+        //TODO Show error message
+        console.log("Empty form can't be submited");
+      } else {
+        this.$emit('submit-form', { username: this.username, pass: this.pass });
+        //reset des Formulars
+        (this.username = null), (this.pass = '');
+      }
+    },
+    /**
+     * @vue-method forgotPass
+     * @description fire the 'forgot-pass' Event with the given username
+     * @returns {$emit} 'forgot-pass'- Event
+     */
+    forgotPass() {
+      console.log('Forgot password fired');
+      this.$emit('forgot-pass', { username: this.username });
+    },
+  },
+  watch: {},
+};
+&lt;/script>
+
+&lt;style scoped>
+.container {
+  height: 100%;
+}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#hideAllModals">hideAllModals</a></li><li><a href="global.html#hideModal">hideModal</a></li><li><a href="global.html#loginCustomer">loginCustomer</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#newCompanie">newCompanie</a></li><li><a href="global.html#newDevice">newDevice</a></li><li><a href="global.html#newDoctype">newDoctype</a></li><li><a href="global.html#newPart">newPart</a></li><li><a href="global.html#pushDevice">pushDevice</a></li><li><a href="global.html#removeDevice">removeDevice</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setCompanies">setCompanies</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li><li><a href="global.html#setDevices">setDevices</a></li><li><a href="global.html#setDoctypes">setDoctypes</a></li><li><a href="global.html#setFiles">setFiles</a></li><li><a href="global.html#setParts">setParts</a></li><li><a href="global.html#showModal">showModal</a></li><li><a href="global.html#spliceDevice">spliceDevice</a></li><li><a href="global.html#updateDevice">updateDevice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 07 2021 13:11:32 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
