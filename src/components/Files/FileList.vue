@@ -17,11 +17,11 @@
 <script>
 import FileItem from '@/components/Files/FileItem.vue';
 
-//TODO Docu for prop isAdmin
 /**
  * @description FileList - represent the Files Array Component in action cards
  *
  * @vue-prop {Array<FileItem>} [items=[]] - atterate through an array of FileItem-Objects
+ * @vue-prop {Boolean} [isAdmin=false] - this prop pass trough to the FileItem, to enable a administrative area to handle the items (edit,delete)
  */
 export default {
   name: 'FileList',
