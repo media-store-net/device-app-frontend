@@ -341,7 +341,7 @@ export const actions = {
 			});
 		}
 	},
-	// TODO Docs
+	// TODO fullfill the method and Docs
 	newFile: async (context, payload) => {
 		try {
 			// send new File to API
@@ -357,7 +357,7 @@ export const actions = {
 			});
 		}
 	},
-	// TODO Docs
+	// TODO fullfill the method and Docs
 	removeFile: async (context, payload) => {
 		try {
 			// send the id of file to remove from server
@@ -449,7 +449,7 @@ export const actions = {
 			if (res.statusText !== "OK") {
 				console.log("Something went wrong");
 			} else {
-				// TODO filter the device in the devices array
+				// filter the device in the devices array
 				console.log(res.data);
 			}
 		} catch (error) {
@@ -545,7 +545,7 @@ export const actions = {
 	 * @method loginUser
 	 * @description send the login user data from a admin user to API
 	 * @param {Object} context - vuex default context object
-	 * @param {Object} payload - expected keys "identifier": String, "password": String
+	 * @param {Object} payload - expected keys "username": String, "password": String
 	 * @returns {Promise<void>} - JWT Token || Server-Error
 	 */
 	loginUser: async (context, payload) => {
@@ -593,7 +593,13 @@ export const actions = {
 			});
 		}
 	},
-	// Docs
+	/**
+	 * @method logoutUser
+	 * @description logout the admin user, remove the AuthKey (JWT Token) and clear the localStorage
+	 * @param {Object} context - vuex default context object
+	 * @returns {Promise<void>} - redirect to login view or Error
+	 * @throws Error
+	 */
 	logoutUser: async context => {
 		try {
 			// remove localstorage item
@@ -615,12 +621,24 @@ export const actions = {
 			});
 		}
 	},
+	/**
+	 * @method pushDevice
+	 * @description method to push one device object to the devices-array in the store
+	 * @param {Object} context - vuex default context object
+	 * @param payload - device object
+	 */
 	pushDevice: (context, payload) => {
 		// payload is the device object from server
 		const devices = [...context.getters.devices];
 		devices.push(payload);
 		context.commit("setDevices", devices);
 	},
+	/**
+	 * @method spliceDevice
+	 * @description remove one device object from the devices-array in the store
+	 * @param {Object} context - vuex default context object
+	 * @param {Object} payload - is the device object from server that should be removed
+	 */
 	spliceDevice: (context, payload) => {
 		// payload is the device object from server
 		const devices = [...context.getters.devices];

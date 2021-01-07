@@ -852,7 +852,7 @@
 
             
 
-            <td class="description last">expected keys "identifier": String, "password": String</td>
+            <td class="description last">expected keys "username": String, "password": String</td>
         </tr>
 
     
@@ -923,6 +923,177 @@
         
 <div class="param-desc">
     - JWT Token || Server-Error
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="logoutUser"><span class="type-signature"></span>logoutUser<span class="signature">(context)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    logout the admin user, remove the AuthKey (JWT Token) and clear the localStorage
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">vuex default context object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="store_index.js.html">store/index.js</a>, <a href="store_index.js.html#line596">line 596</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc">
+    
+        Error
+    
+    </div>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - redirect to login view or Error
 </div>
 
 
@@ -1691,6 +1862,161 @@
     
 
     
+    <h4 class="name" id="pushDevice"><span class="type-signature"></span>pushDevice<span class="signature">(context, payload)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    method to push one device object to the devices-array in the store
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">vuex default context object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>payload</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">device object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="store_index.js.html">store/index.js</a>, <a href="store_index.js.html#line624">line 624</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="removeDevice"><span class="type-signature"></span>removeDevice<span class="signature">(context, payload)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
     
 
@@ -2149,7 +2475,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="store_index.js.html">store/index.js</a>, <a href="store_index.js.html#line630">line 630</a>
+        <a href="store_index.js.html">store/index.js</a>, <a href="store_index.js.html#line648">line 648</a>
     </li></ul></dd>
     
 
@@ -2972,6 +3298,166 @@
     
 
     
+    <h4 class="name" id="spliceDevice"><span class="type-signature"></span>spliceDevice<span class="signature">(context, payload)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    remove one device object from the devices-array in the store
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">vuex default context object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>payload</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">is the device object from server that should be removed</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="store_index.js.html">store/index.js</a>, <a href="store_index.js.html#line636">line 636</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="updateDevice"><span class="type-signature"></span>updateDevice<span class="signature">(context, payload)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
     
 
@@ -3172,13 +3658,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#hideAllModals">hideAllModals</a></li><li><a href="global.html#hideModal">hideModal</a></li><li><a href="global.html#loginCustomer">loginCustomer</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#newCompanie">newCompanie</a></li><li><a href="global.html#newDevice">newDevice</a></li><li><a href="global.html#newDoctype">newDoctype</a></li><li><a href="global.html#newPart">newPart</a></li><li><a href="global.html#removeDevice">removeDevice</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setCompanies">setCompanies</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li><li><a href="global.html#setDevices">setDevices</a></li><li><a href="global.html#setDoctypes">setDoctypes</a></li><li><a href="global.html#setFiles">setFiles</a></li><li><a href="global.html#setParts">setParts</a></li><li><a href="global.html#showModal">showModal</a></li><li><a href="global.html#updateDevice">updateDevice</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#hideAllModals">hideAllModals</a></li><li><a href="global.html#hideModal">hideModal</a></li><li><a href="global.html#loginCustomer">loginCustomer</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#newCompanie">newCompanie</a></li><li><a href="global.html#newDevice">newDevice</a></li><li><a href="global.html#newDoctype">newDoctype</a></li><li><a href="global.html#newPart">newPart</a></li><li><a href="global.html#pushDevice">pushDevice</a></li><li><a href="global.html#removeDevice">removeDevice</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setCompanies">setCompanies</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li><li><a href="global.html#setDevices">setDevices</a></li><li><a href="global.html#setDoctypes">setDoctypes</a></li><li><a href="global.html#setFiles">setFiles</a></li><li><a href="global.html#setParts">setParts</a></li><li><a href="global.html#showModal">showModal</a></li><li><a href="global.html#spliceDevice">spliceDevice</a></li><li><a href="global.html#updateDevice">updateDevice</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Jan 06 2021 20:52:25 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 07 2021 11:30:01 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
