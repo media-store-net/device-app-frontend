@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/DeviceItem.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/DeviceItem.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;v-card class="mx-auto">
+    &lt;v-list-item three-line class="list">
+      &lt;v-list-item-content>
+        &lt;v-list-item-title class="headline mb-4">
+          &lt;strong>SN: &lt;/strong>&lt;span class="title-span">{{ sn }}&lt;/span>
+        &lt;/v-list-item-title>
+        &lt;v-list-item-title class="headline mb-1">
+          &lt;strong>Art.Nr: &lt;/strong
+          >&lt;span class="title-span">{{ part.title }}&lt;/span>
+        &lt;/v-list-item-title>
+        &lt;v-list-item-title class="headline mb-1">
+          &lt;strong>Firma: &lt;/strong
+          >&lt;span class="title-span">{{ companie.name }}&lt;/span>
+        &lt;/v-list-item-title>
+      &lt;/v-list-item-content>
+
+      &lt;v-card-actions>
+        &lt;v-row>
+          &lt;v-col cols="12">
+            &lt;v-btn text color="primary" @click="$emit('gen-qr')">
+              &lt;v-icon>{{ icons.mdiQrcode }}&lt;/v-icon> GenQR
+            &lt;/v-btn>
+
+            &lt;v-btn text color="success" @click="$emit('edit-device')">
+              &lt;v-icon>{{ icons.mdiPencil }}&lt;/v-icon> Edit
+            &lt;/v-btn>
+
+            &lt;v-btn text color="red" @click="$emit('delete-device')">
+              &lt;v-icon>{{ icons.mdiDelete }}&lt;/v-icon> Delete
+            &lt;/v-btn>
+          &lt;/v-col>
+
+          &lt;v-col cols="12" class="badge-container">
+            &lt;div class="badge" @click="showFiles = !showFiles">
+              &lt;v-icon color="success" class="mr-3" size="1.5em">
+                {{ icons.mdiFile }}
+              &lt;/v-icon>
+              &lt;span>{{ files.length }}&lt;/span>
+            &lt;/div>
+          &lt;/v-col>
+        &lt;/v-row>
+      &lt;/v-card-actions>
+    &lt;/v-list-item>
+    &lt;div v-if="showFiles">
+      &lt;transition-group duration="2000">
+        &lt;!-- Component -->
+        &lt;v-card-actions v-for="file in files" :key="file.id">
+          &lt;v-list-item-content class="item">
+            &lt;v-list-item-title class="headline mb-1">
+              {{ file.id }}. {{ fileDoctype(file.doctype) }} |
+              {{ file.url.name }}
+            &lt;/v-list-item-title>
+          &lt;/v-list-item-content>
+          &lt;v-btn color="primary">
+            Download
+          &lt;/v-btn>
+        &lt;/v-card-actions>
+        &lt;!-- /Component -->
+      &lt;/transition-group>
+    &lt;/div>
+  &lt;/v-card>
+&lt;/template>
+&lt;script>
+import { mdiQrcode, mdiPencil, mdiDelete, mdiFile } from '@mdi/js';
+
+import { mapGetters } from 'vuex';
+
+/**
+ * @description DeviceItem is a Component to reflect functionality of one device object
+ *
+ * @vue-prop {number} id - id of the item, this prop is required
+ * @vue-prop {object} companie - represent the companie / customer of the device,
+ * this prop is required
+ * @vue-prop {object} part - represent the doctype of the device,
+ * this prop is required
+ * @vue-prop {string} sn - represent the series number of the device,
+ * this prop is required
+ * @vue-prop {Array} [files=[]] - Files Array include all the Files of one component
+ * @vue-prop {Boolean} [isAdmin=false] - isAdmin prop allows to show or hide admin-specific buttons and actions
+ *
+ * @vue-data {object} [icons={mdiQrcode, mdiPencil, mdiDelete, mdiFile}] - used MDI Icons inside the
+ * component {@link https://materialdesignicons.com}
+ * @vue-data {Boolean} [showFiles=false] - this property allow to show and hide Files-Component
+ *
+ * @vue-computed {Array&lt;object>} doctypes - the doctypes property will be loaded from the VUEX store via mapGetters() function
+ *
+ * @vue-event {string} gen-qr - Emit 'gen-qr' event if the generate qr button clicked
+ * @vue-event {string} edit-device - Emit 'edit-device' event if the edit-button clicked
+ * @vue-event {string} delete-device - Emit 'delete-device' event if the delete-button clicked
+ */
+export default {
+  name: 'DeviceItem',
+  props: {
+    id: { type: Number, required: true },
+    companie: { type: Object, required: true },
+    part: { type: Object, required: true },
+    sn: { type: String, required: true },
+    files: { type: Array, required: false, default: () => [] },
+    isAdmin: { type: Boolean, default: false },
+  },
+  emits: ['gen-qr', 'edit-device', 'delete-device'],
+  data() {
+    return {
+      icons: {
+        mdiQrcode,
+        mdiPencil,
+        mdiDelete,
+        mdiFile,
+      },
+      showFiles: false,
+    };
+  },
+  computed: {
+    ...mapGetters(['doctypes']),
+  },
+  methods: {
+    /**
+     * @vue-method fileDoctype
+     * @description saerch a specific doctype from the doctypes array and return those title
+     * @param {number} id - id from the doctype object
+     * @returns {string}  - returns a title from the doctype
+     */
+    fileDoctype(id) {
+      let doctype = this.doctypes.find((doc) => doc.id === id);
+      return doctype &amp;&amp; doctype.title ? doctype.title : '';
+    },
+  },
+};
+&lt;/script>
+&lt;style scoped>
+.list {
+  align-items: end;
+  padding: 20px;
+}
+.item {
+  padding: 0;
+}
+.title-span {
+  position: absolute;
+  left: 2em;
+  margin-left: 4em;
+}
+.badge {
+  width: 35%;
+  text-align: center;
+  padding: 10px 20px;
+  border: 1px solid #4caf50;
+  border-radius: 10px;
+  margin: 0 auto;
+  background: transparent;
+  color: #4caf50;
+  cursor: pointer;
+}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#getters">getters</a></li><li><a href="global.html#modules">modules</a></li><li><a href="global.html#mutations">mutations</a></li><li><a href="global.html#state">state</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Oct 15 2020 12:00:10 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

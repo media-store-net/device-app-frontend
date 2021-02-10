@@ -1,4 +1,32 @@
-import Vue from "vue";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: store/index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: store/index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Vue from "vue";
 import Vuex from "vuex";
 
 import api from "../api/api";
@@ -181,7 +209,7 @@ export const actions = {
 	 * @method setCompanies
 	 * @description global method to call the companies from API and set to Store
 	 * @param {Object} context - vuex default context obejct
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	setCompanies: async context => {
@@ -194,7 +222,7 @@ export const actions = {
 				name: "MessageBox",
 				componentProps: {
 					type: "error",
-					message: `Fehler: ${error.code} - <br> Companies konnten nicht abgerufen werden`
+					message: `Fehler: ${error.code} - &lt;br> Companies konnten nicht abgerufen werden`
 				}
 			});
 		}
@@ -204,7 +232,7 @@ export const actions = {
 	 * @description method to send one new Companie to the API and push to the companies array in the Store
 	 * @param {Object} context - vuex default context obejct
 	 * @param payload
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	newCompanie: async (context, payload) => {
@@ -237,7 +265,7 @@ export const actions = {
 	 * @description method to send one new Doctype Object to API and push it to Doctypes-Array
 	 * @param {Object} context - vuex default context obejct
 	 * @param payload
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	newDoctype: async (context, payload) => {
@@ -269,7 +297,7 @@ export const actions = {
 	 * @method setDoctypes
 	 * @description call the doctypes from API and set to Store
 	 * @param {Object} context - vuex default context object
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 */
 	setDoctypes: async context => {
 		try {
@@ -291,7 +319,7 @@ export const actions = {
 	 * @description send a new Part Object to the API and push to the store
 	 * @param {Object} context - vuex default context object
 	 * @param payload
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	newPart: async (context, payload) => {
@@ -323,7 +351,7 @@ export const actions = {
 	 * @method setParts
 	 * @description call the parts from API an set to store
 	 * @param {Object} context - vuex default context object
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	setParts: async (context) => {
@@ -376,7 +404,7 @@ export const actions = {
 	 * @method setFiles
 	 * @description get Files Array from API and sets to state (needed only on the files page and files modal)
 	 * @param {Object} context - vuex default context object
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 */
 	setFiles: async context => {
 		try {
@@ -410,7 +438,7 @@ export const actions = {
 	 * @description send a new Device Object to API and push into devices array in the store
 	 * @param {Object} context - vuex default context object
 	 * @param payload
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	newDevice: async (context, payload) => {
@@ -439,7 +467,7 @@ export const actions = {
 	 * @description update an device object to API the changes in the store reflects through currentDevice state
 	 * @param {Object} context - vuex default context object
 	 * @param {Object} payload - expected an object
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	updateDevice: async (context, payload) => {
@@ -468,7 +496,7 @@ export const actions = {
 	 * @description remove one device on server through the given deviceId
 	 * @param {Object} context - vuex default context object
 	 * @param {Number} payload - the deviceId to delete from server
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	removeDevice: async (context, payload) => {
@@ -497,7 +525,7 @@ export const actions = {
 	 * @method setDevices
 	 * @description call the devices from API and set into the store
 	 * @param commit
-	 * @returns {Promise<void>}
+	 * @returns {Promise&lt;void>}
 	 */
 	setDevices: async ({commit}) => {
 		try {
@@ -518,8 +546,8 @@ export const actions = {
 	 * @method loginCustomer
 	 * @description send the customer user login data to API
 	 * @param {Object} context - vuex default context object
-	 * @param {Object} payload - expected keys "sn":String && "pass":String
-	 * @returns {Promise<void>}
+	 * @param {Object} payload - expected keys "sn":String &amp;&amp; "pass":String
+	 * @returns {Promise&lt;void>}
 	 * @throws Error
 	 */
 	loginCustomer: async (context, payload) => {
@@ -546,7 +574,7 @@ export const actions = {
 	 * @description send the login user data from a admin user to API
 	 * @param {Object} context - vuex default context object
 	 * @param {Object} payload - expected keys "username": String, "password": String
-	 * @returns {Promise<void>} - JWT Token || Server-Error
+	 * @returns {Promise&lt;void>} - JWT Token || Server-Error
 	 */
 	loginUser: async (context, payload) => {
 		try {
@@ -597,7 +625,7 @@ export const actions = {
 	 * @method logoutUser
 	 * @description logout the admin user, remove the AuthKey (JWT Token) and clear the localStorage
 	 * @param {Object} context - vuex default context object
-	 * @returns {Promise<void>} - redirect to login view or Error
+	 * @returns {Promise&lt;void>} - redirect to login view or Error
 	 * @throws Error
 	 */
 	logoutUser: async context => {
@@ -652,7 +680,7 @@ export const actions = {
 	 */
 	setCurrentDevice: (context, payload = {}) => {
 		let device = {};
-		if (payload && payload["deviceId"]) {
+		if (payload &amp;&amp; payload["deviceId"]) {
 			device = context.getters.devices.find(dev => dev.id === payload.deviceId);
 		} else {
 			device = payload;
@@ -665,10 +693,10 @@ export const actions = {
 
 		if (payload === "") return hash;
 
-		for (let i = 0; i < payload.length; i++) {
+		for (let i = 0; i &lt; payload.length; i++) {
 			const char = payload.charCodeAt(i);
-			hash = (hash << 3) - hash + char;
-			hash = hash & hash;
+			hash = (hash &lt;&lt; 3) - hash + char;
+			hash = hash &amp; hash;
 		}
 
 		return hash;
@@ -689,3 +717,26 @@ export default function makeStore() {
 		modules
 	});
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DeviceItem.html">DeviceItem</a></li><li><a href="module-DeviceList.html">DeviceList</a></li><li><a href="module-FileItem.html">FileItem</a></li><li><a href="module-FileList.html">FileList</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QrCode.html">QrCode</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#hideAllModals">hideAllModals</a></li><li><a href="global.html#hideModal">hideModal</a></li><li><a href="global.html#loginCustomer">loginCustomer</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#newCompanie">newCompanie</a></li><li><a href="global.html#newDevice">newDevice</a></li><li><a href="global.html#newDoctype">newDoctype</a></li><li><a href="global.html#newPart">newPart</a></li><li><a href="global.html#pushDevice">pushDevice</a></li><li><a href="global.html#removeDevice">removeDevice</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setCompanies">setCompanies</a></li><li><a href="global.html#setCurrentDevice">setCurrentDevice</a></li><li><a href="global.html#setDevices">setDevices</a></li><li><a href="global.html#setDoctypes">setDoctypes</a></li><li><a href="global.html#setFiles">setFiles</a></li><li><a href="global.html#setParts">setParts</a></li><li><a href="global.html#showModal">showModal</a></li><li><a href="global.html#spliceDevice">spliceDevice</a></li><li><a href="global.html#updateDevice">updateDevice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 07 2021 13:11:32 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

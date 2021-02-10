@@ -1,23 +1,13 @@
 <template>
-  <v-app>
-    <v-main>
-      <DeviceForm />
-    </v-main>
+  <v-app id="app">
+    <router-view />
   </v-app>
 </template>
 
-<script>
-import DeviceForm from "./components/DeviceForm";
-
-export default {
-  name: "App",
-
-  components: {
-    DeviceForm
-  },
-
-  data: () => ({
-    //
-  })
-};
-</script>
+<style lang="scss">
+#app {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>
