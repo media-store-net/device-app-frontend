@@ -102,7 +102,7 @@ export default {
     EditBtn
   },
   props: {
-    id: {type: Number, required: true},
+    id: {type: String, required: true},
     companie: {type: Object, required: true},
     part: {type: Object, required: true},
     sn: {type: String, required: true},
