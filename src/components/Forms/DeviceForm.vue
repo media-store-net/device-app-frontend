@@ -277,10 +277,13 @@ export default {
       const response = await api.upload.post(new FormData(formEl));
 
       const uploads = response.data;
+      const doctype = this.doctypes.find(doc => doc.title === this.doctypeTitle);
+
       // loop through the uploaded data
       uploads.map(async upload => {
         const file = {
           filename: upload.name,
+          doctype: [doctype.id],
           url: upload
         }
         // send the file metadata to api
@@ -300,9 +303,12 @@ export default {
       // Find the right company object
       const company = this.companies.find(cmp => cmp.name === this.formData.companie.name)
       this.formData.companie.id = company.id
+      this.formData.companie.kdnr = company.kdnr;
+      console.log(this.formData.companie);
       // Find the right part object
       const part = this.parts.find(part => part.title === this.formData.part.title)
       this.formData.part.id = part.id
+      console.log(this.formData.part);
 
       if (this.mode === 'new') {
         // send data to action
@@ -325,11 +331,16 @@ export default {
     },
   },
   watch: {
-    formData(val) {
-      this.setCurrentDevice(val);
+    formData: {
+      deep: true,
+      handler(newVal, oldVal) {
+        {
+          if (newVal !== oldVal) this.setCurrentDevice(newVal);
+        }
+      }
     },
-    doctypeTitle(val) {
-      return val;
+    doctypeTitle(newVal, oldVal) {
+      return newVal !== oldVal ? newVal : '';
     },
   },
   created() {

@@ -3,65 +3,66 @@
     <v-container class="d-flex justify-center align-center">
       <v-row>
         <v-col
-            cols="12"
-            class="text-center mt-6 mb-10 col-md-8 offset-md-2"
+          cols="12"
+          class="text-center mt-6 mb-10 col-md-8 offset-md-2"
         >
           <v-card class="py-8">
             <close-btn
-                class="mr-10"
-                @click="hideModal('CompanyForm')"
+              class="mr-10"
+              @click="hideModal('CompanyForm')"
             />
             <h1>Company Form</h1>
             <v-form
-                @submit.prevent="sendForm"
-                class="mx-10"
+              @submit.prevent="sendForm"
+              class="mx-10"
             >
               <v-text-field
-                  type="text"
-                  label="* Firmenname"
-                  v-model="name"
+                type="text"
+                label="* Firmenname"
+                v-model="name"
               />
               <v-text-field
-                  type="number"
-                  label="* Kundennummer"
-                  v-model="kdnr"
+                type="number"
+                label="* Kundennummer"
+                v-model="kdnr"
               />
               <v-flex class="d-flex">
                 <v-text-field
-                    class="input"
-                    label="Pass:"
-                    v-model="pass"
+                  class="input"
+                  label="Pass:"
+                  v-model="pass"
                 />
                 <v-btn
-                    text
-                    title="Passwort generieren"
-                    @click="genarate"
+                  text
+                  title="Passwort generieren"
+                  @click="genarate"
                 >
                   <v-icon>{{ icons.mdiLockReset }}</v-icon>
                 </v-btn>
                 <v-btn
-                    text
-                    title="Kopieren"
-                    @click="true"
+                  text
+                  title="Kopieren"
+                  @click="true"
                 >
                   <v-icon>{{ icons.mdiContentCopy }}</v-icon>
                 </v-btn>
               </v-flex>
               <v-textarea
-                  label="kurze Beschreibung"
-                  v-model="desc"
+                label="kurze Beschreibung"
+                v-model="desc"
               />
               <template v-if="messages.length > 0">
                 <message-box
-                    v-for="(message, key) in messages" :key="key"
-                    type="error"
-                    :message="message"
+                  v-for="(message, key) in messages"
+                  :key="key"
+                  type="error"
+                  :message="message"
                 />
               </template>
               <v-flex class="d-flex justify-end mt-3 mr-10">
                 <v-btn
-                    class="primary"
-                    type="submit"
+                  class="primary"
+                  type="submit"
                 >
                   Speichern
                 </v-btn>

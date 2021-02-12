@@ -9,11 +9,13 @@
       </v-col>
       <v-col cols="12">
         <device-item
-          :id="currentDevice.id"
-          :companie="currentDevice.companie"
-          :part="currentDevice.part"
-          :sn="currentDevice.sn"
-          :files="currentDevice.files"
+          v-for="(device, index) in currentDevice"
+          :key="index"
+          :id="currentDevice[index].id"
+          :companie="currentDevice[index].companie"
+          :part="currentDevice[index].part"
+          :sn="currentDevice[index].sn"
+          :files="currentDevice[index].files"
         />
       </v-col>
     </v-row>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 import DeviceItem from '../components/Devices/DeviceItem';
 
 export default {

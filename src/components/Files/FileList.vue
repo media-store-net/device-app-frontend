@@ -6,7 +6,7 @@
     >
       <file-item
         :id="file.id"
-        :doctype-id="file.doctype"
+        :doctype-id="file.doctype.id || file.doctype"
         :url="file.url"
         :is-admin="isAdmin"
       />

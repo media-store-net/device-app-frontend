@@ -17,10 +17,12 @@ export default {
   name: 'PlusBoxBtn',
   props: {
     size: {
-      type: String
+      type: String,
+      default: '2em'
     },
     color: {
-      type: String
+      type: String,
+      default: 'primary'
     }
   },
   emits: ['click'],

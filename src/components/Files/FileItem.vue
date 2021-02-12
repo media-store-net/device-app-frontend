@@ -6,25 +6,42 @@
     >
       <v-list-item-content class="item">
         <v-list-item-title class="headline mb-1">
-          {{ id }}. {{ fileDoctype(doctypeId) }} |
-          {{ url.name }}
+          <table>
+            <thead>
+              <tr>
+                <td>Dokumentationsart</td>
+                <td>Dateiname</td>
+                <td />
+                <td />
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ fileDoctype(doctypeId) }}</td>
+                <td>{{ url.name }}</td>
+                <td v-if="isAdmin">
+                  <DeleteBtn
+                    @click="onDelete"
+                  />
+                </td>
+                <td>
+                  <a
+                    :href="filelink"
+                    target="_blank"
+                  >
+                    <v-btn
+                      icon
+                      color="blue"
+                    >
+                      <v-icon>{{ download }}</v-icon>
+                    </v-btn>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </v-list-item-title>
       </v-list-item-content>
-      <DeleteBtn
-        v-if="isAdmin"
-        @click="onDelete"
-      />
-      <a
-        :href="filelink"
-        target="_blank"
-      >
-        <v-btn
-          icon
-          color="blue"
-        >
-          <v-icon>{{ download }}</v-icon>
-        </v-btn>
-      </a>
     </v-col>
   </transition>
 </template>
@@ -54,18 +71,18 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true,
     },
     doctypeId: {
-      type: Number,
-      required: true,
+      type: String,
+      required: false,
     },
     url: {
       type: Object,
       required: true,
     },
-    isAdmin: { type: Boolean, default: false },
+    isAdmin: {type: Boolean, default: false},
   },
   data() {
     return {

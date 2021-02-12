@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     userLabel() {
-      return this.mode === 'customer' ? 'Gerätenummer' : 'Username';
+      return this.mode === 'customer' ? 'Kundennummer / Gerätenummer' : 'Username';
     },
     passType() {
       return !this.passIsVisible ? 'password' : 'text';
