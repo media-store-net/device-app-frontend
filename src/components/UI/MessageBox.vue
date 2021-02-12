@@ -1,8 +1,8 @@
 <template xmlns:slot="http://www.w3.org/1999/html">
   <v-app>
     <v-alert
-        dense
-        :type="type"
+      dense
+      :type="type"
     >
       {{ message }}
     </v-alert> <!-- :close-icon="CloseBtn"-->
@@ -15,10 +15,12 @@ export default {
   name: "MessageBox",
   props: {
     type: {
-      type: String
+      type: String,
+      default: 'error'
     },
     message: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   emits: ['close-message']
