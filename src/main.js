@@ -9,7 +9,7 @@ import vuetify from './plugins/vuetify'
 import VModal from 'vue-js-modal'
 
 Vue.use(VModal)
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 // new Vue App
 
