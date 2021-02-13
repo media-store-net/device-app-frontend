@@ -210,7 +210,7 @@ export const actions = {
 	newCompanie: async (context, payload) => {
 		try {
 			const res = await api.companies.post(payload);
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log(res);
 			} else {
 				console.log("status OK");
@@ -243,7 +243,7 @@ export const actions = {
 	newDoctype: async (context, payload) => {
 		try {
 			const res = await api.doctypes.post(payload);
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log("Something went wrong");
 			} else {
 				console.log("status OK");
@@ -297,7 +297,7 @@ export const actions = {
 	newPart: async (context, payload) => {
 		try {
 			const res = await api.parts.post(payload);
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log("Something went wrong");
 			} else {
 				console.log("status OK");
@@ -381,7 +381,7 @@ export const actions = {
 	setFiles: async context => {
 		try {
 			const res = await api.files.get();
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				// Show MessageBox
 				context.dispatch("showModal", {
 					name: "MessageBox",
@@ -417,7 +417,7 @@ export const actions = {
 		try {
 			// send data to API
 			const res = await api.devices.post(payload);
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log("Something went wrong");
 			} else {
 				// push device to devices array (this.pushDevice)
@@ -446,7 +446,7 @@ export const actions = {
 		try {
 			// send data to API
 			const res = await api.devices.put(payload);
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log("Something went wrong");
 			} else {
 				// filter the device in the devices array
@@ -476,7 +476,7 @@ export const actions = {
 			// send id to API
 			const res = await api.devices.delete(payload);
 			// remove from devices array
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log("Something went wrong");
 			} else {
 				// delete device in the devices array
@@ -526,10 +526,19 @@ export const actions = {
 		try {
 			const res = await api.deviceLogin({sn: payload.sn, pass: payload.pass});
 			console.log(res);
-			if (res.statusText !== "OK") {
+			if (res.status !== 200) {
 				console.log("Something went wrong");
 			}
-			context.commit("setCurrentDevice", res.data);
+			//TODO prüfen ob object oder array // evtl. am server parsen
+			let devices = [];
+			if(typeof res.data == 'object') {
+				devices.push(res.data);
+			}
+			else {
+				devices = res.data;
+			}
+
+			context.commit("setCurrentDevice", devices);
 		} catch (error) {
 			// Show error messageBox
 			context.dispatch("showModal", {
@@ -554,7 +563,8 @@ export const actions = {
 				identifier: payload.username,
 				password: payload.pass
 			});
-			if (res.statusText !== "OK") {
+			//console.log(res);
+			if (res.status !== 200) {
 				// Show MessageBox
 				context.dispatch("showModal", {
 					name: "MessageBox",
@@ -563,7 +573,6 @@ export const actions = {
 						message: `Fehler: ${res.error.message} - Login derzeit nicht möglich`
 					}
 				});
-				console.log(res);
 			}
 
 			if (res.data.user) {
