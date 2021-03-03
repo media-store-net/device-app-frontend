@@ -29,6 +29,7 @@
                 <v-btn
                   class="primary"
                   type="submit"
+                  :disabled="isValidForm"
                 >
                   Speichern
                 </v-btn>
@@ -70,7 +71,11 @@ export default {
       this.hideModal('Loader');
       this.hideModal('DoctypesForm')
     }
-
+  },
+  computed: {
+    isValidForm () {
+      return this.title.length === 0 ? true : false
+    }
   }
 }
 </script>

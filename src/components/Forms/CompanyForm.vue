@@ -61,8 +61,9 @@
               </template>
               <v-flex class="d-flex justify-end mt-3 mr-10">
                 <v-btn
-                  class="primary"
-                  type="submit"
+                    class="primary"
+                    type="submit"
+                    :disabled="isValidForm"
                 >
                   Speichern
                 </v-btn>
@@ -106,11 +107,11 @@ export default {
     genarate() {
       this.genPass(this.kdnr)
           .then((result) => {
-            this.pass = result;
+            this.pass = result
           })
           .catch((err) => {
-            console.log(err);
-          });
+            console.log(err)
+          })
     },
     validateInputs() {
       // reset the messages
@@ -149,7 +150,7 @@ export default {
         });
         // close the Modal
         this.hideModal('Loader')
-        this.hideModal('CompanyForm');
+        this.hideModal('CompanyForm')
       }
     },
   },
@@ -159,8 +160,12 @@ export default {
         return newValue;
       }
     },
-
   },
+  computed: {
+    isValidForm() {
+      return this.name.length === 0 || this.kdnr.length === 0 || this.pass.length === 0 ? true : false
+    }
+  }
 };
 </script>
 
